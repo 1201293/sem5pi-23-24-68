@@ -7,15 +7,20 @@ hide circles
 
 frame BUILDINGS{
   class Building{
-    designation
+    code
+    name
+    description
   }
 
   class Floor{
     number
+    description
   }
 
   class Room{
-    name
+    code
+    category
+    description
   }
 
   class Elevator{
