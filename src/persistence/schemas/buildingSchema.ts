@@ -1,4 +1,4 @@
-import { IRolePersistence } from '../../dataschema/IRolePersistence';
+import { IBuildingPersistence } from '../../dataschema/IBuildingPersistence';
 import mongoose from 'mongoose';
 
 const BuildingSchema = new mongoose.Schema(
@@ -6,11 +6,12 @@ const BuildingSchema = new mongoose.Schema(
     domainId: { type: String, unique: true },
     code: { type: String, unique: true, maxLength: 5},
     name: { type:String, unique:false, maxLength:50},
-    dsescription: { type:String, unique:false }
+    description: { type:String, unique:false },
+    dimensions: { type:String, unique:false },
   }, 
   {
     timestamps: true
   }
 );
 
-export default mongoose.model<IRolePersistence & mongoose.Document>('Building', BuildingSchema);
+export default mongoose.model<IBuildingPersistence & mongoose.Document>('Building', BuildingSchema);

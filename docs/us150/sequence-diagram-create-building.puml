@@ -14,55 +14,80 @@ participant "IBuildingService1:IBuildingService" as service
 participant "building1:Building" as domain
 participant "buildingRepo1:IBuildingRepo" as repository
 participant "mapper2:Domain2Data" as mapper1
-participant "dataX1:DataX" as data
+participant "Building1:BuildingData" as data
 participant "dbDriver1:IDBDriver" as db
-participant "x1saved:X" as savedDomain
-participant "savedX1:DataX" as savedData
+participant "Building1saved:Building" as savedDomain
+participant "Buildingsaved1:BuildingData" as savedData
 
 
 
--> route: Post /X / (json)
+-> route: Post /buildings / (json)
 activate route
-  route->controller: createX(json)
+  route->controller: createBuilding(json)
   activate controller
     controller -> controller:validate(json)
-    activate controller
-    deactivate
-    controller -> jsonMapper:map2DTOX(json)
+    controller -> jsonMapper:map2DTO(json)
     activate jsonMapper
-    jsonMapper --> dto1**:create(json)
+    jsonMapper -> dto1**:create(json)
+    dto1-->jsonMapper:buildingDTO1
+    jsonMapper --> controller:buildingDTO1
     deactivate
-    controller ->service:createX(dtoX1):dtoX1.1
+    controller ->service:createBuilding(buildingDTO1)
     activate service
-    service--> domain**:create(dtoX1)
-    service->repository:save(x1):x1Saved
+    service-> domain**:create(building1)
+    domain --> service:building1
+    service->repository:save(building1)
     activate repository
-    repository -> mapper1:map2Data(x1)
+    repository -> mapper1:map2Data(building1)
     activate mapper1
-    mapper1 -> domain:getAttr()
+    mapper1 -> domain:getCode()
     activate domain
+    domain--> mapper1:code
+    mapper1 -> domain:getName()
+    domain--> mapper1:name
+    mapper1 -> domain:getDescription()
+    domain--> mapper1:description
+    mapper1 -> domain:getDimensions()
+    domain--> mapper1:dimensions
     deactivate
-    mapper1 --> data**:create(attr, ...)
+    mapper1 -> data**:create(code,name,dimensions,description, ...)
+    data --> mapper1:buildingData
+    mapper1 --> repository:buildingData
     deactivate
-    repository -> db:save(dataX1): savedX1
+    repository -> db:save(buildingData)
     activate db
-    db --> savedData**:create(savedX1)
+    db -> savedData**:create(savedBuilding)
+    db --> repository:savedBuilding
     deactivate
-    repository->mapper1:map2Model(savedX1)
+    repository->mapper1:map2Model(savedBuilding)
     activate mapper1
-    mapper1 --> savedDomain**
+    mapper1 -> savedDomain**
+    savedDomain --> mapper1:buildingSaved
+    mapper1 --> repository:buildingSaved
+    repository --> service:buildingSaved
     deactivate
     deactivate
-    service -> jsonMapper: map2dto(x1saved):dtoX1.1
-    deactivate
+    service -> jsonMapper: map2dto(buildingSaved)
     activate jsonMapper
-    jsonMapper -> savedDomain: getAttr():attr
+    jsonMapper -> savedDomain: getName()
     activate savedDomain
+    savedDomain --> jsonMapper:name
+    jsonMapper -> savedDomain: getCode()
+    savedDomain --> jsonMapper:code
+    jsonMapper -> savedDomain: getDescription()
+    savedDomain --> jsonMapper:description
+    jsonMapper -> savedDomain: getDimensions()
+    savedDomain --> jsonMapper:dimensions
     deactivate
-    jsonMapper --> dto2**:create(attr, ...)
+    jsonMapper --> dto2**:create(name,code,dimensions,description, ...)
+    dto2 --> jsonMapper:savedBuildingDTO
+    jsonMapper --> service: savedBuildingDTO
     deactivate
-    controller -> jsonMapper:map2Json(dtoX1.1):json
+    service --> controller:savedBuildingDTO
+    deactivate
+    controller -> jsonMapper:map2Json(savedBuildingDTO):json
     activate jsonMapper
+    jsonMapper --> controller:json
     deactivate
     controller->controller:generateRes(json)
     controller--> route:response
