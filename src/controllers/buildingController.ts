@@ -23,26 +23,26 @@ export default class BuildingController implements IBuildingController /* TODO: 
       }
 
       const buildingDTO = buildingOrError.getValue();
-      return res.json( buildingDTO ).status(201);
+      return res.status(201).json( buildingDTO );
     }
     catch (e) {
       return next(e);
     }
   };
+  
+  public async listBuildings(req: Request, res: Response, next: NextFunction) {
+    try{
+      const buildingOrError = await this.buildingServiceInstance.listBuildings() as Result<Array<IBuildingDTO>>;
+        
+      if (buildingOrError.isFailure) {
+        return res.status(402).send();
+      }
 
-  // public async updateRole(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const roleOrError = await this.roleServiceInstance.updateRole(req.body as IRoleDTO) as Result<IRoleDTO>;
-
-  //     if (roleOrError.isFailure) {
-  //       return res.status(404).send();
-  //     }
-
-  //     const roleDTO = roleOrError.getValue();
-  //     return res.status(201).json( roleDTO );
-  //   }
-  //   catch (e) {
-  //     return next(e);
-  //   }
-  // };
+      const buildingsDTO = buildingOrError.getValue();
+      return res.json( buildingsDTO ).status(200);
+    }catch(e){
+      return next(e);
+    }
+      
+  }
 }

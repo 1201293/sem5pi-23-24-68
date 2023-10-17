@@ -24,4 +24,6 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createBuilding(req, res, next) );
 
+    route.get('',(req,res,next) => ctrl.listBuildings(req,res,next));
+
 };
