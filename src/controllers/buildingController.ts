@@ -7,8 +7,6 @@ import IBuildingService from '../services/IServices/IBuildingService';
 import IBuildingDTO from '../dto/IBuildingDTO';
 
 import { Result } from "../core/logic/Result";
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 
 @Service()
 export default class BuildingController implements IBuildingController /* TODO: extends ../core/infra/BaseController */ {

@@ -12,26 +12,24 @@ frame BUILDINGS{
     description
   }
 
+}
+
+frame FLOORS{
   class Floor{
     number
     description
   }
 
+  class BuildingConnection{
+   
+  }
+}
+
+frame ROOMS{
   class Room{
     code
     category
     description
-  }
-
-  class Elevator{
-
-  }
-
-}
-
-frame BUILDING_CONNECTIONS{
-  class BuildingConnection{
-   
   }
 }
 
@@ -51,14 +49,14 @@ frame ROBOTS{
 
 Robot "*" ---> "1" RobotType
 
-BuildingConnection "*" ---> "1" Building
+BuildingConnection "*" ---> "1" Floor
 
-BuildingConnection "*" ---> "1" Building
+BuildingConnection "*" ---> "1" Floor
 
 
 Building "1" ---> "1" Elevator
-Building "1" ---> "*" Floor
-Floor "1" ---> "*" Room
+Building "1" <--- "*" Floor
+Floor "1" <--- "*" Room
 
 
 
