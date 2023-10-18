@@ -12,6 +12,10 @@ frame BUILDINGS{
     description
   }
 
+  class BuildingId
+
+  Building "1" --> "1" BuildingId
+
 }
 
 frame FLOORS{
@@ -20,9 +24,9 @@ frame FLOORS{
     description
   }
 
-  class BuildingConnection{
-   
-  }
+  class FloorId
+
+  Floor "1" --> "1" FloorId
 }
 
 frame ROOMS{
@@ -31,6 +35,10 @@ frame ROOMS{
     category
     description
   }
+
+  class RoomId
+
+  Room "1" --> "1" RoomId
 }
 
 frame ROBOTS{

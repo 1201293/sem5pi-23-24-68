@@ -1,5 +1,5 @@
 
-export default interface IRoleDTO {
+export default interface IBuildingDTO {
   id: string;
   code: string;
   name: string;
