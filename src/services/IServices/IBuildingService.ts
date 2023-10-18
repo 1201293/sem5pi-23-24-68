@@ -3,5 +3,6 @@ import IBuildingDTO from "../../dto/IBuildingDTO";
 
 export default interface IBuildingService  {
   createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
-  listBuildings(): Promise<Result<Array<IBuildingDTO>>>
+  listBuildings(): Promise<Result<Array<IBuildingDTO>>>;
+  updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
 }

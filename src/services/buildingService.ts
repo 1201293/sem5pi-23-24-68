@@ -50,4 +50,38 @@ export default class BuildingService implements IBuildingService {
     }
   }
 
+  public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
+      try{
+        const buildingResult= await this.buildingRepo.findByDomainId(buildingDTO.id);
+
+        if(buildingResult == null){
+            return Result.fail<IBuildingDTO>("Building Id does not exist");
+        }
+
+        if(!!buildingDTO.code){
+          buildingResult.code = buildingDTO.code;
+        }
+
+        if(!!buildingDTO.description){
+          buildingResult.description=buildingDTO.description;
+        }
+
+        if(!!buildingDTO.dimensions){
+          buildingResult.dimensions=buildingDTO.dimensions;
+        }
+
+        if(!!buildingDTO.name){
+          buildingResult.name=buildingDTO.name;
+        }
+
+
+        await this.buildingRepo.save(buildingResult);
+
+        const buildingDTOResult = BuildingMap.toDTO( buildingResult ) as IBuildingDTO;
+        return Result.ok<IBuildingDTO>( buildingDTOResult )
+      }catch(e){
+        throw e;
+      }
+  }
+
 }

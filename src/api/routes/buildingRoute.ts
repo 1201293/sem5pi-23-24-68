@@ -26,4 +26,28 @@ export default (app: Router) => {
 
     route.get('',(req,res,next) => ctrl.listBuildings(req,res,next));
 
+    route.put('',celebrate({
+      body:Joi.object({
+        id: Joi.string().required(),
+        name: Joi.string().required(),
+        code: Joi.string().required(),
+        dimensions: Joi.string().required(),
+        description: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.updateBuilding(req, res, next) );
+
+    route.patch('',celebrate({
+      body:Joi.object({
+        id: Joi.string().required(),
+        name: Joi.string(),
+        code: Joi.string(),
+        dimensions: Joi.string(),
+        description: Joi.string(),
+      })
+    }),
+    (req, res, next) => ctrl.updateBuilding(req, res, next) );
+
+
+
 };
