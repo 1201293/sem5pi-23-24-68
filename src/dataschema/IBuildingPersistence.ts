@@ -4,5 +4,6 @@ export interface IBuildingPersistence {
   name: string;
   code: string;
   description: string;
-  dimensions: string;
+  width: number;
+  depth: number;
 }

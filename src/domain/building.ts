@@ -10,7 +10,8 @@ interface BuildingProps {
   code: string;
   name: string;
   description: string;
-  dimensions: string;
+  width: number;
+  depth: number;
 }
 
 export class Building extends AggregateRoot<BuildingProps> {
@@ -34,8 +35,12 @@ export class Building extends AggregateRoot<BuildingProps> {
     return this.props.description;
   }
 
-  get dimensions (): string{
-    return this.props.dimensions;
+  get width (): number{
+    return this.props.width;
+  }
+
+  get depth (): number{
+    return this.props.depth;
   }
 
   set name ( value: string) {
@@ -50,9 +55,14 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.description = value;
   }
 
-  set dimensions ( value: string) {
-    this.props.dimensions = value;
+  set width ( value: number) {
+    this.props.width = value;
   }
+
+  set depth ( value: number) {
+    this.props.depth = value;
+  }
+
   private constructor (props: BuildingProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -63,12 +73,12 @@ export class Building extends AggregateRoot<BuildingProps> {
       return Result.fail<Building>('Must provide a building code(max 5 characters)');
     }else if(!!buildingDTO.description === false){
       return Result.fail<Building>('Must provide a building description');
-    }else if(!!buildingDTO.dimensions === false ){
-      return Result.fail<Building>('Must provide the building dimensions');
+    }else if(buildingDTO.width == 0 || buildingDTO.depth==0){
+      return Result.fail<Building>('Must provide the building non zero values to width and depth of the building');
     } else if(buildingDTO.name.length>50){
       return Result.fail<Building>('Building name cant have more than 50 characters');
     }else {
-      const building = new Building({ name: buildingDTO.name,code: buildingDTO.code,dimensions: buildingDTO.dimensions,description:buildingDTO.description }, id);
+      const building = new Building({ name: buildingDTO.name,code: buildingDTO.code,width: buildingDTO.width,description:buildingDTO.description,depth:buildingDTO.depth }, id);
       return Result.ok<Building>( building )
     }
   }

@@ -47,10 +47,12 @@ activate route
     domain--> mapper1:name
     mapper1 -> domain:getDescription()
     domain--> mapper1:description
-    mapper1 -> domain:getDimensions()
-    domain--> mapper1:dimensions
+    mapper1 -> domain:getWidth()
+    domain--> mapper1:width
+    mapper1 -> domain:getDepth()
+    domain--> mapper1:depth
     deactivate
-    mapper1 -> data**:create(code,name,dimensions,description, ...)
+    mapper1 -> data**:create(code,name,description,width,depth ...)
     data --> mapper1:buildingData
     mapper1 --> repository:buildingData
     deactivate
@@ -76,10 +78,12 @@ activate route
     savedDomain --> jsonMapper:code
     jsonMapper -> savedDomain: getDescription()
     savedDomain --> jsonMapper:description
-    jsonMapper -> savedDomain: getDimensions()
-    savedDomain --> jsonMapper:dimensions
+    jsonMapper -> savedDomain: getWidth()
+    savedDomain --> jsonMapper:width
+    jsonMapper -> savedDomain: getDepth()
+    savedDomain --> jsonMapper:depth
     deactivate
-    jsonMapper --> dto2**:create(name,code,dimensions,description, ...)
+    jsonMapper --> dto2**:create(name,code,description,width,depth ...)
     dto2 --> jsonMapper:savedBuildingDTO
     jsonMapper --> service: savedBuildingDTO
     deactivate

@@ -51,11 +51,13 @@ activate route
     deactivate
     service -> savedDomain:setName(buildingDTO1.name)
     savedDomain --> service:buildingSaved
-    service -> savedDomain:setName(buildingDTO1.code)
+    service -> savedDomain:setCode(buildingDTO1.code)
     savedDomain --> service:buildingSaved
-    service -> savedDomain:setName(buildingDTO1.dimensions)
+    service -> savedDomain:setDescription(buildingDTO1.description)
     savedDomain --> service:buildingSaved
-    service -> savedDomain:setName(buildingDTO1.description)
+    service -> savedDomain:setWidth(buildingDTO1.width)
+    savedDomain --> service:buildingSaved
+    service -> savedDomain:setDepth(buildingDTO1.depth)
     savedDomain --> service:buildingSaved
     service -> repository:save(buildingSaved)
     activate repository
@@ -79,10 +81,12 @@ activate route
     savedDomain --> jsonMapper:code
     jsonMapper -> savedDomain: getDescription()
     savedDomain --> jsonMapper:description
-    jsonMapper -> savedDomain: getDimensions()
-    savedDomain --> jsonMapper:dimensions
+    jsonMapper -> savedDomain: getWidth()
+    savedDomain --> jsonMapper:width
+    jsonMapper -> savedDomain: getDepth()
+    savedDomain --> jsonMapper:depthd
     deactivate
-    jsonMapper --> dto2**:create(name,code,dimensions,description, ...)
+    jsonMapper --> dto2**:create(name,code,description,width,depth ...)
     dto2 --> jsonMapper:savedBuildingDTO
     jsonMapper --> service: savedBuildingDTO
     deactivate

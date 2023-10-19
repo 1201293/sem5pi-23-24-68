@@ -18,8 +18,9 @@ export default (app: Router) => {
       body: Joi.object({
         name: Joi.string(),
         code: Joi.string().required(),
-        dimensions: Joi.string().required(),
         description: Joi.string().required(),
+        width: Joi.number().required(),
+        depth: Joi.number().required(),
       })
     }),
     (req, res, next) => ctrl.createBuilding(req, res, next) );
@@ -31,8 +32,9 @@ export default (app: Router) => {
         id: Joi.string().required(),
         name: Joi.string().required(),
         code: Joi.string().required(),
-        dimensions: Joi.string().required(),
         description: Joi.string().required(),
+        width: Joi.number().required(),
+        depth: Joi.number().required(),
       })
     }),
     (req, res, next) => ctrl.updateBuilding(req, res, next) );
@@ -42,8 +44,9 @@ export default (app: Router) => {
         id: Joi.string().required(),
         name: Joi.string(),
         code: Joi.string(),
-        dimensions: Joi.string(),
         description: Joi.string(),
+        width: Joi.number(),
+        depth: Joi.number(),
       })
     }),
     (req, res, next) => ctrl.updateBuilding(req, res, next) );

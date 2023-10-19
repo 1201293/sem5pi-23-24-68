@@ -66,14 +66,17 @@ export default class BuildingService implements IBuildingService {
           buildingResult.description=buildingDTO.description;
         }
 
-        if(!!buildingDTO.dimensions){
-          buildingResult.dimensions=buildingDTO.dimensions;
+        if(!!buildingDTO.width || buildingDTO.width!=0){
+          buildingResult.width=buildingDTO.width;
+        }
+
+        if(!!buildingDTO.depth || buildingDTO.depth!=0){
+          buildingResult.depth=buildingDTO.depth;
         }
 
         if(!!buildingDTO.name){
           buildingResult.name=buildingDTO.name;
         }
-
 
         await this.buildingRepo.save(buildingResult);
 
