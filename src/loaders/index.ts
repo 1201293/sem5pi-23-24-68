@@ -39,6 +39,12 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roomSchema',
   };
 
+  const buildingConnectionSchema = {
+    // compare with the approach followed in repos and services
+    name: 'buildingConnectionSchema',
+    schema: '../persistence/schemas/buildingConnectionSchema',
+  };
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -57,6 +63,11 @@ export default async ({ expressApp }) => {
   const roomController = {
     name: config.controllers.room.name,
     path: config.controllers.room.path
+  }
+
+  const buildingConnectionController = {
+    name: config.controllers.buildingConnection.name,
+    path: config.controllers.buildingConnection.path
   }
 
   const roleRepo = {
@@ -84,6 +95,11 @@ export default async ({ expressApp }) => {
     path: config.repos.room.path
   }
 
+  const buildingConnectionRepo = {
+    name: config.repos.buildingConnection.name,
+    path: config.repos.buildingConnection.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -103,6 +119,10 @@ export default async ({ expressApp }) => {
     name: config.services.room.name,
     path: config.services.room.path
   }
+  const buildingConnectionService = {
+    name: config.services.buildingConnection.name,
+    path: config.services.buildingConnection.path
+  }
 
   await dependencyInjectorLoader({
     mongoConnection,
@@ -111,26 +131,30 @@ export default async ({ expressApp }) => {
       roleSchema,
       buildingSchema,
       floorSchema,
-      roomSchema
+      roomSchema,
+      buildingConnectionSchema
     ],
     controllers: [
       roleController,
       buildingController,
       floorController,
-      roomController
+      roomController,
+      buildingConnectionController
     ],
     repos: [
       roleRepo,
       userRepo,
       buildingRepo,
       floorRepo,
-      roomRepo
+      roomRepo,
+      buildingConnectionRepo
     ],
     services: [
       roleService,
       buildingService,
       floorService,
-      roomService
+      roomService,
+      buildingConnectionService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

@@ -56,6 +56,10 @@ export default {
     room:{
       name:"RoomController",
       path:"../controllers/roomController"
+    },
+    buildingConnection: {
+      name:"BuildingConnectionController",
+      path:"../controllers/buildingConnectionController"
     }
   },
 
@@ -75,6 +79,10 @@ export default {
     room: {
       name: "RoomRepo",
       path: "../repos/roomRepo"
+    },
+    buildingConnection: {
+      name: "BuildingConnectionRepo",
+      path: "../repos/buildingConnectionRepo"
     },
     user: {
       name: "UserRepo",
@@ -98,6 +106,10 @@ export default {
     room: {
       name: "RoomService",
       path: "../services/roomService"
+    },
+    buildingConnection: {
+      name: "BuildingConnectionService",
+      path: "../services/buildingConnectionService"
     }
   },
 };

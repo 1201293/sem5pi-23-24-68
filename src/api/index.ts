@@ -5,10 +5,12 @@ import role from './routes/roleRoute';
 import building from './routes/buildingRoute';
 import floor from './routes/floorRoute';
 import room from './routes/roomRoute';
+import buildingConnection from './routes/buildingConnectionRoute';
 
 export default () => {
 	const app = Router();
 
+	buildingConnection(app);
 	room(app);
 	floor(app);
 	building(app);
