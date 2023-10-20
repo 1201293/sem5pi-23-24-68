@@ -4,10 +4,12 @@ import user from './routes/userRoute';
 import role from './routes/roleRoute';
 import building from './routes/buildingRoute';
 import floor from './routes/floorRoute';
+import room from './routes/roomRoute';
 
 export default () => {
 	const app = Router();
 
+	room(app);
 	floor(app);
 	building(app);
 	auth(app);

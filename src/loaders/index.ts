@@ -21,9 +21,42 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
+  const buildingSchema = {
+    // compare with the approach followed in repos and services
+    name: 'buildingSchema',
+    schema: '../persistence/schemas/buildingSchema',
+  };
+
+  const floorSchema={
+    // compare with the approach followed in repos and services
+    name: 'floorSchema',
+    schema: '../persistence/schemas/floorSchema',
+  };
+
+  const roomSchema = {
+    // compare with the approach followed in repos and services
+    name: 'roomSchema',
+    schema: '../persistence/schemas/roomSchema',
+  };
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
+  }
+
+  const buildingController = {
+    name: config.controllers.building.name,
+    path: config.controllers.building.path
+  }
+
+  const floorController = {
+    name: config.controllers.floor.name,
+    path: config.controllers.floor.path
+  }
+
+  const roomController = {
+    name: config.controllers.room.name,
+    path: config.controllers.room.path
   }
 
   const roleRepo = {
@@ -36,40 +69,9 @@ export default async ({ expressApp }) => {
     path: config.repos.user.path
   }
 
-  const roleService = {
-    name: config.services.role.name,
-    path: config.services.role.path
-  }
-
-  const buildingSchema = {
-    // compare with the approach followed in repos and services
-    name: 'buildingSchema',
-    schema: '../persistence/schemas/buildingSchema',
-  };
-
-  const buildingController = {
-    name: config.controllers.building.name,
-    path: config.controllers.building.path
-  }
-
   const buildingRepo = {
     name: config.repos.building.name,
     path: config.repos.building.path
-  }
-
-  const buildingService = {
-    name: config.services.building.name,
-    path: config.services.building.path
-  }
-
-  const floorSchema={
-    name: 'floorSchema',
-    schema: '../persistence/schemas/floorSchema',
-  }
-
-  const floorController = {
-    name: config.controllers.floor.name,
-    path: config.controllers.floor.path
   }
 
   const floorRepo = {
@@ -77,9 +79,29 @@ export default async ({ expressApp }) => {
     path: config.repos.floor.path
   }
 
+  const roomRepo = {
+    name: config.repos.room.name,
+    path: config.repos.room.path
+  }
+
+  const roleService = {
+    name: config.services.role.name,
+    path: config.services.role.path
+  }
+
+  const buildingService = {
+    name: config.services.building.name,
+    path: config.services.building.path
+  }
+
   const floorService = {
     name: config.services.floor.name,
     path: config.services.floor.path
+  }
+
+  const roomService = {
+    name: config.services.room.name,
+    path: config.services.room.path
   }
 
   await dependencyInjectorLoader({
@@ -88,23 +110,27 @@ export default async ({ expressApp }) => {
       userSchema,
       roleSchema,
       buildingSchema,
-      floorSchema
+      floorSchema,
+      roomSchema
     ],
     controllers: [
       roleController,
       buildingController,
-      floorController
+      floorController,
+      roomController
     ],
     repos: [
       roleRepo,
       userRepo,
       buildingRepo,
-      floorRepo
+      floorRepo,
+      roomRepo
     ],
     services: [
       roleService,
       buildingService,
-      floorService
+      floorService,
+      roomService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
