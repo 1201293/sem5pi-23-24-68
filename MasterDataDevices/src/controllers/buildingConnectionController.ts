@@ -7,6 +7,7 @@ import IBuildingConnectionService from '../services/IServices/IBuildingConnectio
 import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
 
 import { Result } from "../core/logic/Result";
+import IBuildingDTO from '../dto/IBuildingDTO';
 
 @Service()
 export default class BuildingConnectionController implements IBuildingConnectionController /* TODO: extends ../core/infra/BaseController */ {
@@ -32,7 +33,7 @@ export default class BuildingConnectionController implements IBuildingConnection
   
   public async listBuildingConnections(req: Request, res: Response, next: NextFunction) {
     try{
-      const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections() as Result<Array<IBuildingConnectionDTO>>;
+      const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections(req.body as IBuildingDTO) as Result<Array<IBuildingConnectionDTO>>;
         
       if (buildingConnectionOrError.isFailure) {
         return res.status(402).send();

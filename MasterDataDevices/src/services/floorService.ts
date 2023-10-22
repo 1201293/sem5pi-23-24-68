@@ -8,12 +8,15 @@ import { Result } from "../core/logic/Result";
 import { FloorMap } from "../mappers/FloorMap";
 import IBuildingRepo from './IRepos/IBuildingRepo';
 import { write } from 'fs';
+import { BuildingId } from '../domain/buildingId';
+import IBuildingConnectionRepo from './IRepos/IBuildingConnectionRepo';
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
       @Inject(config.repos.floor.name) private floorRepo : IFloorRepo,
-      @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo
+      @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo,
+      @Inject(config.repos.buildingConnection.name) private buildingConnectionRepo : IBuildingConnectionRepo
   ) {}
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
@@ -53,6 +56,39 @@ export default class FloorService implements IFloorService {
 
       const floorDTOResult = FloorMap.toDTO( floorResult ) as IFloorDTO;
       return Result.ok<IFloorDTO>( floorDTOResult )
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async listFloors(buildingId: BuildingId): Promise<Result<IFloorDTO[]>> {
+    try {
+
+      const floorsWithBuildingConnections = [];
+
+      const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
+
+      if (buildingResult === null) {
+        return Result.fail<IFloorDTO[]>("Building does not exist!");
+      }
+
+      const floors = await this.floorRepo.findAll();
+
+      if (floors.length != 0) {
+        const buildingConnections = await this.buildingConnectionRepo.findAll();
+
+        if (buildingConnections.length != 0) {
+          for (let i = 0; i < buildingConnections.length; i++) {
+            for (let j = 0; j < floors.length; j++) {
+              if ((buildingConnections[i].floor1Id || buildingConnections[i].floor2Id) === floors[j].floorId.toString()) {
+                floorsWithBuildingConnections.push(floors[j]);
+              }
+            }
+          }
+        }
+      }
+
+      return Result.ok<IFloorDTO[]>(floorsWithBuildingConnections);
     } catch (e) {
       throw e;
     }

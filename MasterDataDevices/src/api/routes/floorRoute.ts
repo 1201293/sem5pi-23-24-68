@@ -54,4 +54,11 @@ export default (app: Router) => {
     }),
     (req,res,next)=> ctrl.loadMap(req,res,next));
 
+  route.get('',
+    celebrate({
+      body: Joi.object({
+        buildingId: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.listFloors(req, res, next) )
 };
