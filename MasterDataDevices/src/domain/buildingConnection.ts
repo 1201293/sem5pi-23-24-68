@@ -25,7 +25,7 @@ export class BuildingConnection extends AggregateRoot<BuildingConnectionProps> {
   }
 
   get floor2Id (): string {
-    return this.props.floor1Id;
+    return this.props.floor2Id;
   }
 
   set floor1Id ( value: string) {
