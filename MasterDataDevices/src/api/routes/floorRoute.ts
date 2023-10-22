@@ -23,6 +23,35 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next) );
 
-
+    route.patch('/maps',celebrate({
+      body: Joi.object({
+        floorId: Joi.string().required(),
+        map: Joi.array().items(
+          Joi.array().items(Joi.number())
+        ).required(),
+        rooms: Joi.array().items(
+          Joi.object({
+            roomId: Joi.string(),
+            dimensions: Joi.object({
+              positionX: Joi.number().integer(),
+              positionY: Joi.number().integer(),
+              width: Joi.number().integer(),
+              height: Joi.number().integer(),
+            }),
+          })
+        ),
+        elevator: Joi.object({
+          elevatorId: Joi.string(),
+          positionX: Joi.number().required(),
+          positionY: Joi.number().required(),
+          direction: Joi.string().required(),
+        }).required(),
+        exits: Joi.array().items(
+          Joi.array().items(Joi.number())
+        ).required(),
+        exitLocation: Joi.array().items(Joi.number()).required(),
+      })
+    }),
+    (req,res,next)=> ctrl.loadMap(req,res,next));
 
 };
