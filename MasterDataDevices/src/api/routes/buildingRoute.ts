@@ -18,7 +18,7 @@ export default (app: Router) => {
       body: Joi.object({
         name: Joi.string(),
         code: Joi.string().required(),
-        description: Joi.string().required(),
+        description: Joi.string(),
         width: Joi.number().required(),
         depth: Joi.number().required(),
       })

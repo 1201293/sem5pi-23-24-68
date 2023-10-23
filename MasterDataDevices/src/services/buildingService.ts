@@ -66,11 +66,11 @@ export default class BuildingService implements IBuildingService {
           buildingResult.description=buildingDTO.description;
         }
 
-        if(!!buildingDTO.width || buildingDTO.width!=0){
+        if(!!buildingDTO.width){ 
           buildingResult.width=buildingDTO.width;
         }
 
-        if(!!buildingDTO.depth || buildingDTO.depth!=0){
+        if(!!buildingDTO.depth){
           buildingResult.depth=buildingDTO.depth;
         }
 
