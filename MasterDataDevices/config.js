@@ -60,6 +60,10 @@ export default {
     buildingConnection: {
       name:"BuildingConnectionController",
       path:"../controllers/buildingConnectionController"
+    },
+    robotType:{
+      name:"RobotTypeController",
+      path:"../controllers/robotTypeController"
     }
   },
 
@@ -87,6 +91,10 @@ export default {
     user: {
       name: "UserRepo",
       path: "../repos/userRepo"
+    },
+    robotType:{
+      name:"RobotTypeRepo",
+      path:"../repos/robotTypeRepo"
     }
   },
 
@@ -110,6 +118,10 @@ export default {
     buildingConnection: {
       name: "BuildingConnectionService",
       path: "../services/buildingConnectionService"
+    },
+    robotType: {
+      name: "RobotTypeService",
+      path: "../services/robotTypeService"
     }
   },
 };
