@@ -7,7 +7,7 @@ import IFloorService from '../services/IServices/IFloorService';
 import IFloorDTO from '../dto/IFloorDTO';
 
 import { Result } from "../core/logic/Result";
-import { BuildingId } from '../domain/buildingId';
+import IBuildingDTO from '../dto/IBuildingDTO';
 
 @Service()
 export default class FloorController implements IFloorController /* TODO: extends ../core/infra/BaseController */ {
@@ -33,7 +33,9 @@ export default class FloorController implements IFloorController /* TODO: extend
 
   public async listFloors(req: Request, res: Response, next: NextFunction) {
     try{
-      const floorOrError = await this.floorServiceInstance.listFloors(req.body as BuildingId) as Result<Array<IFloorDTO>>;
+      let aux = req.url.substring(10, req.url.length);
+      
+      const floorOrError = await this.floorServiceInstance.listFloors(aux) as Result<Array<IFloorDTO>>;
         
       if (floorOrError.isFailure) {
         return res.status(402).send();
@@ -44,6 +46,5 @@ export default class FloorController implements IFloorController /* TODO: extend
     }catch(e){
       return next(e);
     }
-      
   }
 }

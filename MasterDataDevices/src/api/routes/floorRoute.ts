@@ -23,7 +23,9 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next) );
 
-    route.patch('/maps',celebrate({
+    route.get('/building/:id', (req, res, next) => ctrl.listFloors(req, res, next) );
+
+    /*route.patch('/maps',celebrate({
       body: Joi.object({
         floorId: Joi.string().required(),
         map: Joi.array().items(
@@ -52,13 +54,5 @@ export default (app: Router) => {
         exitLocation: Joi.array().items(Joi.number()).required(),
       })
     }),
-    (req,res,next)=> ctrl.loadMap(req,res,next));
-
-  route.get('',
-    celebrate({
-      body: Joi.object({
-        buildingId: Joi.string().required(),
-      })
-    }),
-    (req, res, next) => ctrl.listFloors(req, res, next) )
+    (req,res,next)=> ctrl.loadMap(req,res,next)); */
 };
