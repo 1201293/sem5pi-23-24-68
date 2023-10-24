@@ -45,6 +45,11 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/buildingConnectionSchema',
   };
 
+  const robotTypeSchema={
+    name: 'robotTypeSchema',
+    schema: '../persistence/schemas/robotTypeSchema',
+  }
+
   const roleController = {
     name: config.controllers.role.name,
     path: config.controllers.role.path
@@ -68,6 +73,11 @@ export default async ({ expressApp }) => {
   const buildingConnectionController = {
     name: config.controllers.buildingConnection.name,
     path: config.controllers.buildingConnection.path
+  }
+
+  const robotTypeController = {
+    name: config.controllers.robotType.name,
+    path: config.controllers.robotType.path
   }
 
   const roleRepo = {
@@ -100,6 +110,11 @@ export default async ({ expressApp }) => {
     path: config.repos.buildingConnection.path
   }
 
+  const robotTypeRepo = {
+    name: config.repos.robotType.name,
+    path: config.repos.robotType.path
+  }
+
   const roleService = {
     name: config.services.role.name,
     path: config.services.role.path
@@ -119,9 +134,15 @@ export default async ({ expressApp }) => {
     name: config.services.room.name,
     path: config.services.room.path
   }
+
   const buildingConnectionService = {
     name: config.services.buildingConnection.name,
     path: config.services.buildingConnection.path
+  }
+
+  const robotTypeService = {
+    name: config.services.robotType.name,
+    path: config.services.robotType.path
   }
 
   await dependencyInjectorLoader({
@@ -132,14 +153,16 @@ export default async ({ expressApp }) => {
       buildingSchema,
       floorSchema,
       roomSchema,
-      buildingConnectionSchema
+      buildingConnectionSchema,
+      robotTypeSchema
     ],
     controllers: [
       roleController,
       buildingController,
       floorController,
       roomController,
-      buildingConnectionController
+      buildingConnectionController,
+      robotTypeController
     ],
     repos: [
       roleRepo,
@@ -147,14 +170,16 @@ export default async ({ expressApp }) => {
       buildingRepo,
       floorRepo,
       roomRepo,
-      buildingConnectionRepo
+      buildingConnectionRepo,
+      robotTypeRepo
     ],
     services: [
       roleService,
       buildingService,
       floorService,
       roomService,
-      buildingConnectionService
+      buildingConnectionService,
+      robotTypeService
     ]
   });
   Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
