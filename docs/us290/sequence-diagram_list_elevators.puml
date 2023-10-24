@@ -1,0 +1,58 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam shadowing false
+
+participant ElevatorRoute  as route
+participant ElevatorController as controller
+participant "mapper2:Json2DTO" as jsonMapper
+participant "IElevatorDTO1:IElevatorDTO" as dto1
+participant "IElevatorDTO1.1:IElevatorDTO" as dto2
+participant "IElevatorService1:IElevatorService" as service
+participant "Elevator1:Elevator" as domain
+participant "ElevatorRepo1:IElevatorRepo" as repository
+participant "BuildingRepo1:IBuildingRepo" as repository2
+participant "dbDriver1:IDBDriver" as db
+participant "mapper2:Domain2Data" as mapper1
+participant "Elevator1saved:Elevator" as savedData
+
+
+
+-> route : /get elevators
+activate route
+route -> controller : ListElevators(json)
+activate controller
+controller -> controller : Validate(json)
+controller -> jsonMapper : Map(json)
+activate jsonMapper
+jsonMapper -> dto1 : Map(json)
+dto1 -> jsonMapper : ElevatorDTO
+jsonMapper -> controller : ElevatorDTO
+deactivate jsonMapper
+controller -> service : ListElevators()
+activate service
+service -> repository : findbybuilding(ElevatorDTO)
+activate repository
+repository -> db : find(ElevatorDTO)
+activate db
+
+loop foreach savedElevator
+db -> savedData**:create(savedElevators)
+end
+db --> repository:savedElevators
+deactivate db
+
+loop foreach savedElevator
+    repository->mapper1:map2Model(savedElevator)
+    activate mapper1
+    mapper1 -> savedDomain**
+    savedDomain --> mapper1:ElevatorSaved
+    mapper1 --> repository:ElevatorSaved
+    end
+    repository --> service:ElevatorSaved
+deactivate repository
+
+
+
+@enduml
