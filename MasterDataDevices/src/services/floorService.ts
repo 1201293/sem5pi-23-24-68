@@ -9,13 +9,20 @@ import { FloorMap } from "../mappers/FloorMap";
 import IBuildingRepo from './IRepos/IBuildingRepo';
 import IBuildingDTO from '../dto/IBuildingDTO';
 import IBuildingConnectionRepo from './IRepos/IBuildingConnectionRepo';
+import IElevatorDTO from '../dto/IElevatorDTO';
+import IRoomDTO from '../dto/IRoomDTO';
+import IElevatorRepo from './IRepos/IElevatorRepo';
+import IRoomRepo from './IRepos/IRoomRepo';
+import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
 
 @Service()
 export default class FloorService implements IFloorService {
   constructor(
       @Inject(config.repos.floor.name) private floorRepo : IFloorRepo,
       @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo,
-      @Inject(config.repos.buildingConnection.name) private buildingConnectionRepo : IBuildingConnectionRepo
+      @Inject(config.repos.buildingConnection.name) private buildingConnectionRepo : IBuildingConnectionRepo,
+      @Inject(config.repos.elevator.name) private elevatorRepo : IElevatorRepo,
+      @Inject(config.repos.room.name) private roomRepo : IRoomRepo,
   ) {}
 
   public async createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
@@ -91,5 +98,79 @@ export default class FloorService implements IFloorService {
     } catch (e) {
       throw e;
     }
+  }
+
+  public async loadMap(floorId: string, map: string[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
+      try {
+        const floorOrError= await this.floorRepo.findByDomainId(floorId);
+
+        if(floorOrError == null){
+          return Result.fail<IFloorDTO>({"error":"Must provide a valid floor id!"});
+        }
+
+        const buildingOrError= await this.buildingRepo.findByDomainId(floorOrError.buildingId);
+
+        if(buildingOrError == null){
+          return Result.fail<IFloorDTO>({"error":"Something went wrong! Please contact the administrators"});
+        }
+
+        if(buildingOrError.depth === map.length-1 &&buildingOrError.width === map[0].length-1){
+          
+          if(elevatorDTO != null){
+            const elevatorOrError= await this.elevatorRepo.findByDomainId(elevatorDTO.id);
+
+            if(elevatorOrError == null){
+              return Result.fail<IFloorDTO>({"error":"Must provide a valid elevator id!"});
+            }
+
+            if(elevatorOrError.buildingId != floorOrError.buildingId){
+              return Result.fail<IFloorDTO>({"error":"Must provide an elevator that is installed in the same  building of the floor!"});
+            }
+
+            elevatorOrError.posX=elevatorDTO.posX;
+            elevatorOrError.posY=elevatorDTO.posY;
+          }
+
+          let  rooms=[]
+
+          for(let i=0;i<roomsDTO.length;i++){
+             const roomOrError =  await this.roomRepo.findByDomainId(roomsDTO[i].id);
+
+             if(roomOrError == null){
+                return Result.fail<IFloorDTO>({"error":"Must provide a valid room id!"});
+             }
+
+             if(roomOrError.floorId != floorId){
+                return Result.fail<IFloorDTO>({"error":"Must provide a room id that is located in the same building of the floor!"});
+             }
+
+            
+             
+          }
+
+          for(let i=0;i<buildingConnectionsDTO.length;i++){
+            const buildingConnectionOrError =  await this.buildingConnectionRepo.findByDomainId(buildingConnectionsDTO[i].id);
+
+            if(buildingConnectionOrError == null){
+               return Result.fail<IFloorDTO>({"error":"Must provide a valid building connection id!"});
+            }
+
+            if(buildingConnectionOrError.floor1Id != floorId){
+              if(buildingConnectionOrError.floor2Id != floorId){
+                return Result.fail<IFloorDTO>({"error":"Must provide a building connection that is located in the floor!"});
+              }
+            }
+
+
+            
+         }
+
+        }
+
+        
+
+      } catch (e) {
+        throw e;
+      }
   }
 }

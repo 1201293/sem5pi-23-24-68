@@ -25,34 +25,34 @@ export default (app: Router) => {
 
     route.get('/building/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
 
-    /*route.patch('/maps',celebrate({
+    route.patch('/load-maps',celebrate({
       body: Joi.object({
-        floorId: Joi.string().required(),
+        id: Joi.string().required(),
         map: Joi.array().items(
           Joi.array().items(Joi.number())
         ).required(),
         rooms: Joi.array().items(
           Joi.object({
-            roomId: Joi.string(),
-            dimensions: Joi.object({
-              positionX: Joi.number().integer(),
-              positionY: Joi.number().integer(),
+              id: Joi.string(),
+              posX: Joi.number().integer(),
+              posY: Joi.number().integer(),
               width: Joi.number().integer(),
               height: Joi.number().integer(),
-            }),
           })
         ),
         elevator: Joi.object({
-          elevatorId: Joi.string(),
-          positionX: Joi.number().required(),
-          positionY: Joi.number().required(),
-          direction: Joi.string().required(),
-        }).required(),
-        exits: Joi.array().items(
-          Joi.array().items(Joi.number())
-        ).required(),
-        exitLocation: Joi.array().items(Joi.number()).required(),
+          id: Joi.string(),
+          posX: Joi.number().required(),
+          posY: Joi.number().required()
+        }),
+        buildingConnections: Joi.array().items(
+          Joi.object({
+              id: Joi.string(),
+              posX: Joi.number().integer(),
+              posY: Joi.number().integer(),
+          })
+        )
       })
     }),
-    (req,res,next)=> ctrl.loadMap(req,res,next)); */
+    (req,res,next)=> ctrl.loadMap(req,res,next));
 };
