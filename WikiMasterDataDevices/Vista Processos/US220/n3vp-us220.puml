@@ -1,0 +1,65 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam shadowing false
+
+
+participant FloorRoute  as route
+participant FloorController as controller
+participant FloorService as service
+participant Floor as domain
+participant FloorMap as mapper
+participant FloorRepo as repo
+participant BuildingMap as mapperBuilding
+participant BuildingRepo as repoBuilding
+participant buildingConnectionMap as mapperConnection
+participant BuildingConnectionRepo as repoConnection
+
+-> route: Get /floors /building/:id (json)
+activate route
+  route -> controller: listFloorsWithBuildingConnections(buildingId)
+  activate controller
+    controller -> service: listFloorsWithBuildingConnections(buildingId)
+    activate service
+    service -> repoBuilding: findByDomainId(buildingId)
+    activate repoBuilding
+    repoBuilding -> mapperBuilding: Map2Model(buildingData)
+    activate mapperBuilding
+    mapperBuilding --> repoBuilding: building
+    deactivate
+    repoBuilding --> service: building
+    service -> repo: findByBuildingId(buildingId)
+    activate repo
+    loop (for each floor)
+    repo -> mapper: Map2Model(floorData)
+    activate mapper
+    mapper --> repo: floor
+    deactivate
+    end loop
+    repo --> service: floor
+    service -> repoConnection: findAll()
+    loop (for each building connection)
+    activate repoConnection
+    repoConnection -> mapperConnection: Map2Model(buildingConnectionData)
+    activate mapperConnection
+    mapperConnection --> repoConnection: buildingConnection
+    deactivate
+    end loop
+    repoConnection --> service: buildingConnection
+    deactivate
+    service -> service: fillList
+    loop (for each floor)
+    service -> mapper: map2DTO(floor)
+    activate mapper
+    mapper -> service: floorDTO
+    deactivate
+    end loop
+    service --> controller: list
+    deactivate
+    controller --> route: response(list as json)
+    deactivate
+    <-- route: response
+    deactivate
+    
+@enduml

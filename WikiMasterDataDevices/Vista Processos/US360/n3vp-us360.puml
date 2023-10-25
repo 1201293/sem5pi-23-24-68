@@ -1,0 +1,65 @@
+@startuml
+'http://plantuml.com/skinparam.html
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam shadowing false
+
+
+participant RobotRoute  as route
+participant RobotController as controller
+participant RobotService as service
+participant Robot as domain
+participant RobotRepo as repo
+participant RobotMap as mapper
+participant RobotTypeRepo as repoRobot
+participant RobotTypeMap as mapperRobot
+
+-> route: Post /robots / (json)
+activate route
+  route -> controller: createRobot(json)
+  activate controller
+    controller -> service: createRobot(json as IRobotDTO)
+    activate service
+    service -> repoRobot: findByDomainId(robotDTO.robotTypeId)
+    activate repoRobot
+    repoRobot -> mapperRobot: Map2Model(robotData)
+    activate mapperRobot
+    mapperRobot --> repoRobot: robot
+    deactivate
+    repoRobot --> service: robot
+    deactivate
+    service -> repo: findAll()
+    activate repo
+    repo -> mapper: Map2Model(robotTypeData)
+    activate mapper
+    mapper --> repo: robotTypeList
+    deactivate
+    repo --> service: robotTypeList
+    deactivate
+    service -> domain**: create(robotDTO)
+    domain --> service: robot
+    service -> repo: save(robot)
+    activate repo
+    repo -> mapper:Map2Data(robot)
+    activate mapper
+    mapper --> repo: robotData
+    deactivate
+    repo -> : save(robotData)
+    repo -> mapper: Map2Model(robotData)     
+    activate mapper
+    mapper --> repo: robot1
+    deactivate
+    repo --> service: robot1
+    deactivate
+    service -> mapper: Map2DTO(robot1)
+    activate mapper
+    mapper--> service: robot1DTO
+    deactivate
+    service --> controller: robot1DTO
+    deactivate
+    controller --> route: response(robotDTO as json)
+    deactivate
+    <-- route: response
+    deactivate
+    
+@enduml
