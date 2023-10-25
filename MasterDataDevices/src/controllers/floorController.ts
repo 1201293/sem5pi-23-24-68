@@ -55,19 +55,24 @@ export default class FloorController implements IFloorController /* TODO: extend
   public async loadMap(req: Request, res: Response, next: NextFunction) {
       try {
         let rooms=[];
-        for(let i=0;i<req.body.rooms.length;i++){
-          rooms.push(req.body.rooms[i] as IRoomDTO);
+
+        if(req.body.rooms!=null){
+          for(let i=0;i<req.body.rooms.length;i++){
+            rooms.push(req.body.rooms[i] as IRoomDTO);
+          }
         }
 
         let connections=[];
-        for(let i=0;i<req.body.buildingConnections.length;i++){
-          connections.push(req.body.buildingConnections[i] as IBuildingConnectionDTO);
+        if(req.body.buildingConnections!=null){
+          for(let i=0;i<req.body.buildingConnections.length;i++){
+            connections.push(req.body.buildingConnections[i] as IBuildingConnectionDTO);
+          }
         }
 
         const floorOrError = await this.floorServiceInstance.loadMap(req.body.id,req.body.map,rooms,req.body.elevator as IElevatorDTO,connections) as Result<IFloorDTO>;
 
         if (floorOrError.isFailure) {
-          return res.json(floorOrError.errorValue()).status(402).send();
+          return res.status(402).json(floorOrError.errorValue()).send();
         }
   
         const floorDTO = floorOrError.getValue();

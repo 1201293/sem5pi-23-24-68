@@ -8,7 +8,9 @@ const elevatorSchema = new mongoose.Schema(
         code: { type: String, unique: false },
         description: { type: String, unique: false },
         buildingId: { type: String, unique: false },
-        floorsIds: { type: Array, unique: false }
+        floorsIds: { type: Array, unique: false },
+        posX:{type: Number,unique:false},
+        posY:{type: Number,unique:false},
     },
 
     {

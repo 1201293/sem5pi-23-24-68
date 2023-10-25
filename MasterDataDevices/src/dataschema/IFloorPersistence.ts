@@ -4,4 +4,5 @@ export interface IFloorPersistence {
   buildingId: string;
   number: number;
   description: string;
+  map: number[][];
 }

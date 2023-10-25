@@ -100,7 +100,7 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async loadMap(floorId: string, map: string[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
+  public async loadMap(floorId: string, map: number[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {
         const floorOrError= await this.floorRepo.findByDomainId(floorId);
 
@@ -115,21 +115,6 @@ export default class FloorService implements IFloorService {
         }
 
         if(buildingOrError.depth === map.length-1 &&buildingOrError.width === map[0].length-1){
-          
-          if(elevatorDTO != null){
-            const elevatorOrError= await this.elevatorRepo.findByDomainId(elevatorDTO.id);
-
-            if(elevatorOrError == null){
-              return Result.fail<IFloorDTO>({"error":"Must provide a valid elevator id!"});
-            }
-
-            if(elevatorOrError.buildingId != floorOrError.buildingId){
-              return Result.fail<IFloorDTO>({"error":"Must provide an elevator that is installed in the same  building of the floor!"});
-            }
-
-            elevatorOrError.posX=elevatorDTO.posX;
-            elevatorOrError.posY=elevatorDTO.posY;
-          }
 
           let  rooms=[]
 
@@ -144,9 +129,15 @@ export default class FloorService implements IFloorService {
                 return Result.fail<IFloorDTO>({"error":"Must provide a room id that is located in the same building of the floor!"});
              }
 
-            
+            roomOrError.posX=roomsDTO[i].posX;
+            roomOrError.posY=roomsDTO[i].posY;
+            roomOrError.height=roomsDTO[i].height;
+            roomOrError.width=roomsDTO[i].width;
              
+            rooms.push(roomOrError);
           }
+
+          let buildingConnections=[]
 
           for(let i=0;i<buildingConnectionsDTO.length;i++){
             const buildingConnectionOrError =  await this.buildingConnectionRepo.findByDomainId(buildingConnectionsDTO[i].id);
@@ -161,10 +152,45 @@ export default class FloorService implements IFloorService {
               }
             }
 
+            buildingConnectionOrError.posX=buildingConnectionsDTO[i].posX;
+            buildingConnectionOrError.posY=buildingConnectionsDTO[i].posY;
 
-            
-         }
+            buildingConnections.push(buildingConnectionOrError);
+          }
 
+         if(elevatorDTO != null){
+          const elevatorOrError= await this.elevatorRepo.findByDomainId(elevatorDTO.id);
+
+          if(elevatorOrError == null){
+            return Result.fail<IFloorDTO>({"error":"Must provide a valid elevator id!"});
+          }
+
+          if(elevatorOrError.buildingId != floorOrError.buildingId){
+            return Result.fail<IFloorDTO>({"error":"Must provide an elevator that is installed in the same  building of the floor!"});
+          }
+
+          elevatorOrError.posX=elevatorDTO.posX;
+          elevatorOrError.posY=elevatorDTO.posY;
+
+          await this.elevatorRepo.save(elevatorOrError);
+          }
+
+          for(let i=0;i<rooms.length;i++){
+            await this.roomRepo.save(rooms[i]);
+          }
+
+          for(let i=0;i<buildingConnections.length;i++){
+            await this.buildingConnectionRepo.save(buildingConnections[i]);
+          }
+
+          floorOrError.map=map;
+
+          await this.floorRepo.save(floorOrError);
+
+          return   Result.ok<IFloorDTO>(FloorMap.toDTO(floorOrError));
+
+        }else{
+          return Result.fail<IFloorDTO>({"error":"Map size does not match with building dimensions!"});
         }
 
         

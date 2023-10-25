@@ -14,7 +14,9 @@ export class BuildingConnectionMap extends Mapper<BuildingConnection> {
     return {
       id: buildingConnection.id.toString(),
       floor1Id: buildingConnection.floor1Id,
-      floor2Id: buildingConnection.floor2Id
+      floor2Id: buildingConnection.floor2Id,
+      posX: buildingConnection.posX,
+      posY:buildingConnection.posY
     } as IBuildingConnectionDTO;
   }
 
@@ -33,7 +35,9 @@ export class BuildingConnectionMap extends Mapper<BuildingConnection> {
     return {
       domainId: buildingConnection.id.toString(),
       floor1Id: buildingConnection.floor1Id,
-      floor2Id: buildingConnection.floor2Id
+      floor2Id: buildingConnection.floor2Id,
+      posX: buildingConnection.posX,
+      posY:buildingConnection.posY
     }
   }
 }

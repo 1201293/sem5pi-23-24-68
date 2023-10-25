@@ -17,6 +17,10 @@ export class RoomMap extends Mapper<Room> {
       name: room.name,
       category: room.category,
       description: room.description,
+      posX: room.posX,
+      posY: room.posY,
+      width: room.width,
+      height: room.height,
     } as IRoomDTO;
   }
 
@@ -38,6 +42,10 @@ export class RoomMap extends Mapper<Room> {
       name: room.name,
       category: room.category,
       description: room.description,
+      posX: room.posX,
+      posY: room.posY,
+      width: room.width,
+      height: room.height,
     }
   }
 }

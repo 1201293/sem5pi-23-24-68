@@ -12,6 +12,10 @@ interface RoomProps {
   name: string;
   category: string;
   description: string;
+  posX: number;
+  posY: number;
+  width: number;
+  height: number;
 }
 
 export class Room extends AggregateRoot<RoomProps> {
@@ -39,6 +43,22 @@ export class Room extends AggregateRoot<RoomProps> {
     return this.props.description;
   }
 
+  get posX():number{
+    return this.props.posX; 
+  }
+
+  get posY():number{
+    return this.props.posY;
+  }
+
+  get width():number{
+    return this.props.width;
+  }
+
+  get height():number{
+    return this.props.height;
+  }
+
   set floorId ( value: string) {
     this.props.floorId = value;
   }
@@ -53,6 +73,22 @@ export class Room extends AggregateRoot<RoomProps> {
 
   set description ( value: string) {
     this.props.description = value;
+  }
+
+  set  posX(value:number){
+    this.props.posX=value;
+    }
+
+  set  posY(value:number){
+    this.props.posY=value;
+  }
+
+  set  width(value:number){
+    this.props.width=value;
+  }
+
+  set  height(value:number){
+    this.props.height=value;
   }
 
   private constructor (props: RoomProps, id?: UniqueEntityID) {
@@ -70,7 +106,7 @@ export class Room extends AggregateRoot<RoomProps> {
     }else if(roomDTO.name.length > 4){
       return Result.fail<Room>('Room name cant have more than 4 characters');
     }else {
-      const room = new Room({floorId: roomDTO.floorId, name: roomDTO.name, category: roomDTO.category, description:roomDTO.description}, id);
+      const room = new Room({floorId: roomDTO.floorId, name: roomDTO.name, category: roomDTO.category, description:roomDTO.description,posX: undefined,posY: undefined,height:undefined,width:undefined}, id);
       return Result.ok<Room>( room );
     }
   }

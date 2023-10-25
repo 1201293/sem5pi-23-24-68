@@ -7,4 +7,6 @@ export interface IElevatorPersistence {
     description: string;
     buildingId: string;
     floorsIds: string[];
+    posX: number;
+    posY: number;
 }

@@ -5,8 +5,6 @@ import { Result } from "../core/logic/Result";
 import { ElevatorId } from "./elevatorId";
 
 import IElevatorDTO from "../dto/IElevatorDTO";
-import { BuildingId } from "./buildingId";
-import { Code } from "mongodb";
 
 interface ElevatorProps {
     code: string;

@@ -10,6 +10,7 @@ interface FloorProps {
   buildingId: string;
   number: number;
   description: string;
+  map:number[][];
 }
 
 export class Floor extends AggregateRoot<FloorProps> {
@@ -33,6 +34,10 @@ export class Floor extends AggregateRoot<FloorProps> {
     return this.props.description;
   }
 
+  get map ():number[][]{
+    return  this.props.map;
+  }
+
   set buildingId ( value: string) {
     this.props.buildingId = value;
   }
@@ -43,6 +48,10 @@ export class Floor extends AggregateRoot<FloorProps> {
 
   set description ( value: string) {
     this.props.description = value;
+  }
+
+  set  map(value : number [][]){
+    this.props.map=value;
   }
 
   private constructor (props: FloorProps, id?: UniqueEntityID) {
@@ -58,7 +67,7 @@ export class Floor extends AggregateRoot<FloorProps> {
     }else if(!!floorDTO.buildingId === false ){
       return Result.fail<Floor>('Must provide the buildingId that the floor is in');
     } else {
-      const floor = new Floor({ buildingId: floorDTO.buildingId,number: floorDTO.number,description:floorDTO.description }, id);
+      const floor = new Floor({ buildingId: floorDTO.buildingId,number: floorDTO.number,description:floorDTO.description,map: undefined }, id);
       return Result.ok<Floor>( floor )
     }
   }

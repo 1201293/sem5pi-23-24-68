@@ -6,6 +6,6 @@ import IRoomDTO from "../../dto/IRoomDTO";
 
 export default interface IFloorService  {
   createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
-  loadMap(floorId: string,map: string[][],roomsDTO: IRoomDTO[],elevatorDTO: IElevatorDTO,buildingConnectionsDTO: IBuildingConnectionDTO[]) : Promise<Result<IFloorDTO>>;
+  loadMap(floorId: string,map: number[][],roomsDTO: IRoomDTO[],elevatorDTO: IElevatorDTO,buildingConnectionsDTO: IBuildingConnectionDTO[]) : Promise<Result<IFloorDTO>>;
   listFloorsWithBuildingConnections(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
 }

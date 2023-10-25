@@ -17,7 +17,9 @@ export class ElevatorMap extends Mapper<Elevator>{
             name: elevator.name,
             description: elevator.description,
             buildingId: elevator.buildingId.toString(),
-            floorsIds: elevator.floorsIds.map(floorId => floorId.toString())
+            floorsIds: elevator.floorsIds.map(floorId => floorId.toString()),
+            posX: elevator.posX,
+            posY:elevator.posY
         } as IElevatorDTO;
     }
 
@@ -39,7 +41,9 @@ export class ElevatorMap extends Mapper<Elevator>{
             code: elevator.code,
             description: elevator.description,
             buildingId: elevator.buildingId.toString(),
-            floorsIds: elevator.floorsIds.map(floorId => floorId.toString())
+            floorsIds: elevator.floorsIds.map(floorId => floorId.toString()),
+            posX: elevator.posX,
+            posY:elevator.posY
         }
     }
 

@@ -8,6 +8,10 @@ const RoomSchema = new mongoose.Schema(
     floorId: { type: String, unique: false },
     category: { type: String, unique: false},
     description: { type: String, unique: false},
+    posX: {type:Number,unique:false},
+    posY:  {type:Number,unique:false},
+    width:  {type:Number,unique:false},
+    height: {type:Number,unique:false},
   }, 
   {
     timestamps: true
