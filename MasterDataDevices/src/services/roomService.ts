@@ -63,7 +63,7 @@ export default class RoomService implements IRoomService {
         const roomResult= await this.roomRepo.findByDomainId(roomDTO.id);
 
         if(roomResult == null){
-            return Result.fail<IRoomDTO>({"error": "The Floor does not exist"});
+            return Result.fail<IRoomDTO>({"error": "The Room does not exist"});
         }
 
         if(!!roomDTO.category){
