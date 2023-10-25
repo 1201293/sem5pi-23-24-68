@@ -36,7 +36,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections(req.body as IBuildingDTO) as Result<Array<IBuildingConnectionDTO>>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).send(buildingConnectionOrError.errorValue());
       }
 
       const buildingConnectionsDTO = buildingConnectionOrError.getValue();

@@ -7,7 +7,11 @@ import IFloorService from '../services/IServices/IFloorService';
 import IFloorDTO from '../dto/IFloorDTO';
 
 import { Result } from "../core/logic/Result";
-import IBuildingDTO from '../dto/IBuildingDTO';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
+import IRoomDTO from '../dto/IRoomDTO';
+import IElevatorDTO from '../dto/IElevatorDTO';
+import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
 
 @Service()
 export default class FloorController implements IFloorController /* TODO: extends ../core/infra/BaseController */ {
@@ -46,5 +50,30 @@ export default class FloorController implements IFloorController /* TODO: extend
     }catch(e){
       return next(e);
     }
+  }
+  
+  public async loadMap(req: Request, res: Response, next: NextFunction) {
+      try {
+        let rooms=[];
+        for(let i=0;i<req.body.rooms.length;i++){
+          rooms.push(req.body.rooms[i] as IRoomDTO);
+        }
+
+        let connections=[];
+        for(let i=0;i<req.body.buildingConnections.length;i++){
+          connections.push(req.body.buildingConnections[i] as IBuildingConnectionDTO);
+        }
+
+        const floorOrError = await this.floorServiceInstance.loadMap(req.body.id,req.body.map,rooms,req.body.elevator as IElevatorDTO,connections) as Result<IFloorDTO>;
+
+        if (floorOrError.isFailure) {
+          return res.json(floorOrError.errorValue()).status(402).send();
+        }
+  
+        const floorDTO = floorOrError.getValue();
+        return  res.json(rooms[0]).status(200); 
+      } catch (e) {
+        return  next(e);
+      }
   }
 }

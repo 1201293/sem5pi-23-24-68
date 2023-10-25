@@ -14,6 +14,8 @@ interface ElevatorProps {
     floorsIds: string[];
     name: string;
     description: string;
+    posX:number;
+    posY:number;
 }
 
 export class Elevator extends AggregateRoot<ElevatorProps> {
@@ -45,6 +47,14 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
         return this.props.description;
     }
 
+    get posX():number{
+        return this.props.posX;
+    }
+
+    get posY():number{
+        return this.props.posY;
+    }
+
     set code (code: string) {
         this.props.code = code;
     }
@@ -65,7 +75,14 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
         this.props.description = description;
     }
 
-    
+    set  posX(value:number){
+        this.props.posX=value;
+    }
+
+    set  posY(value:number){
+        this.props.posY=value;
+    }
+
 
     private constructor (props: ElevatorProps, id?: UniqueEntityID){
         super(props,id);
@@ -80,7 +97,7 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
         } else if(elevatorDTO.name.length > 50){
             return Result.fail<Elevator>("Elevator name can't have more than 50 characters");
         } else {
-            const elevator = new Elevator({code: elevatorDTO.code, name: elevatorDTO.name, buildingId: elevatorDTO.buildingId, floorsIds: elevatorDTO.floorsIds, description: elevatorDTO.description}, id);
+            const elevator = new Elevator({code: elevatorDTO.code, name: elevatorDTO.name, buildingId: elevatorDTO.buildingId, floorsIds: elevatorDTO.floorsIds, description: elevatorDTO.description,posX: undefined,posY: undefined}, id);
             return Result.ok<Elevator>(elevator);
         }
     }

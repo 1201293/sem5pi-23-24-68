@@ -4,4 +4,6 @@ export default interface IFloorDTO {
   buildingId: string;
   number: number;
   description: string;
+  map: string;
+  exits: string;
 }
