@@ -3,5 +3,4 @@ import IElevatorDTO from "../../dto/IElevatorDTO";
 
 export default interface IElevatorService {
     createElevator(elevatorDTO: IElevatorDTO): Promise<Result<IElevatorDTO>>;
-    listElevators(floorId: string): Promise<Result<Array<IElevatorDTO>>>;
 }
