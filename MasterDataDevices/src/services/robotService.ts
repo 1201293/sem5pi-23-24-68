@@ -51,9 +51,9 @@ export default class RobotService implements IRobotService {
     }
   }
 
-  public async disableRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {
+  public async disableRobot(robotId: string): Promise<Result<IRobotDTO>> {
     try {
-      const robotOrError = await this.robotRepo.findByDomainId(robotDTO.id);
+      const robotOrError = await this.robotRepo.findByDomainId(robotId);
 
       if (robotOrError === null) {
         return Result.fail<IRobotDTO>({"error": "Could not find robot"});

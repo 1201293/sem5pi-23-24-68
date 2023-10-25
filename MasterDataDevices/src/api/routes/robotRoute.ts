@@ -24,4 +24,12 @@ export default (app: Router) => {
       })
     }),
     (req, res, next) => ctrl.createRobot(req, res, next) );
+
+  route.patch('/disable',
+    celebrate({
+      body: Joi.object({
+        id: Joi.string().required()
+      })
+    }),
+    (req, res, next) => ctrl.disableRobot(req, res, next) );
 }
