@@ -3,5 +3,5 @@ import IFloorDTO from "../../dto/IFloorDTO";
 
 export default interface IFloorService  {
   createFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
-  listFloors(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
+  listFloorsWithBuildingConnections(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
 }

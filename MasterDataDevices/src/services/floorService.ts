@@ -60,7 +60,7 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async listFloors(buildingId: string): Promise<Result<IFloorDTO[]>> {
+  public async listFloorsWithBuildingConnections(buildingId: string): Promise<Result<IFloorDTO[]>> {
     try {
 
       const floorsWithBuildingConnections = [];

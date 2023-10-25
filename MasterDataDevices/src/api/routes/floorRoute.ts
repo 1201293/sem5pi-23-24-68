@@ -23,7 +23,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next) );
 
-    route.get('/building/:id', (req, res, next) => ctrl.listFloors(req, res, next) );
+    route.get('/building/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
 
     /*route.patch('/maps',celebrate({
       body: Joi.object({
