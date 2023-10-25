@@ -44,8 +44,11 @@ export default class ElevatorRepo implements IElevatorRepo {
 
                 return ElevatorMap.toDomain(elevatorCreated);
             } else {
-                elevatorDocument.name = elevator.name;
+                
                 elevatorDocument.code = elevator.code;
+                elevatorDocument.brand = elevator.brand;
+                elevatorDocument.model = elevator.model;
+                elevatorDocument.serialNumber = elevator.serialNumber;
                 elevatorDocument.description= elevator.description;
                 elevatorDocument.buildingId = elevator.buildingId;
                 elevatorDocument.floorsIds = elevator.floorsIds;

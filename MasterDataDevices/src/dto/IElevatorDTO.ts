@@ -2,7 +2,9 @@
 export default interface IElevatorDTO {
     id: string;
     code: string;
-    name: string;
+    brand: string;
+    model: string;
+    serialNumber: string;
     buildingId: string;
     floorsIds: string[];
     description: string;

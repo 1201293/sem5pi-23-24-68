@@ -14,7 +14,9 @@ export class ElevatorMap extends Mapper<Elevator>{
         return {
             id: elevator.id.toString(),
             code: elevator.code,
-            name: elevator.name,
+            brand: elevator.brand,
+            model: elevator.model,
+            serialNumber: elevator.serialNumber,
             description: elevator.description,
             buildingId: elevator.buildingId.toString(),
             floorsIds: elevator.floorsIds.map(floorId => floorId.toString()),
@@ -37,8 +39,10 @@ export class ElevatorMap extends Mapper<Elevator>{
     public static toPersistence(elevator: Elevator): any {
         return {
             domainId: elevator.id.toString(),
-            name: elevator.name,
             code: elevator.code,
+            brand: elevator.brand,
+            model: elevator.model,
+            serialNumber: elevator.serialNumber,
             description: elevator.description,
             buildingId: elevator.buildingId.toString(),
             floorsIds: elevator.floorsIds.map(floorId => floorId.toString()),

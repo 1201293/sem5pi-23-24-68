@@ -10,7 +10,9 @@ interface ElevatorProps {
     code: string;
     buildingId: string;
     floorsIds: string[];
-    name: string;
+    brand: string;
+    model: string;
+    serialNumber: string;
     description: string;
     posX:number;
     posY:number;
@@ -37,8 +39,16 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
         return this.props.floorsIds;
     }
 
-    get name (): string {
-        return this.props.name;
+    get brand (): string {
+        return this.props.brand;
+    }
+
+    get model (): string {
+        return this.props.model;
+    }
+
+    get serialNumber (): string {
+        return this.props.serialNumber;
     }
 
     get description (): string {
@@ -65,8 +75,16 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
         this.props.floorsIds = floorsIds;
     }
 
-    set name (name: string) {
-        this.props.name = name;
+    set brand (brand: string) {
+        this.props.brand = brand;
+    }
+
+    set model (model: string) {
+        this.props.model = model;
+    }
+
+    set serialNumber (serialNumber: string) {
+        this.props.serialNumber = serialNumber;
     }
 
     set description (description: string) {
@@ -92,10 +110,14 @@ export class Elevator extends AggregateRoot<ElevatorProps> {
             return Result.fail<Elevator>("Must provide a elevator code(max 5 characters)");
         } else if(!!elevatorDTO.description === false){
             return Result.fail<Elevator>("Must provide a elevator description");
-        } else if(elevatorDTO.name.length > 50){
-            return Result.fail<Elevator>("Elevator name can't have more than 50 characters");
+        } else if(elevatorDTO.brand.length > 50){
+            return Result.fail<Elevator>("Elevator brand can't have more than 50 characters");
+        } else if(elevatorDTO.model.length > 50){
+            return Result.fail<Elevator>("Elevator model can't have more than 50 characters");
+        } else if(elevatorDTO.serialNumber.length > 50){
+            return Result.fail<Elevator>("Elevator serial number can't have more than 50 characters");
         } else {
-            const elevator = new Elevator({code: elevatorDTO.code, name: elevatorDTO.name, buildingId: elevatorDTO.buildingId, floorsIds: elevatorDTO.floorsIds, description: elevatorDTO.description,posX: undefined,posY: undefined}, id);
+            const elevator = new Elevator({code: elevatorDTO.code, brand: elevatorDTO.brand, model: elevatorDTO.model, serialNumber: elevatorDTO.serialNumber, buildingId: elevatorDTO.buildingId, floorsIds: elevatorDTO.floorsIds, description: elevatorDTO.description,posX: undefined,posY: undefined}, id);
             return Result.ok<Elevator>(elevator);
         }
     }
