@@ -5,6 +5,7 @@ import { Container } from 'typedi';
 import IRobotTypeController from '../../controllers/IControllers/IRobotTypeController'; 
 
 import config from "../../../config";
+import middlewares from '../middlewares';
 
 const route = Router();
 
@@ -13,7 +14,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.robotType.name) as IRobotTypeController;
 
-  route.post('',
+  route.post('',middlewares.checkUserRole,
     celebrate({
       body: Joi.object({
         type: Joi.string().required(),
