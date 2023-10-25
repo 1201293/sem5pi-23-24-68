@@ -76,7 +76,7 @@ export default class FloorController implements IFloorController /* TODO: extend
         }
   
         const floorDTO = floorOrError.getValue();
-        return  res.json(rooms[0]).status(200); 
+        return  res.json(floorDTO).status(200); 
       } catch (e) {
         return  next(e);
       }
