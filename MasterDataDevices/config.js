@@ -68,6 +68,10 @@ export default {
     elevator:{
       name:"ElevatorController",
       path:"../controllers/elevatorController"
+    },
+    robot:{
+      name:"RobotController",
+      path:"../controllers/robotController"
     }
   },
 
@@ -103,6 +107,10 @@ export default {
     elevator:{
       name:"ElevatorRepo",
       path:"../repos/elevatorRepo"
+    },
+    robot:{
+      name:"RobotRepo",
+      path:"../repos/robotRepo"
     }
   },
 
@@ -134,6 +142,10 @@ export default {
     elevator:{
       name:"ElevatorService",
       path:"../services/elevatorService"
+    },
+    robot: {
+      name: "RobotService",
+      path: "../services/robotService"
     }
   },
 };

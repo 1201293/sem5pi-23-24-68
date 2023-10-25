@@ -8,12 +8,13 @@ import room from './routes/roomRoute';
 import buildingConnection from './routes/buildingConnectionRoute';
 import robotType from './routes/robotTypeRoute';
 import elevator from './routes/elevatorRoute';
+import robot from './routes/robotRoute';
 
 export default () => {
 	const app = Router();
 
-
-	elevator(app)
+	robot(app);
+	elevator(app);
 	robotType(app);
 	buildingConnection(app);
 	room(app);

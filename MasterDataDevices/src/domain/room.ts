@@ -5,7 +5,6 @@ import { Result } from "../core/logic/Result";
 import { RoomId } from "./roomId";
 
 import IRoomDTO from "../dto/IRoomDTO";
-import { floor } from "lodash";
 
 interface RoomProps {
   floorId: string;
