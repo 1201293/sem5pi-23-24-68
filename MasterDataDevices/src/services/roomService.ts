@@ -21,7 +21,7 @@ export default class RoomService implements IRoomService {
       const floorOrError = await this.floorRepo.findByDomainId(roomDTO.floorId);
 
       if (floorOrError === null) {
-        return Result.fail<IRoomDTO>(roomDTO);
+        return Result.fail<IRoomDTO>({"error": "The Floor does not exist"});
       }
 
       const roomOrError = await Room.create( roomDTO );
@@ -63,7 +63,7 @@ export default class RoomService implements IRoomService {
         const roomResult= await this.roomRepo.findByDomainId(roomDTO.id);
 
         if(roomResult == null){
-            return Result.fail<IRoomDTO>("Room Id does not exist");
+            return Result.fail<IRoomDTO>({"error": "The Floor does not exist"});
         }
 
         if(!!roomDTO.category){

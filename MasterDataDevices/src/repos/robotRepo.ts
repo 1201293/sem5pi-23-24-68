@@ -47,7 +47,7 @@ export default class RobotRepo implements IRobotRepo {
       } else {
         robotDocument.name = robot.name;
         robotDocument.code = robot.code;
-        robotDocument.type = robot.type;
+        robotDocument.robotTypeId = robot.robotTypeId;
         robotDocument.number = robot.number;
         robotDocument.status = robot.status;
         robotDocument.description= robot.description;

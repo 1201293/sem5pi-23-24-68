@@ -18,7 +18,7 @@ export default (app: Router) => {
       body: Joi.object({
         code: Joi.string().required(),
         name: Joi.string().required(),
-        type: Joi.string().required(),
+        robotTypeId: Joi.string().required(),
         number: Joi.string().required(),
         description: Joi.string(),
       })

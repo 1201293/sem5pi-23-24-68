@@ -19,7 +19,7 @@ export default class RobotController implements IRobotController /* TODO: extend
       const robotOrError = await this.robotServiceInstance.createRobot(req.body as IRobotDTO) as Result<IRobotDTO>;
         
       if (robotOrError.isFailure) {
-        return res.status(402).send();
+        return res.json(robotOrError.errorValue()).status(402).send();
       }
 
       const robotDTO = robotOrError.getValue();

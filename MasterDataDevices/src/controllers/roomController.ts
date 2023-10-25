@@ -19,7 +19,7 @@ export default class RoomController implements IRoomController /* TODO: extends 
       const roomOrError = await this.roomServiceInstance.createRoom(req.body as IRoomDTO) as Result<IRoomDTO>;
         
       if (roomOrError.isFailure) {
-        return res.status(402).send();
+        return res.json(roomOrError.errorValue()).status(402).send();
       }
 
       const roomDTO = roomOrError.getValue();
@@ -29,35 +29,4 @@ export default class RoomController implements IRoomController /* TODO: extends 
       return next(e);
     }
   };
-  
-  public async listRooms(req: Request, res: Response, next: NextFunction) {
-    try{
-      const roomOrError = await this.roomServiceInstance.listRooms() as Result<Array<IRoomDTO>>;
-        
-      if (roomOrError.isFailure) {
-        return res.status(402).send();
-      }
-
-      const roomsDTO = roomOrError.getValue();
-      return res.json( roomsDTO ).status(200);
-    }catch(e){
-      return next(e);
-    }
-      
-  }
-
-  public async updateRoom(req: Request, res: Response, next: NextFunction) {
-    try{
-      const roomOrError = await this.roomServiceInstance.updateRoom(req.body as IRoomDTO) as Result<IRoomDTO>;
-        
-      if (roomOrError.isFailure) {
-        return res.status(402).send();
-      }
-
-      const roomDTO = roomOrError.getValue();
-      return res.json( roomDTO ).status(200);
-    }catch(e){
-      return next(e);
-    }
-  }
 }

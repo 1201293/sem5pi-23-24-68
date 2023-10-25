@@ -9,7 +9,7 @@ import IRobotDTO from "../dto/IRobotDTO";
 interface RobotProps {
   code: string;
   name: string;
-  type: string;
+  robotTypeId: string;
   number: string;
   status: boolean;
   description: string;
@@ -32,8 +32,8 @@ export class Robot extends AggregateRoot<RobotProps> {
     return this.props.code;
   }
 
-  get type (): string {
-    return this.props.type;
+  get robotTypeId (): string {
+    return this.props.robotTypeId;
   }
 
   get number (): string {
@@ -56,8 +56,8 @@ export class Robot extends AggregateRoot<RobotProps> {
     this.props.code = value;
   }
 
-  set type ( value: string) {
-    this.props.type = value;
+  set robotTypeId ( value: string) {
+    this.props.robotTypeId = value;
   }
 
   set number ( value: string) {
@@ -78,18 +78,16 @@ export class Robot extends AggregateRoot<RobotProps> {
 
   public static create (robotDTO: IRobotDTO, id?: UniqueEntityID): Result<Robot> {
 
-    if (!!robotDTO.code === null || robotDTO.code.length > 30) {
+    if (robotDTO.code === null || robotDTO.code.length > 30) {
       return Result.fail<Robot>('Must provide a robot code(max 30 characters)');
     }else if(robotDTO.name === null || robotDTO.name.length > 30){
       return Result.fail<Robot>('Must provide a robot name(max 30 characters)');
-    } else if (robotDTO.type === null) {
-      return Result.fail<Robot>('Must provide a robot type');
     }else if(robotDTO.number.length === null || robotDTO.number.length > 50){
       return Result.fail<Robot>('Must provide a robot serial number(max 50 characters)');
-    }else if (robotDTO.description.length > 250) {
+    }else if (!!robotDTO.description === true && robotDTO.description.length > 250) {
       return Result.fail<Robot>('Robot description has a maximum of 250 characters');
     }else {
-      const robot = new Robot({ code: robotDTO.code, name: robotDTO.name, type: robotDTO.type, number: robotDTO.number, status: true, description: robotDTO.description }, id);
+      const robot = new Robot({ code: robotDTO.code, name: robotDTO.name, robotTypeId: robotDTO.robotTypeId, number: robotDTO.number, status: true, description: robotDTO.description }, id);
       return Result.ok<Robot>( robot )
     }
   }

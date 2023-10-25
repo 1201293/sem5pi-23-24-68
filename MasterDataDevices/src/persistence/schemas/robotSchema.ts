@@ -6,7 +6,7 @@ const RobotSchema = new mongoose.Schema(
     domainId: { type: String, unique: true },
     code: { type: String, unique: true, maxLength: 30},
     name: { type: String, unique: true, maxLength: 30},
-    type: { type: String, unique: false },
+    robotTypeId: { type: String, unique: false },
     number: { type: String, unique: false , maxLength: 50},
     status: { type: String, unique: false },
     description: { type: String, unique: false , maxLength: 250},
