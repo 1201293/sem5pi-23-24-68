@@ -35,14 +35,14 @@ export default class FloorController implements IFloorController /* TODO: extend
     }
   }
 
-  public async listFloors(req: Request, res: Response, next: NextFunction) {
+  public async listFloorsWithBuildingConnections(req: Request, res: Response, next: NextFunction) {
     try{
       let aux = req.url.substring(10, req.url.length);
       
-      const floorOrError = await this.floorServiceInstance.listFloors(aux) as Result<Array<IFloorDTO>>;
+      const floorOrError = await this.floorServiceInstance.listFloorsWithBuildingConnections(aux) as Result<Array<IFloorDTO>>;
         
       if (floorOrError.isFailure) {
-        return res.status(402).send();
+        return res.json(floorOrError.errorValue()).status(402).send();
       }
 
       const floorsDTO = floorOrError.getValue();

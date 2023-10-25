@@ -67,7 +67,7 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async listFloors(buildingId: string): Promise<Result<IFloorDTO[]>> {
+  public async listFloorsWithBuildingConnections(buildingId: string): Promise<Result<IFloorDTO[]>> {
     try {
 
       const floorsWithBuildingConnections = [];
@@ -75,7 +75,7 @@ export default class FloorService implements IFloorService {
       const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
 
       if (buildingResult === null) {
-        return Result.fail<IFloorDTO[]>("Building does not exist!");
+        return Result.fail<IFloorDTO[]>({"error": "Building does not exist!"});
       }
 
       const floors = await this.floorRepo.findByBuildingId(buildingId);

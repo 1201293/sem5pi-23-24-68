@@ -20,7 +20,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.createBuildingConnection(req.body as IBuildingConnectionDTO) as Result<IBuildingConnectionDTO>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.status(402).send();
+        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
       }
 
       const buildingConnectionDTO = buildingConnectionOrError.getValue();
@@ -36,7 +36,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections(req.body as IBuildingDTO) as Result<Array<IBuildingConnectionDTO>>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.status(402).send(buildingConnectionOrError.errorValue());
+        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
       }
 
       const buildingConnectionsDTO = buildingConnectionOrError.getValue();
@@ -52,7 +52,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.updateBuildingConnection(req.body as IBuildingConnectionDTO) as Result<IBuildingConnectionDTO>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.status(402).send();
+        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
       }
 
       const buildingConnectionDTO = buildingConnectionOrError.getValue();

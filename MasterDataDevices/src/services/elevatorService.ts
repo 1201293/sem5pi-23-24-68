@@ -42,7 +42,13 @@ export default class ElevatorService implements IElevatorService{
 
             // TO-DO Check if an elevator was already made before
 
-            
+            const buildingHasElevator = await this.elevatorRepo.findByBuildingId(elevatorDTO.buildingId);
+
+            // if building has elevator, then it will fail
+
+            if(buildingHasElevator.length != 0){
+                return Result.fail<IElevatorDTO>(elevatorDTO);
+            }
 
             const elevatorOrError = await Elevator.create(elevatorDTO);
 

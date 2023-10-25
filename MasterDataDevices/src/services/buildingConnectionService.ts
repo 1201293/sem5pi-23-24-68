@@ -22,17 +22,17 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
         const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor1Id);
 
         if (floorOrError1 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
         }
 
         const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor2Id);
 
         if (floorOrError2 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
         }
 
         if (floorOrError1.buildingId === floorOrError2.buildingId) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "The floors can not be the same"});
         }
 
         const sameFloorsOrError = await this.buildingConnectionRepo.findAll();
@@ -46,7 +46,7 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
                 }
             }
             if (failed) {
-                return Result.fail<IBuildingConnectionDTO>(sameFloorsOrError);
+                return Result.fail<IBuildingConnectionDTO>({"error": "The building connection already exists"});
             }
         }
 
@@ -93,42 +93,42 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
         const buildingConnectionResult = await this.buildingConnectionRepo.findByDomainId(buildingConnectionDTO.id);
 
         if(buildingConnectionResult == null){
-            return Result.fail<IBuildingConnectionDTO>("Building Connection Id does not exist");
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection Id does not exist"});
         }
 
         if (!buildingConnectionDTO.floor1Id) {
           const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor2Id);
 
           if (floorOrError2 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "The floor does not exist"});
           }
 
           const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionResult.floor1Id);
 
           if (buildingConnectionDTO.floor2Id === buildingConnectionResult.floor1Id) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
           }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have floors from the same building"});
           }
 
           buildingConnectionResult.floor2Id = buildingConnectionDTO.floor2Id;
-        }else if(!buildingConnectionDTO.floor2Id){
+        }else if (!buildingConnectionDTO.floor2Id) {
           const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor1Id);
 
           if (floorOrError1 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "The floor does not exist"});
           }
 
           const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionResult.floor2Id);
 
           if (buildingConnectionDTO.floor1Id === buildingConnectionResult.floor2Id) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
           }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have floors from the same building"});
           }
 
           buildingConnectionResult.floor1Id = buildingConnectionDTO.floor1Id;
@@ -136,21 +136,21 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
           const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor1Id);
 
           if (floorOrError1 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "The floor does not exist"});
           }
 
           const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor2Id);
 
           if (floorOrError2 === null) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "The floor does not exist"});
           }
 
           if (buildingConnectionDTO.floor1Id === buildingConnectionDTO.floor2Id) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
           }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
-            return Result.fail<IBuildingConnectionDTO>(buildingConnectionDTO);
+            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have floors from the same building"});
           }
 
           buildingConnectionResult.floor1Id = buildingConnectionDTO.floor1Id;
