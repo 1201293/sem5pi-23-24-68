@@ -12,7 +12,7 @@
     participant RobotRepo as repo
     participant RobotMap as mapper
 
-    -> route: Patch /robots /disable / (json)
+    -> route: Patch /robots/disable (json)
     activate route
     route -> controller: disableRobot(json)
     activate controller
@@ -26,7 +26,10 @@
         deactivate
         repo --> service: robot
         deactivate
-        service -> service: disableRobot
+        service -> domain**: setStatus(false)
+        activate domain
+        domain --> service:robot
+        deactivate
         service -> repo: save(robot)
         activate repo
         repo -> mapper: Map2Data(robot)
