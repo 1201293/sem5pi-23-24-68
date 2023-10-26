@@ -67,6 +67,31 @@ export default class FloorService implements IFloorService {
     }
   }
 
+  public async listFloors(buildingId: string): Promise<Result<IFloorDTO[]>> {
+    try {
+
+      const floorlist = [];
+
+      const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
+
+      if (buildingResult === null) {
+        return Result.fail<IFloorDTO[]>("Building does not exist!");
+      }
+
+      const floors = await this.floorRepo.findByBuildingId(buildingId);
+
+      if (floors.length != 0) {
+        floors.forEach((element) => {
+          floorlist.push(FloorMap.toDTO(element));
+        })
+      }
+      return Result.ok<IFloorDTO[]>(floorlist);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+
   public async listFloorsWithBuildingConnections(buildingId: string): Promise<Result<IFloorDTO[]>> {
     try {
 
@@ -99,6 +124,7 @@ export default class FloorService implements IFloorService {
       throw e;
     }
   }
+
 
   public async loadMap(floorId: string, map: number[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {
@@ -199,4 +225,35 @@ export default class FloorService implements IFloorService {
         throw e;
       }
   }
+
+
+  public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
+    try{
+      const floorResult = await this.floorRepo.findByDomainId(floorDTO.id);
+
+      if(floorResult == null){
+          return Result.fail<IFloorDTO>("Floor does not exist");
+      }
+
+      if(!!floorDTO.buildingId){ 
+        floorResult.buildingId = floorDTO.buildingId;
+      }
+
+      if(!!floorDTO.number){
+        floorResult.number = floorDTO.number;
+      }
+
+      if(!!floorDTO.description){
+        floorResult.description = floorDTO.description;
+      }
+
+      await this.floorRepo.save(floorResult);
+
+      const floorDTOResult = FloorMap.toDTO( floorResult ) as IFloorDTO;
+      return Result.ok<IFloorDTO>( floorDTOResult )
+    }catch(e){
+      throw e;
+    }
+  }
+
 }
