@@ -7,6 +7,7 @@ import {ElevatorMap} from "../mappers/ElevatorMap";
 
 import {Document, FilterQuery, Model} from 'mongoose';
 import {IElevatorPersistence} from '../dataschema/IElevatorPersistence';
+import { SourceLocation } from 'acorn';
 
 @Service()
 export default class ElevatorRepo implements IElevatorRepo {
@@ -86,7 +87,7 @@ export default class ElevatorRepo implements IElevatorRepo {
     }
 
     public async findByBuildingId (buildingId: string): Promise<Array<Elevator>> {
-    
+        
         const query = { buildingId: buildingId};
         const elevatorRecord = await this.elevatorSchema.find( query as FilterQuery<IElevatorPersistence & Document>);
         if (elevatorRecord != null) {

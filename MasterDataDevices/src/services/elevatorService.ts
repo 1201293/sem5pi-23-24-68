@@ -10,6 +10,7 @@ import IFloorRepo from "./IRepos/IFloorRepo";
 import IFloorDTO from "../dto/IFloorDTO";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
 import IBuildingDTO from "../dto/IBuildingDTO";
+import { BuildingId } from "../domain/buildingId";
 
 @Service()
 export default class ElevatorService implements IElevatorService{
@@ -110,9 +111,28 @@ export default class ElevatorService implements IElevatorService{
         
     }
 
-    public async listElevators(): Promise<Result<IElevatorDTO[]>> {
+    public async listElevators(buildingId: string): Promise<Result<IElevatorDTO[]>> {
         
-        return null;
+        try{
+            
+            const elevatorList = [];
+
+            const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
+
+            if(elevatorsResult.length == 0){
+                return Result.fail<IElevatorDTO[]>("No Elevators found for this building");
+            }
+
+            elevatorsResult.forEach(elevator => {
+                elevatorList.push(ElevatorMap.toDto(elevator));
+            });
+
+
+            return Result.ok<IElevatorDTO[]>(elevatorList);
+
+        } catch(e){
+            throw e;
+        }
     
     }
 

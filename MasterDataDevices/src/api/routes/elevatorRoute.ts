@@ -54,4 +54,5 @@ export default (app: Router) => {
         (req, res, next) => ctrl.updateElevator(req, res, next)
     )
     
+    route.get('/building/:buildingId', (req, res, next) => ctrl.listElevators(req, res, next));
 }
