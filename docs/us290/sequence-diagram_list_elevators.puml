@@ -4,54 +4,81 @@ skinparam monochrome true
 skinparam packageStyle rect
 skinparam shadowing false
 
-participant ElevatorRoute  as route
-participant ElevatorController as controller
+
+participant elevatorsRoute  as route
+participant elevatorsController as controller
 participant "mapper2:Json2DTO" as jsonMapper
-participant "IElevatorDTO1:IElevatorDTO" as dto1
-participant "IElevatorDTO1.1:IElevatorDTO" as dto2
-participant "IElevatorService1:IElevatorService" as service
-participant "Elevator1:Elevator" as domain
-participant "ElevatorRepo1:IElevatorRepo" as repository
-participant "BuildingRepo1:IBuildingRepo" as repository2
-participant "dbDriver1:IDBDriver" as db
+participant "IelevatorsDTO1:IelevatorsDTO" as dto1
+participant "IelevatorsDTO1.1:IelevatorsDTO" as dto2
+participant "IelevatorsService1:IelevatorsService" as service
+participant "elevators1:elevators" as domain
+participant "elevatorsRepo1:IelevatorsRepo" as repository
 participant "mapper2:Domain2Data" as mapper1
-participant "Elevator1saved:Elevator" as savedData
+participant "elevators1:elevatorsData" as data
+participant "dbDriver1:IDBDriver" as db
+participant "elevators1saved:elevators" as savedDomain
+participant "elevatorssaved1:elevatorsData" as savedData
 
 
 
--> route : /get elevators
+-> route: Get /Elevators/ buildingId / (json)
 activate route
-route -> controller : ListElevators(json)
-activate controller
-controller -> controller : Validate(json)
-controller -> jsonMapper : Map(json)
-activate jsonMapper
-jsonMapper -> dto1 : Map(json)
-dto1 -> jsonMapper : ElevatorDTO
-jsonMapper -> controller : ElevatorDTO
-deactivate jsonMapper
-controller -> service : ListElevators()
-activate service
-service -> repository : findbybuilding(ElevatorDTO)
-activate repository
-repository -> db : find(ElevatorDTO)
-activate db
-
-loop foreach savedElevator
-db -> savedData**:create(savedElevators)
-end
-db --> repository:savedElevators
-deactivate db
-
-loop foreach savedElevator
-    repository->mapper1:map2Model(savedElevator)
+  route->controller: getElevators(json)
+  activate controller
+    controller ->service:listElevatorss()
+    activate service
+    service->repository:findBy(buildingId)
+    activate repository
+    repository -> db:find()
+    activate db
+    loop foreach savedelevators
+      db -> savedData**:create(savedelevators)
+    end
+    db --> repository:savedelevatorss
+    deactivate
+    loop foreach savedelevators
+    repository->mapper1:map2Model(savedelevators)
     activate mapper1
     mapper1 -> savedDomain**
-    savedDomain --> mapper1:ElevatorSaved
-    mapper1 --> repository:ElevatorSaved
+    savedDomain --> mapper1:elevatorsSaved
+    mapper1 --> repository:elevatorsSaved
     end
-    repository --> service:ElevatorSaved
-deactivate repository
+    repository --> service:elevatorsSaved
+    deactivate
+    deactivate
+    loop foreach savedelevators                     
+    service -> jsonMapper: map2dto(elevatorsSaved)
+    activate jsonMapper
+    jsonMapper -> savedDomain: getCode()
+    activate savedDomain
+    savedDomain --> jsonMapper:code
+    jsonMapper -> savedDomain: getBrand()
+    savedDomain --> jsonMapper:brand
+    jsonMapper -> savedDomain: getModel()
+    savedDomain --> jsonMapper:model
+    jsonMapper -> savedDomain: getSerialNumber()
+    savedDomain --> jsonMapper:serialNumber
+    jsonMapper -> savedDomain: getFloorsIds()
+    savedDomain --> jsonMapper:floorsIds
+    deactivate
+    jsonMapper --> dto2**:create(code,Brand,Model,SerialNumber,description, ...)
+    dto2 --> jsonMapper:savedelevatorsDTO            
+    jsonMapper --> service: savedelevatorsDTO
+    end
+    deactivate
+    service --> controller:savedelevatorsDTO
+    deactivate
+    controller -> jsonMapper:map2Json(savedselevatorsDTO):json
+    activate jsonMapper
+    jsonMapper --> controller:json
+    deactivate
+    controller->controller:generateRes(json)
+    controller--> route:response
+    deactivate
+    <- route:response
+    deactivate
+
+
 
 
 
