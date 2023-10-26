@@ -7,8 +7,6 @@ import IFloorService from '../services/IServices/IFloorService';
 import IFloorDTO from '../dto/IFloorDTO';
 
 import { Result } from "../core/logic/Result";
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import IRoomDTO from '../dto/IRoomDTO';
 import IElevatorDTO from '../dto/IElevatorDTO';
 import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
@@ -24,7 +22,7 @@ export default class FloorController implements IFloorController /* TODO: extend
       const floorOrError = await this.floorServiceInstance.createFloor(req.body as IFloorDTO) as Result<IFloorDTO>;
         
       if (floorOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json(floorOrError.errorValue()).send();
       }
 
       const floorDTO = floorOrError.getValue();
