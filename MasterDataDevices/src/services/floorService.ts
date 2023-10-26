@@ -100,6 +100,42 @@ export default class FloorService implements IFloorService {
     }
   }
 
+  public async listFloorsWithElevator(buildingId: string): Promise<Result<IFloorDTO[]>> {
+    try {
+
+      const floorsWithElevator = [];
+      const floorsWithElevatorpushed = [];
+
+      const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
+
+      if (buildingResult === null) {
+        return Result.fail<IFloorDTO[]>({"error": "Building does not exist!"});
+      }
+
+      const elevatorsResult = await this.elevatorRepo.findByBuildingId2(buildingId);
+
+      if (elevatorsResult.length != 0) {
+        const floors = await this.floorRepo.findByBuildingId(buildingId);
+
+        if (floors.length != 0) {
+          for (let i = 0; i < elevatorsResult.length; i++) {
+            for (let j = 0; j < elevatorsResult[i].floorsIds.length; j++) {
+              for (let k = 0; k < floors.length; k++) {
+                if(elevatorsResult[i].floorsIds[j] === floors[k].floorId.toString()) {
+                  floorsWithElevator.push(floors[k]);
+                }
+               }
+              }
+            }
+          }
+        }
+
+      return Result.ok<IFloorDTO[]>(floorsWithElevator);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async loadMap(floorId: string, map: number[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {
         const floorOrError= await this.floorRepo.findByDomainId(floorId);

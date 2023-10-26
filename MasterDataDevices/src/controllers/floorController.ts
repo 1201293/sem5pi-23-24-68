@@ -49,6 +49,23 @@ export default class FloorController implements IFloorController /* TODO: extend
       return next(e);
     }
   }
+
+  public async listFloorsWithElevator(req: Request, res: Response, next: NextFunction) {
+    try{
+      let aux = req.url.substring(19, req.url.length);
+      
+      const floorOrError = await this.floorServiceInstance.listFloorsWithBuildingConnections(aux) as Result<Array<IFloorDTO>>;
+        
+      if (floorOrError.isFailure) {
+        return res.json(floorOrError.errorValue()).status(402).send();
+      }
+
+      const floorsDTO = floorOrError.getValue();
+      return res.json( floorsDTO ).status(200);
+    }catch(e){
+      return next(e);
+    }
+  }
   
   public async loadMap(req: Request, res: Response, next: NextFunction) {
       try {
