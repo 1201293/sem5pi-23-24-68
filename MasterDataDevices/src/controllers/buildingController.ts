@@ -46,6 +46,24 @@ export default class BuildingController implements IBuildingController /* TODO: 
       
   }
 
+  public async listBuildingsInFloorLimit(req: Request, res: Response, next: NextFunction) {
+    try{
+      let min = req.params.min;
+      let max = req.params.max;
+      const buildings = await this.buildingServiceInstance.listBuildingsInFloorLimit(+min, +max) as Result<Array<IBuildingDTO>>;
+        
+      if (buildings.isFailure) {
+        return res.status(402).send();
+      }
+
+      const buildingsDTO = buildings.getValue();
+      return res.json( buildingsDTO ).status(200);
+    }catch(e){
+      return next(e);
+    }
+      
+  }
+
   public async updateBuilding(req: Request, res: Response, next: NextFunction) {
     try{
       const buildingOrError = await this.buildingServiceInstance.updateBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
@@ -53,7 +71,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
       if (buildingOrError.isFailure) {
         return res.status(402).json(buildingOrError.errorValue()).send();
       }
-
+      
       const buildingDTO = buildingOrError.getValue();
       return res.json( buildingDTO ).status(200);
     }catch(e){

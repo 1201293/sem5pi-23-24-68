@@ -83,6 +83,18 @@ export default class FloorRepo implements IFloorRepo {
     return floors;
   }
 
+  public async floorInLimit (buildingId: string, min : number, max : number): Promise<boolean> {
+    const query = { buildingId: buildingId };
+    const floorRecord = await this.floorSchema.find( query as FilterQuery<IFloorPersistence & Document>);
+    
+    if(floorRecord.length != 0){
+      if((min <= floorRecord.length) && (floorRecord.length <= max)){
+        return true;
+      }
+    }
+    return false;
+  }
+
   public async findAll(): Promise<Floor[]> {
       const floorsResult = await this.floorSchema.find();
       const floors = []

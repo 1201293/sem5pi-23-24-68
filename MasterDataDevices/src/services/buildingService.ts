@@ -3,6 +3,7 @@ import config from "../../config";
 import IBuildingDTO from '../dto/IBuildingDTO';
 import { Building } from "../domain/building";
 import IBuildingRepo from '../services/IRepos/IBuildingRepo';
+import IFloorRepo from '../services/IRepos/IFloorRepo';
 import IBuildingService from './IServices/IBuildingService';
 import { Result } from "../core/logic/Result";
 import { BuildingMap } from "../mappers/BuildingMap";
@@ -10,7 +11,8 @@ import { BuildingMap } from "../mappers/BuildingMap";
 @Service()
 export default class BuildingService implements IBuildingService {
   constructor(
-      @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo
+      @Inject(config.repos.building.name) private buildingRepo : IBuildingRepo,
+      @Inject(config.repos.floor.name) private floorRepo : IFloorRepo
   ) {}
 
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
@@ -42,6 +44,26 @@ export default class BuildingService implements IBuildingService {
       if(buildingResult.length != 0){
         buildingResult.forEach((element) => {
           buildings.push(BuildingMap.toDTO(element));
+        })
+      }
+      return Result.ok<IBuildingDTO[]>( buildings );
+    } catch (e) {
+      throw e;
+    }
+  }
+  
+  public async listBuildingsInFloorLimit(min: number, max: number): Promise<Result<IBuildingDTO[]>> {
+    try {
+      const buildingResult = await this.buildingRepo.findAll();
+
+      const buildings=[];
+
+      if(buildingResult.length != 0){
+        buildingResult.forEach(async (element) => {
+          const buildingDTO = BuildingMap.toDTO(element);
+          if(await this.floorRepo.floorInLimit(buildingDTO.id,min,max)){
+            buildings.push(buildingDTO);
+          }
         })
       }
       return Result.ok<IBuildingDTO[]>( buildings );

@@ -27,6 +27,8 @@ export default (app: Router) => {
 
     route.get('',(req,res,next) => ctrl.listBuildings(req,res,next));
 
+    route.get('/inFloorLimit/:min&:max',(req,res,next) => ctrl.listBuildingsInFloorLimit(req,res,next));
+
     route.put('',celebrate({
       body:Joi.object({
         id: Joi.string().required(),

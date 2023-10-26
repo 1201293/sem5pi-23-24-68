@@ -23,7 +23,9 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next) );
 
-    route.get('/building/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
+    route.get('/building/:id', (req, res, next) => ctrl.listFloors(req, res, next) );
+
+    route.get('/withConnections/building/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
 
     route.get('/building/elevator/:id', (req, res, next) => ctrl.listFloorsWithElevator(req, res, next) );
 
@@ -57,4 +59,26 @@ export default (app: Router) => {
       })
     }),
     (req,res,next)=> ctrl.loadMap(req,res,next));
+
+    route.put('',celebrate({
+      body:Joi.object({
+        id: Joi.string().required(),
+        buildingId: Joi.string().required(),
+        number: Joi.number().required(),
+        description: Joi.string().required(),
+      })
+    }),
+    (req, res, next) => ctrl.updateFloor(req, res, next) );
+
+    route.patch('',celebrate({
+      body:Joi.object({
+        id: Joi.string().required(),
+        name: Joi.string(),
+        code: Joi.string(),
+        description: Joi.string(),
+        width: Joi.number(),
+        depth: Joi.number(),
+      })
+    }),
+    (req, res, next) => ctrl.updateFloor(req, res, next) );
 };
