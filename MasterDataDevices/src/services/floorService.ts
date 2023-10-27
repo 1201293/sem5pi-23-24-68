@@ -139,20 +139,13 @@ export default class FloorService implements IFloorService {
       const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
 
       if (elevatorsResult.length != 0) {
-        const floors = await this.floorRepo.findByBuildingId(buildingId);
-
-        if (floors.length != 0) {
-          for (let i = 0; i < elevatorsResult.length; i++) {
-            for (let j = 0; j < elevatorsResult[i].floorsIds.length; j++) {
-              for (let k = 0; k < floors.length; k++) {
-                if(elevatorsResult[i].floorsIds[j] === floors[k].floorId.toString()) {
-                  floorsWithElevator.push(FloorMap.toDTO(floors[k]));
-                }
-               }
-              }
-            }
+        for (let j = 0; j < elevatorsResult[0].floorsIds.length; j++) {
+          const floor = await this.floorRepo.findByDomainId(elevatorsResult[0].floorsIds[j]);
+          if(floor != null){
+            floorsWithElevator.push(FloorMap.toDTO(floor));
           }
         }
+     }
 
       return Result.ok<IFloorDTO[]>(floorsWithElevator);
     } catch (e) {
