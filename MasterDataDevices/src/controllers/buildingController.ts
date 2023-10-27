@@ -19,7 +19,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
       const buildingOrError = await this.buildingServiceInstance.createBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
         
       if (buildingOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json(buildingOrError.errorValue()).send();
       }
 
       const buildingDTO = buildingOrError.getValue();
@@ -35,7 +35,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
       const buildingOrError = await this.buildingServiceInstance.listBuildings() as Result<Array<IBuildingDTO>>;
         
       if (buildingOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json(buildingOrError.errorValue()).send();
       }
 
       const buildingsDTO = buildingOrError.getValue();
