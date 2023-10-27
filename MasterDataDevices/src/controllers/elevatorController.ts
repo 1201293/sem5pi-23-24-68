@@ -7,10 +7,6 @@ import IElevatorService from "../services/IServices/IElevatorService";
 import IElevatorDTO from "../dto/IElevatorDTO";
 
 import { Result } from "../core/logic/Result";
-import IBuildingDTO from "../dto/IBuildingDTO";
-import IFloorDTO from "../dto/IFloorDTO";
-import { ParamsDictionary } from "express-serve-static-core";
-import { ParsedQs } from "qs";
 
 @Service()
 export default class ElevatorController implements IElevatorController /* TODO: extends ../core/infra/BaseController */ {
@@ -62,7 +58,7 @@ export default class ElevatorController implements IElevatorController /* TODO: 
             const elevatorOrError = await this.elevatorServiceInstance.listElevators(aux) as Result<Array<IElevatorDTO>>;
 
             if (elevatorOrError.isFailure) {
-                return res.json(elevatorOrError.errorValue()).status(402).send();
+                return res.status(402).json(elevatorOrError.errorValue()).send();
             }
 
             const elevatorsDTO = elevatorOrError.getValue();

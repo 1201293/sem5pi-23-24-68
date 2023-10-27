@@ -22,17 +22,17 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
         const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor1Id);
 
         if (floorOrError1 === null) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
+          return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
         }
 
         const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionDTO.floor2Id);
 
         if (floorOrError2 === null) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
+          return Result.fail<IBuildingConnectionDTO>({"error": "Floor not found"});
         }
 
         if (floorOrError1.buildingId === floorOrError2.buildingId) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "The floors can not be the same"});
+          return Result.fail<IBuildingConnectionDTO>({"error": "The floors can not be from the same building"});
         }
 
         const sameFloorsOrError = await this.buildingConnectionRepo.findAll();
@@ -67,17 +67,17 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
     }
   }
 
-  public async listBuildingConnections(buildingDTO: IBuildingDTO): Promise<Result<IBuildingConnectionDTO[]>> {
+  public async listBuildingConnections(buildingId1: string, buildingId2: string): Promise<Result<IBuildingConnectionDTO[]>> {
     try {
       const buildingConnectionResult = await this.buildingConnectionRepo.findAll();
 
-      const buildingConnections=[];
+      const buildingConnections = [];
 
-      if(buildingConnectionResult.length != 0){
+      if (buildingConnectionResult.length != 0){
         for (let i = 0; i < buildingConnectionResult.length; i++) {
           const floor1 = await this.floorRepo.findByDomainId(buildingConnectionResult[i].floor1Id);
           const floor2 = await this.floorRepo.findByDomainId(buildingConnectionResult[i].floor2Id);
-          if (floor1.buildingId === buildingDTO.id || floor2.buildingId === buildingDTO.id) {
+          if ((floor1.buildingId === buildingId1 && floor2.buildingId === buildingId2) || (floor1.buildingId === buildingId2 && floor2.buildingId === buildingId1)) {
             buildingConnections.push(buildingConnectionResult[i]);
           }
         }
@@ -93,7 +93,7 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
         const buildingConnectionResult = await this.buildingConnectionRepo.findByDomainId(buildingConnectionDTO.id);
 
         if(buildingConnectionResult == null){
-            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection Id does not exist"});
+            return Result.fail<IBuildingConnectionDTO>({"error": "The Building does not exist"});
         }
 
         if (!buildingConnectionDTO.floor1Id) {
@@ -104,10 +104,6 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
           }
 
           const floorOrError1 = await this.floorRepo.findByDomainId(buildingConnectionResult.floor1Id);
-
-          if (buildingConnectionDTO.floor2Id === buildingConnectionResult.floor1Id) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
-          }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
             return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have floors from the same building"});
@@ -122,10 +118,6 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
           }
 
           const floorOrError2 = await this.floorRepo.findByDomainId(buildingConnectionResult.floor2Id);
-
-          if (buildingConnectionDTO.floor1Id === buildingConnectionResult.floor2Id) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
-          }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
             return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have floors from the same building"});
@@ -143,10 +135,6 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
 
           if (floorOrError2 === null) {
             return Result.fail<IBuildingConnectionDTO>({"error": "The floor does not exist"});
-          }
-
-          if (buildingConnectionDTO.floor1Id === buildingConnectionDTO.floor2Id) {
-            return Result.fail<IBuildingConnectionDTO>({"error": "Building Connection can not have the same floor"});
           }
 
           if (floorOrError1.buildingId === floorOrError2.buildingId) {
