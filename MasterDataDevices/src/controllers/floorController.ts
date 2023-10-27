@@ -52,9 +52,9 @@ export default class FloorController implements IFloorController /* TODO: extend
 
   public async listFloorsWithElevator(req: Request, res: Response, next: NextFunction) {
     try{
-      let aux = req.url.substring(19, req.url.length);
+      let aux = req.params.id;
       
-      const floorOrError = await this.floorServiceInstance.listFloorsWithBuildingConnections(aux) as Result<Array<IFloorDTO>>;
+      const floorOrError = await this.floorServiceInstance.listFloorsWithElevator(aux) as Result<Array<IFloorDTO>>;
         
       if (floorOrError.isFailure) {
         return res.json(floorOrError.errorValue()).status(402).send();

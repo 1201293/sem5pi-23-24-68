@@ -112,7 +112,7 @@ export default class FloorService implements IFloorService {
           for (let i = 0; i < buildingConnections.length; i++) {
             for (let j = 0; j < floors.length; j++) {
               if (buildingConnections[i].floor1Id === floors[j].floorId.toString() || buildingConnections[i].floor2Id === floors[j].floorId.toString()) {
-                floorsWithBuildingConnections.push(floors[j]);
+                floorsWithBuildingConnections.push(FloorMap.toDTO(floors[j]));
               }
             }
           }
@@ -136,7 +136,7 @@ export default class FloorService implements IFloorService {
         return Result.fail<IFloorDTO[]>({"error": "Building does not exist!"});
       }
 
-      const elevatorsResult = await this.elevatorRepo.findByBuildingId2(buildingId);
+      const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
 
       if (elevatorsResult.length != 0) {
         const floors = await this.floorRepo.findByBuildingId(buildingId);
@@ -146,7 +146,7 @@ export default class FloorService implements IFloorService {
             for (let j = 0; j < elevatorsResult[i].floorsIds.length; j++) {
               for (let k = 0; k < floors.length; k++) {
                 if(elevatorsResult[i].floorsIds[j] === floors[k].floorId.toString()) {
-                  floorsWithElevator.push(floors[k]);
+                  floorsWithElevator.push(FloorMap.toDTO(floors[k]));
                 }
                }
               }
