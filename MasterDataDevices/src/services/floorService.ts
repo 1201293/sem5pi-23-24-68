@@ -138,6 +138,34 @@ export default class FloorService implements IFloorService {
     }
   }
 
+  public async listFloorsWithElevator(buildingId: string): Promise<Result<IFloorDTO[]>> {
+    try {
+
+      const floorsWithElevator = [];
+
+      const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
+
+      if (buildingResult === null) {
+        return Result.fail<IFloorDTO[]>({"error": "Building does not exist!"});
+      }
+
+      const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
+
+      if (elevatorsResult.length != 0) {
+        for (let j = 0; j < elevatorsResult[0].floorsIds.length; j++) {
+          const floor = await this.floorRepo.findByDomainId(elevatorsResult[0].floorsIds[j]);
+          if(floor != null){
+            floorsWithElevator.push(FloorMap.toDTO(floor));
+          }
+        }
+     }
+
+      return Result.ok<IFloorDTO[]>(floorsWithElevator);
+    } catch (e) {
+      throw e;
+    }
+  }
+
 
   public async loadMap(floorId: string, map: number[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {

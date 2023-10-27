@@ -10,5 +10,5 @@ export default interface IFloorService  {
   listFloors(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
   listFloorsWithBuildingConnections(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
   updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
-
+  listFloorsWithElevator(buildingId: string): Promise<Result<Array<IFloorDTO>>>;
 }

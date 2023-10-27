@@ -27,6 +27,8 @@ export default (app: Router) => {
 
     route.get('/withConnections/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
 
+    route.get('/buildings/elevator/:id', (req, res, next) => ctrl.listFloorsWithElevator(req, res, next) );
+
     route.patch('/load-maps',celebrate({
       body: Joi.object({
         id: Joi.string().required(),
