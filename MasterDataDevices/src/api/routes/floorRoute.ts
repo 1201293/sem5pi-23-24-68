@@ -73,11 +73,9 @@ export default (app: Router) => {
     route.patch('',celebrate({
       body:Joi.object({
         id: Joi.string().required(),
-        name: Joi.string(),
-        code: Joi.string(),
-        description: Joi.string(),
-        width: Joi.number(),
-        depth: Joi.number(),
+        buildingId: Joi.string().required(),
+        number: Joi.number().required(),
+        description: Joi.string().required(),
       })
     }),
     (req, res, next) => ctrl.updateFloor(req, res, next) );

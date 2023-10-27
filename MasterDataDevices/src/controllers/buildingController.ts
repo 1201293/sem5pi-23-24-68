@@ -53,7 +53,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
       const buildings = await this.buildingServiceInstance.listBuildingsInFloorLimit(+min, +max) as Result<Array<IBuildingDTO>>;
         
       if (buildings.isFailure) {
-        return res.status(402).send();
+        return res.status(402).json(buildings.errorValue()).send();
       }
 
       const buildingsDTO = buildings.getValue();
