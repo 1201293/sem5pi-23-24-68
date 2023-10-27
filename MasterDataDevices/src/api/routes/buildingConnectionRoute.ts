@@ -22,7 +22,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createBuildingConnection(req, res, next) );
 
-    route.get('',(req,res,next) => ctrl.listBuildingConnections(req,res,next));
+    route.get('/:id1/:id2',(req,res,next) => ctrl.listBuildingConnections(req,res,next));
 
     route.put('',celebrate({
       body:Joi.object({

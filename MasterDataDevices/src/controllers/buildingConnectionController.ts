@@ -7,7 +7,6 @@ import IBuildingConnectionService from '../services/IServices/IBuildingConnectio
 import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
 
 import { Result } from "../core/logic/Result";
-import IBuildingDTO from '../dto/IBuildingDTO';
 
 @Service()
 export default class BuildingConnectionController implements IBuildingConnectionController /* TODO: extends ../core/infra/BaseController */ {
@@ -20,7 +19,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.createBuildingConnection(req.body as IBuildingConnectionDTO) as Result<IBuildingConnectionDTO>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
+        return res.status(402).json(buildingConnectionOrError.errorValue()).send();
       }
 
       const buildingConnectionDTO = buildingConnectionOrError.getValue();
@@ -33,10 +32,13 @@ export default class BuildingConnectionController implements IBuildingConnection
   
   public async listBuildingConnections(req: Request, res: Response, next: NextFunction) {
     try{
-      const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections(req.body as IBuildingDTO) as Result<Array<IBuildingConnectionDTO>>;
+      let aux1 = req.params.id1;
+      let aux2 = req.params.id2;
+
+      const buildingConnectionOrError = await this.buildingConnectionServiceInstance.listBuildingConnections(aux1, aux2) as Result<Array<IBuildingConnectionDTO>>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
+        return res.status(402).json(buildingConnectionOrError.errorValue()).send();
       }
 
       const buildingConnectionsDTO = buildingConnectionOrError.getValue();
@@ -52,7 +54,7 @@ export default class BuildingConnectionController implements IBuildingConnection
       const buildingConnectionOrError = await this.buildingConnectionServiceInstance.updateBuildingConnection(req.body as IBuildingConnectionDTO) as Result<IBuildingConnectionDTO>;
         
       if (buildingConnectionOrError.isFailure) {
-        return res.json(buildingConnectionOrError.errorValue()).status(402).send();
+        return res.status(402).json(buildingConnectionOrError.errorValue()).send();
       }
 
       const buildingConnectionDTO = buildingConnectionOrError.getValue();

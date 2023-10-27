@@ -23,9 +23,9 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createFloor(req, res, next) );
 
-    route.get('/building/:id', (req, res, next) => ctrl.listFloors(req, res, next) );
+    route.get('/:id', (req, res, next) => ctrl.listFloors(req, res, next) );
 
-    route.get('/withConnections/building/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
+    route.get('/withConnections/:id', (req, res, next) => ctrl.listFloorsWithBuildingConnections(req, res, next) );
 
     route.get('/buildings/elevator/:id', (req, res, next) => ctrl.listFloorsWithElevator(req, res, next) );
 

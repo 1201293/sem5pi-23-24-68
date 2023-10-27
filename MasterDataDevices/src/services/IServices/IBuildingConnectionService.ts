@@ -4,6 +4,6 @@ import IBuildingDTO from "../../dto/IBuildingDTO";
 
 export default interface IBuildingConnectionService  {
   createBuildingConnection(buildingConnectionDTO: IBuildingConnectionDTO): Promise<Result<IBuildingConnectionDTO>>;
-  listBuildingConnections(buildingDTO: IBuildingDTO): Promise<Result<Array<IBuildingConnectionDTO>>>;
+  listBuildingConnections(buildingId1: string, buildingId2: string): Promise<Result<Array<IBuildingConnectionDTO>>>;
   updateBuildingConnection(buildingConnectionDTO: IBuildingConnectionDTO): Promise<Result<IBuildingConnectionDTO>>;
 }

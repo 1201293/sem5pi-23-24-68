@@ -104,20 +104,33 @@ export default class FloorService implements IFloorService {
       }
 
       const floors = await this.floorRepo.findByBuildingId(buildingId);
+      const buildingConnections = await this.buildingConnectionRepo.findAll();
 
-      if (floors.length != 0) {
-        const buildingConnections = await this.buildingConnectionRepo.findAll();
-
-        if (buildingConnections.length != 0) {
-          for (let i = 0; i < buildingConnections.length; i++) {
-            for (let j = 0; j < floors.length; j++) {
-              if (buildingConnections[i].floor1Id === floors[j].floorId.toString() || buildingConnections[i].floor2Id === floors[j].floorId.toString()) {
-                floorsWithBuildingConnections.push(FloorMap.toDTO(floors[j]));
-              }
-            }
-          }
+      for (const connection of buildingConnections) {
+        // Check if either of the connected floor IDs belong to the specified building.
+        if (floors.some(floor => floor.floorId.toString() === connection.floor1Id) || floors.some(floor => floor.floorId.toString() === connection.floor2Id)) {
+          floorsWithBuildingConnections.push(connection.floor1Id, connection.floor2Id);
         }
       }
+
+      // if (floors.length != 0) {
+      //   const buildingConnections = await this.buildingConnectionRepo.findAll();
+
+      //   console.log("entrei 1º if");
+      //   if (buildingConnections.length != 0) {
+      //     console.log("entrei 2º if");
+      //     for (let i = 0; i < buildingConnections.length; i++) {
+      //       console.log("entrei 1º loop");
+      //       for (let j = 0; j < floors.length; j++) {
+      //         console.log("entrei 2º loop");
+      //         if (buildingConnections[i].floor1Id === floors[j].floorId.toString() || buildingConnections[i].floor2Id === floors[j].floorId.toString()) {
+      //           console.log("dei push");
+      //           floorsWithBuildingConnections.push(floors[j]);
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
 
       return Result.ok<IFloorDTO[]>(floorsWithBuildingConnections);
     } catch (e) {
