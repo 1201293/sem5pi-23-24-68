@@ -129,7 +129,6 @@ export default class FloorService implements IFloorService {
     try {
 
       const floorsWithElevator = [];
-      const floorsWithElevatorpushed = [];
 
       const buildingResult = await this.buildingRepo.findByDomainId(buildingId);
 
