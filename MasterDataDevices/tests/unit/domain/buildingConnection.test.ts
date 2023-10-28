@@ -1,4 +1,4 @@
-import expect from 'chai'; // Use a biblioteca de asserção de sua escolha
+import {expect} from 'chai'; // Use a biblioteca de asserção de sua escolha
 import { BuildingConnection } from './../../../src/domain/buildingConnection';
 
 describe('BuildingConnection', () => {
@@ -13,7 +13,7 @@ describe('BuildingConnection', () => {
 
   it('should create a valid BuildingConnection', () => {
     const result = BuildingConnection.create(mockBuildingConnectionDTO);
-    expect(result.isSuccess).to.be.true;
+    expect(result.isSuccess).to.equal(true);
 
     if (result.isSuccess) {
       const buildingConnection = result.getValue();
@@ -25,20 +25,20 @@ describe('BuildingConnection', () => {
   it('should not create a BuildingConnection without floor1Id', () => {
     const invalidDTO = { ...mockBuildingConnectionDTO, floor1Id: '' };
     const result = BuildingConnection.create(invalidDTO);
-    expect(result.isFailure).to.be.true;
+    expect(result.isFailure).to.equal(true);
     expect(result.error).to.equal('Must provide a floor id');
   });
 
   it('should not create a BuildingConnection without floor2Id', () => {
     const invalidDTO = { ...mockBuildingConnectionDTO, floor2Id: '' };
     const result = BuildingConnection.create(invalidDTO);
-    expect(result.isFailure).to.be.true;
+    expect(result.isFailure).to.equal(true);
     expect(result.error).to.equal('Must provide a floor id');
   });
 
   it('should get and set values correctly', () => {
     const result = BuildingConnection.create(mockBuildingConnectionDTO);
-    expect(result.isSuccess).to.be.true;
+    expect(result.isSuccess).to.equal(true);
 
     if (result.isSuccess) {
       const buildingConnection = result.getValue();

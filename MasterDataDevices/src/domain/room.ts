@@ -99,7 +99,7 @@ export class Room extends AggregateRoot<RoomProps> {
     if (!!roomDTO.floorId === false) {
       return Result.fail<Room>('Must provide a floor id')
     }else if (!!roomDTO.category === false) {
-      return Result.fail<Room>('Must provide a room cegory');
+      return Result.fail<Room>('Must provide a room category');
     }else if(!!roomDTO.description === false){
       return Result.fail<Room>('Must provide a room description');
     }else if(roomDTO.name.length > 4){

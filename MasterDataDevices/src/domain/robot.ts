@@ -78,11 +78,11 @@ export class Robot extends AggregateRoot<RobotProps> {
 
   public static create (robotDTO: IRobotDTO, id?: UniqueEntityID): Result<Robot> {
 
-    if (robotDTO.code === null || robotDTO.code.length > 30) {
+    if (!!robotDTO.code === false || robotDTO.code.length > 30) {
       return Result.fail<Robot>('Must provide a robot code(max 30 characters)');
-    }else if(robotDTO.name === null || robotDTO.name.length > 30){
+    }else if(!!robotDTO.name === false || robotDTO.name.length > 30){
       return Result.fail<Robot>('Must provide a robot name(max 30 characters)');
-    }else if(robotDTO.number.length === null || robotDTO.number.length > 50){
+    }else if(!!robotDTO.number === false || robotDTO.number.length > 50){
       return Result.fail<Robot>('Must provide a robot serial number(max 50 characters)');
     }else if (!!robotDTO.description === true && robotDTO.description.length > 250) {
       return Result.fail<Robot>('Robot description has a maximum of 250 characters');
