@@ -11,12 +11,12 @@ participant FloorService as service
 participant Floor as domain
 participant FloorMap as mapper
 participant FloorRepo as repo
-participant BuildingMap as mapperBuilding
 participant BuildingRepo as repoBuilding
-participant buildingConnectionMap as mapperConnection
+participant BuildingMap as mapperBuilding
 participant BuildingConnectionRepo as repoConnection
+participant buildingConnectionMap as mapperConnection
 
--> route: Get /floors /building/:id (json)
+-> route: Get /floors/building/:id (json)
 activate route
   route -> controller: listFloorsWithBuildingConnections(buildingId)
   activate controller
@@ -24,13 +24,16 @@ activate route
     activate service
     service -> repoBuilding: findByDomainId(buildingId)
     activate repoBuilding
+    repoBuilding -> : findOne(buildingId)
     repoBuilding -> mapperBuilding: Map2Model(buildingData)
     activate mapperBuilding
     mapperBuilding --> repoBuilding: building
     deactivate
     repoBuilding --> service: building
+    deactivate
     service -> repo: findByBuildingId(buildingId)
     activate repo
+    repo -> : find()
     loop (for each floor)
     repo -> mapper: Map2Model(floorData)
     activate mapper
@@ -38,9 +41,11 @@ activate route
     deactivate
     end loop
     repo --> service: floor
+    deactivate
     service -> repoConnection: findAll()
-    loop (for each building connection)
     activate repoConnection
+    repoConnection -> : find()
+    loop (for each building connection)
     repoConnection -> mapperConnection: Map2Model(buildingConnectionData)
     activate mapperConnection
     mapperConnection --> repoConnection: buildingConnection
@@ -48,12 +53,14 @@ activate route
     end loop
     repoConnection --> service: buildingConnection
     deactivate
-    service -> service: fillList
+    loop (for each buildingConnection)
     loop (for each floor)
     service -> mapper: map2DTO(floor)
     activate mapper
-    mapper -> service: floorDTO
+    mapper --> service: floorDTO
     deactivate
+    service -> service: floorsWithBuildingConnections.push(floorDTO)
+    end loop
     end loop
     service --> controller: list
     deactivate

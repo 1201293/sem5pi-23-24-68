@@ -116,7 +116,7 @@ export default class FloorService implements IFloorService {
               console.log("entrei 2º loop");
               if (((buildingConnections[i].floor1Id === floors[j].id.toString()) || (buildingConnections[i].floor2Id === floors[j].id.toString())) && !floorsWithBuildingConnections.includes(floors[j])) {
                 console.log("dei push");
-                floorsWithBuildingConnections.push(floors[j]);
+                floorsWithBuildingConnections.push(FloorMap.toDTO(floors[j]));
               }
             }
           }

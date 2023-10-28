@@ -22,6 +22,7 @@ activate route
     activate service
     service -> repoFloor: findByDomainId(roomDTO.floorId)
     activate repoFloor
+    repoFloor -> : findOne(roomDTO.floorId)
     repoFloor -> mapperFloor: Map2Model(floorData)
     activate mapperFloor
     mapperFloor --> repoFloor: floor
