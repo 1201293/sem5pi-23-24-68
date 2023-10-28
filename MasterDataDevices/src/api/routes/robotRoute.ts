@@ -34,8 +34,8 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.disableRobot(req, res, next) );
 
-  route.get('',(req,res,next) => ctrl.listRobots(req,res,next));
+  route.get('', middlewares.checkUserRole, (req,res,next) => ctrl.listRobots(req,res,next));
 
-  route.get('/:TaskOrDesignation',middlewares.checkUserRole, (req, res, next) => ctrl.listRobotsByTaskOrDesignation(req, res, next));
+  route.get('/:TaskOrDesignation', middlewares.checkUserRole, (req, res, next) => ctrl.listRobotsByTaskOrDesignation(req, res, next));
 
   }
