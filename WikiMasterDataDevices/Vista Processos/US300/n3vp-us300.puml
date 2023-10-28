@@ -22,6 +22,7 @@ activate route
   activate service
    service -> repoBuilding: findByDomainId(buildingId)
    activate repoBuilding
+   repoBuilding -> : findOne(buildingId)
     repoBuilding -> mapBuilding: Map2Model(buildingData)
     activate mapBuilding
      mapBuilding --> repoBuilding: building
@@ -30,6 +31,7 @@ activate route
     deactivate
    service -> repoElevator: findByBuildingId(buildingId)
    activate repoElevator
+   repoElevator -> : find(buildingId)
     repoElevator -> mapElevator: Map2Model(elevatorData)
     activate mapElevator
      mapElevator --> repoElevator: elevator
@@ -39,6 +41,7 @@ activate route
    loop (for each floorId)
     service -> repoFloor: findByDomainId(floorsIds)
     activate repoFloor
+    repoFloor -> : FindOne(floorId)
      repoFloor -> mapFloor: Map2Model(floorData)
      activate mapFloor
       mapFloor --> repoFloor: floor
@@ -50,9 +53,9 @@ activate route
      mapFloor --> service: floorDTO
     end loop
      deactivate
-    service --> controller: list
+    service --> controller: FloorsDTOlist
     deactivate
-   controller --> route: response(list as json)
+   controller --> route: response(FloorsDTOlist as json)
    deactivate
   <-- route: response
   deactivate
