@@ -63,7 +63,7 @@ export class BuildingConnection extends AggregateRoot<BuildingConnectionProps> {
     if (!!buildingConnectionDTO.floor1Id === false || !!buildingConnectionDTO.floor2Id === false) {
         return Result.fail<BuildingConnection>('Must provide a floor id');
     }else {
-      const buildingConnection = new BuildingConnection({ floor1Id: buildingConnectionDTO.floor1Id, floor2Id: buildingConnectionDTO.floor2Id,posX: undefined,posY:undefined });
+      const buildingConnection = new BuildingConnection({ floor1Id: buildingConnectionDTO.floor1Id, floor2Id: buildingConnectionDTO.floor2Id,posX: undefined,posY:undefined },id);
       return Result.ok<BuildingConnection>( buildingConnection )
     }
   }

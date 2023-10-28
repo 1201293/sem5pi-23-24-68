@@ -36,7 +36,7 @@ describe("Building Class", () => {
   });
 
   it("should fail to create a Building instance with missing description", () => {
-    const invalidDTO = { ...sampleBuildingDTO, description: undefined };
+    const invalidDTO = { ...sampleBuildingDTO, description: "" };
     const result = Building.create(invalidDTO as IBuildingDTO);
 
     expect(result.isFailure).toBe(true);
