@@ -78,10 +78,11 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
           const floor1 = await this.floorRepo.findByDomainId(buildingConnectionResult[i].floor1Id);
           const floor2 = await this.floorRepo.findByDomainId(buildingConnectionResult[i].floor2Id);
           if ((floor1.buildingId === buildingId1 && floor2.buildingId === buildingId2) || (floor1.buildingId === buildingId2 && floor2.buildingId === buildingId1)) {
-            buildingConnections.push(buildingConnectionResult[i]);
+            buildingConnections.push(BuildingConnectionMap.toDTO(buildingConnectionResult[i]));
           }
         }
       }
+
       return Result.ok<IBuildingConnectionDTO[]>( buildingConnections );
     } catch (e) {
       throw e;

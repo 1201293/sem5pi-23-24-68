@@ -20,6 +20,7 @@
         activate service
         service -> repo: findByDomainId(robotId)
         activate repo
+        repo -> : findOne(robotId)
         repo -> mapper: Map2Model(robotData)
         activate mapper
         mapper --> repo: robot
@@ -28,7 +29,7 @@
         deactivate
         service -> domain**: setStatus(false)
         activate domain
-        domain --> service:robot
+        domain --> service: robot
         deactivate
         service -> repo: save(robot)
         activate repo

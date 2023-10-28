@@ -22,19 +22,23 @@ activate route
     activate service
     service -> repoRobot: findByDomainId(robotDTO.robotTypeId)
     activate repoRobot
+    repoRobot -> : findOne(robotDTO.robotTypeId)
     repoRobot -> mapperRobot: Map2Model(robotData)
     activate mapperRobot
-    mapperRobot --> repoRobot: robot
+    mapperRobot --> repoRobot: robotType
     deactivate
-    repoRobot --> service: robot
+    repoRobot --> service: robotType
     deactivate
     service -> repo: findAll()
     activate repo
-    repo -> mapper: Map2Model(robotTypeData)
+    repo -> : find()
+    loop (for each robot)
+    repo -> mapper: Map2Model(robotData)
     activate mapper
-    mapper --> repo: robotTypeList
+    mapper --> repo: robot
     deactivate
-    repo --> service: robotTypeList
+    end loop
+    repo --> service: robotList
     deactivate
     service -> domain**: create(robotDTO)
     domain --> service: robot

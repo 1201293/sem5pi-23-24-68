@@ -9,10 +9,10 @@ participant BuildingConnectionRoute  as route
 participant BuildingConnectionController as controller
 participant BuildingConnectionService as service
 participant BuildingConnection as domain
-participant BuildingConnectionMap as mapper
 participant BuildingConnectionRepo as repo
-participant FloorMap as mapperFloor
+participant BuildingConnectionMap as mapper
 participant FloorRepo as repoFloor
+participant FloorMap as mapperFloor
 
 
 
