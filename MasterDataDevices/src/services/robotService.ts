@@ -7,6 +7,7 @@ import IRobotTypeRepo from '../services/IRepos/IRobotTypeRepo';
 import IRobotService from './IServices/IRobotService';
 import { Result } from "../core/logic/Result";
 import { RobotMap } from "../mappers/RobotMap";
+import { type } from 'os';
 
 @Service()
 export default class RobotService implements IRobotService {
@@ -90,4 +91,51 @@ export default class RobotService implements IRobotService {
       throw e;
     }
   }
+
+
+  public async listRobotsByTaskOrDesignation(TaskOrDesignation: string): Promise<Result<IRobotDTO[]>> {
+
+    try{
+
+      const robotTypes = await this.robotTypeRepo.findAll();
+      const robots = await this.robotRepo.findAll();
+      const robotsResult = []
+      const typesResult = []
+
+      if(robots.length != 0) {
+        for(let i = 0; i < robots.length; i++) {
+          if(robots[i].robotTypeId === TaskOrDesignation) {
+            robotsResult.push(RobotMap.toDTO(robots[i]))
+          }
+        }
+      }
+
+      if(robotTypes.length != 0) {
+        for(let j = 0; j < robotTypes.length; j++) {
+          for(let k = 0; k < robotTypes[j].possibleTasks.length; k++) {
+            if(robotTypes[j].possibleTasks[k] === TaskOrDesignation) {
+              typesResult.push(robotTypes[j].type)
+            }
+          }
+        }
+      }
+
+      if(typesResult.length != 0) {
+        for(let l = 0; l < typesResult.length; l++) {
+          for(let m = 0; m < robots.length; m++) {
+            if(robots[m].robotTypeId === typesResult[l]) {
+              robotsResult.push(RobotMap.toDTO(robots[m]))
+            }
+          }
+        }
+      }
+
+      return Result.ok<IRobotDTO[]>( robotsResult );
+
+    } catch (e) {
+      throw e;
+    }
+  }
+
+
 }
