@@ -10,18 +10,38 @@ frame BUILDINGS{
     code
     name
     description
+    width
+    depth
   }
 
   class BuildingId
 
   Building "1" --> "1" BuildingId
+}
 
+frame  BUILDINGSCONNECTIONS{
+  class  BuildingConnection{
+    posX
+    posY
+  }
+}
+
+frame ELEVATORS{
+  class Elevator{
+    code
+    brand
+    model
+    serialNumber  
+    posX
+    posY
+  }
 }
 
 frame FLOORS{
   class Floor{
     number
     description
+    map
   }
 
   class FloorId
@@ -34,6 +54,10 @@ frame ROOMS{
     code
     category
     description
+    posX
+    posY
+    width
+    depth
   }
 
   class RoomId
@@ -43,26 +67,29 @@ frame ROOMS{
 
 frame ROBOTS{
   class RobotType{
-    designation
-    availableTasks
+    type
+    brand
+    model
+    possibleTasks
   }
 
   class Robot{
+    status
     serialNumber
     code
-    nickname
+    name
+    description
   }
 }
 
 
 Robot "*" ---> "1" RobotType
 
-BuildingConnection "*" ---> "1" Floor
+BuildingConnection "*" ---> "*" Floor
 
-BuildingConnection "*" ---> "1" Floor
+Building "1" <--- "1" Elevator
 
-
-Building "1" ---> "1" Elevator
+Elevator"1" ---> "*" Floor
 Building "1" <--- "*" Floor
 Floor "1" <--- "*" Room
 
