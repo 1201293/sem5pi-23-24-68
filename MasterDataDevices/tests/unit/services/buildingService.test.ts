@@ -297,6 +297,83 @@ describe('building service', function () {
       "error":"assasss"}));
 	});
 
+	it('listBuildingsInFloorLimit buildingService unit test using buildingRepo and Building stub', async function () {
+		// Arrange
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+		sinon.stub(Building, "create").returns(Result.ok({
+			"id":"123", 
+			"name": req.body.name,
+			"code":req.body.code,
+			"description": req.body.description,
+			"width": req.body.width,
+			"depth": req.body.depth
+		}));
+
+		let buildingRepoInstance = Container.get("BuildingRepo");
+		const   repo=sinon.stub(buildingRepoInstance, "findAll").returns(new Promise<Building>((resolve, reject) => {
+			resolve(Building.create({"id":"123", 
+			"name": req.body.name,
+			"code":req.body.code,
+			"description": req.body.description,
+			"width": req.body.width,
+			"depth": req.body.depth}).getValue())
+		}));
+
+		const service = new BuildingService(repo as IBuildingRepo,Container.get("FloorRepo"));
+
+		// Act
+		await service.listBuildingsInFloorLimit(1,5);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ 
+			"id":"123", 
+			"name": req.body.name,
+			"code":req.body.code,
+			"description": req.body.description,
+			"width": req.body.width,
+			"depth": req.body.depth
+		}));
+	});
+
+  it('fail listBuildingsInFloorLimit buildingService unit test using buildingRepo and Building stub', async function () {
+		// Arrange
+      	let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+    	sinon.stub(Building, "create").returns(Result.fail({"error":"test_error"}));
+
+		let buildingRepoInstance = Container.get("BuildingRepo");
+		const   repo=sinon.stub(buildingRepoInstance, "findAll").returns(new Promise<Building>((resolve, reject) => {
+			resolve(Building.create({
+				"id":"123", 
+				"name": req.body.name,
+				"code":req.body.code,
+				"description": req.body.description,
+				"width": req.body.width,
+				"depth": req.body.depth
+			}).errorValue())
+		}));
+
+		const service = new BuildingService(repo as IBuildingRepo,Container.get("FloorRepo"));
+
+		// Act
+		await service.listBuildingsInFloorLimit(1,5);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ 
+      "error":"test_error"}));
+	});
+
 
   //INTEGRATION   TESTS
 

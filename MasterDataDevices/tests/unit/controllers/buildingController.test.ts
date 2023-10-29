@@ -236,6 +236,65 @@ describe('building controller', function () {
 		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaa"}));
 	});
 
+	it('listBuildingsInFloorLimit buildingController unit test using buildingService stub', async function () {
+		// Arrange
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let buildingServiceInstance = Container.get("BuildingService");
+		const service=sinon.stub(buildingServiceInstance, "listBuildingsInFloorLimit").returns( Result.ok<IBuildingDTO>( {
+      		"id":"123", 
+			"name": req.body.name,
+			"code":req.body.code,
+			"description": req.body.description,
+			"width": req.body.width,
+			"depth": req.body.depth
+		} ));
+
+		const ctrl = new BuildingController(service as IBuildingService);
+
+		// Act
+		await ctrl.listBuildingsInFloorLimit(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({
+			"id":"123", 
+			"name": req.body.name,
+			"code":req.body.code,
+			"description": req.body.description,
+			"width": req.body.width,
+			"depth": req.body.depth
+		}));
+	});
+
+	it('fail listBuildingsInFloorLimit buildingController unit test using buildingService stub', async function () {
+		// Arrange
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let buildingServiceInstance = Container.get("BuildingService");
+		const service=sinon.stub(buildingServiceInstance, "listBuildingsInFloorLimit").returns( Result.fail<IBuildingDTO>( {
+      "error":"test_error"
+		} ));
+
+		const ctrl = new BuildingController(service as IBuildingService);
+
+		// Act
+		await ctrl.listBuildingsInFloorLimit(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ 
+		"error":"test_error"}));
+	});
+
 
 
 
@@ -458,6 +517,54 @@ describe('building controller', function () {
 		// Assert
 		sinon.assert.calledOnce(res.json);
 		sinon.assert.calledWith(res.json, sinon.match({"id":"123","name":req.body.name,"code":req.body.code,"description":req.body.description,"width":req.body.width,"depth": req.body.depth}));
+	});
+
+	it('listBuildingsInFloorLimit buildingController + buildingService integration test using buildingRepository and building stubs', async function () {	
+		// Arrange	
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		sinon.stub(Building, "create").returns(Result.ok({
+			"id":"123",
+			"name":'AAAA',
+			"code":"DEI",
+			"description": "Departamento engenharia eletro",
+			"width": 8,
+			"depth": 7
+		}));
+
+		let buildingRepoInstance = Container.get("BuildingRepo");
+		sinon.stub(buildingRepoInstance, "findAll").returns(new Promise<Building>((resolve, reject) => {
+			resolve(Building.create({
+				"id":"123", 
+				"name":'AAAA',
+				"code":"DEI",
+				"description": "Departamento engenharia eletro",
+				"width": 8,
+				"depth": 7
+			}).getValue())
+		}));
+
+		let buildingServiceInstance = Container.get("BuildingService");
+
+		const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
+
+		// Act
+		await ctrl.listBuildingsInFloorLimit(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({
+			"id":"123", 
+			"name":'AAAA',
+			"code":"DEI",
+			"description": "Departamento engenharia eletro",
+			"width": 8,
+			"depth": 7
+		}));
 	});
 
 });

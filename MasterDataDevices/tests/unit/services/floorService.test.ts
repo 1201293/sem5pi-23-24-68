@@ -192,6 +192,186 @@ describe('building service', function () {
 		sinon.assert.calledWith(res.json, sinon.match({"error":"Map size does not match with building dimensions!"}));
 	});
 
+	it('updateFloor floorService unit test using floorRepo,buildingRepo,floor,building stubs', async function () {
+		// Arrange
+        let body = { 
+			"id": '123',
+			"buildingId":'123',
+			"number":1,
+			"description": "Departamento engenharia info",
+			"map": [[]]
+		};
+        let req: Partial<Request> = {};
+		req.body = body;
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+    	sinon.stub(Floor, "create").returns(Result.ok({
+			"id":"123", 
+			"buildingId": req.body.buildingId,
+			"number":req.body.number,
+			"description": req.body.description,
+			"map": req.body.map
+		}));
+
+
+		let floorRepoInstance = Container.get("FloorRepo");
+		const   floorRepo=sinon.stub(floorRepoInstance, "findByDomainId").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create({
+				"id":"123", 
+				"buildingId": req.body.buildingId,
+				"number":req.body.number,
+				"description": req.body.description,
+				"map": req.body.map
+			}).getValue())
+		}));
+
+			
+		const repo=sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create(body as IFloorDTO).getValue())
+		}));
+
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
+
+		// Act
+		await service.updateFloor(body as IFloorDTO);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({
+			"id":"123", 
+			"buildingId": req.body.buildingId,
+			"number":req.body.number,
+			"description": req.body.description,
+			"map": req.body.map
+		}));
+	});
+
+  it('fail updateFloor floorService unit test using floorRepo,buildingRepo,floor,building stubs', async function () {
+		// Arrange
+        let body = { 
+			"id": '123',
+			"buildingId":'123',
+			"number":1,
+			"description": "Departamento engenharia info",
+			"map": [[]]
+		};
+        let req: Partial<Request> = {};
+		req.body = body;
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+    	sinon.stub(Floor, "create").returns(Result.fail({"error":"test_error"}));
+
+
+		let floorRepoInstance = Container.get("FloorRepo");
+		const   floorRepo=sinon.stub(floorRepoInstance, "findByDomainId").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create({
+				"id":"123", 
+				"buildingId": req.body.buildingId,
+				"number":req.body.number,
+				"description": req.body.description,
+				"map": req.body.map
+			}).getValue())
+		}));
+
+			
+		const repo=sinon.stub(floorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create(body as IFloorDTO).errorValue())
+		}));
+		
+
+		
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
+
+		// Act
+		await service.updateFloor(body as IFloorDTO);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({"error":"test_error"}));
+	});
+
+	it('listFloors floorService unit test using floorRepo and Floor stub', async function () {
+		// Arrange
+      
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+        sinon.stub(Floor, "create").returns(Result.ok({
+            "id":"123", 
+			"buildingId": req.body.buildingId,
+  			"number": req.body.number,
+  			"description": req.body.description,
+  			"map": req.body.map
+        }));
+
+		let floorRepoInstance = Container.get("FloorRepo");
+		const   repo=sinon.stub(floorRepoInstance, "findAll").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create({
+                "id":"123", 
+				"buildingId": req.body.buildingId,
+  				"number": req.body.number,
+  				"description": req.body.description,
+  				"map": req.body.map
+            }).getValue())
+		}));
+
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
+
+		// Act
+		await service.listFloors(req.body.buildingId);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ 
+            "id":"123", 
+			"buildingId": req.body.buildingId,
+  			"number": req.body.number,
+  			"description": req.body.description,
+  			"map": req.body.map
+        }));
+	});
+
+  it('fail listFloors floorService unit test using floorRepo and Floor stub', async function () {
+		// Arrange
+      
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+    
+        sinon.stub(Floor, "create").returns(Result.fail({"error":"test_error"}));
+
+		let floorRepoInstance = Container.get("FloorRepo");
+		const   repo=sinon.stub(floorRepoInstance, "findAll").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create({
+                "id":"123", 
+			    "buildingId": req.body.buildingId,
+  				"number": req.body.number,
+  				"description": req.body.description,
+  				"map": req.body.map
+            }).errorValue())
+		}));
+
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
+
+		// Act
+		await service.listFloors(req.body.buildingId);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({"error":"test_error"}));
+	});
+
 	it('listFloorsWithBuildingConnections floorService unit test using floorRepo and Floor stub', async function () {
 		// Arrange
       
@@ -261,7 +441,7 @@ describe('building service', function () {
 		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingConnectionRepo"));
 
 		// Act
-		await service.listFloorsWWithBuildingConnections();
+		await service.listFloorsWithBuildingConnections();
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
