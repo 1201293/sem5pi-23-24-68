@@ -34,6 +34,8 @@ export default class RobotService implements IRobotService {
         }
       }
 
+      robotDTO.status=true;
+
       const robotOrError = await Robot.create( robotDTO );
 
       if (robotOrError.isFailure) {
@@ -59,7 +61,7 @@ export default class RobotService implements IRobotService {
         return Result.fail<IRobotDTO>({"error": "Could not find robot"});
       }
 
-      if (robotOrError.status === false) {
+      if (robotOrError.status===false) {
         return Result.fail<IRobotDTO>({"error": "The robot is already disabled"});
       }
 

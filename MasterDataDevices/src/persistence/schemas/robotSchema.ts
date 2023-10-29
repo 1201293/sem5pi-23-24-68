@@ -8,7 +8,7 @@ const RobotSchema = new mongoose.Schema(
     name: { type: String, unique: true, maxLength: 30},
     robotTypeId: { type: String, unique: false },
     number: { type: String, unique: false , maxLength: 50},
-    status: { type: String, unique: false },
+    status: { type: Boolean, unique: false },
     description: { type: String, unique: false , maxLength: 250},
   }, 
   {
