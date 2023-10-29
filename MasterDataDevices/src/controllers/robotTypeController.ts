@@ -24,7 +24,7 @@ export default class RobotTypeController implements IRobotTypeController /* TODO
       }
 
       const robotTypeDTO = robotTypeOrError.getValue();
-      return res.json( robotTypeDTO ).status(201);
+      return res.status(201).json( robotTypeDTO );
     }
     catch (e) {
       return next(e);
