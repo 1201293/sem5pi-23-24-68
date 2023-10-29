@@ -261,11 +261,11 @@ describe('building service', function () {
 		const service = new BuildingConnectionService(repo as IBuildingConnectionRepo,Container.get("FloorRepo"));
 
 		// Act
-		await service.listBuildingConnections();
+		await service.listBuildingConnections("123", "123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({ 
+		sinon.assert.calledWith(res.json, sinon.match({
             "id":"123", 
             "floor1Id": req.body.floor1Id,
 			"floor2Id": req.body.floor2Id,
@@ -299,7 +299,7 @@ describe('building service', function () {
 		const service = new BuildingConnectionService(repo as IBuildingConnectionRepo,Container.get("FloorRepo"));
 
 		// Act
-		await service.listBuildingConnections();
+		await service.listBuildingConnections("123", "123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);

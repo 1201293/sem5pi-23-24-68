@@ -400,10 +400,10 @@ describe('building service', function () {
             }).getValue())
 		}));
 
-		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingConnectionRepo"));
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
 
 		// Act
-		await service.listFloorsWithBuildingConnections();
+		await service.listFloorsWithBuildingConnections("123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
@@ -438,10 +438,10 @@ describe('building service', function () {
             }).errorValue())
 		}));
 
-		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingConnectionRepo"));
+		const service = new FloorService(repo as IFloorRepo,Container.get("BuildingRepo"),Container.get("BuildingConnectionRepo"),Container.get("ElevatorRepo"),Container.get("RoomRepo"));
 
 		// Act
-		await service.listFloorsWithBuildingConnections();
+		await service.listFloorsWithBuildingConnections("123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);

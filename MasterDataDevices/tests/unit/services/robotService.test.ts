@@ -189,7 +189,7 @@ describe('building service', function () {
 		const service = new RobotService(repo as IRobotRepo,Container.get("RobotTypeRepo"));
 
 		// Act
-		await service.disableRobot(body as IRobotDTO);
+		await service.disableRobot("123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
@@ -251,7 +251,7 @@ describe('building service', function () {
 		const service = new RobotService(repo as IRobotRepo,Container.get("FloorRepo"));
 
 		// Act
-		await service.disableRobot(body as IRobotDTO);
+		await service.disableRobot("123");
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
