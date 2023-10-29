@@ -187,6 +187,62 @@ describe('Floor controller', function () {
 		sinon.assert.calledWith(res.json, sinon.match({ "error":"aaaaaaaaaaa"}));
 	});
 
+	it('listFloorsWithBuildingConnections floorController unit test using floorService stub', async function () {
+		// Arrange
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let floorServiceInstance = Container.get("FloorService");
+		const service=sinon.stub(floorServiceInstance, "listFloorsWithBuildingConnections").returns( Result.ok<IFloorDTO>( {
+			"id":"123", 
+			"buildingId": "123",
+  			"number": 1,
+  			"description": "abcd",
+  			"map": [[1, 2, 3]]
+		} ));
+
+		const ctrl = new FloorController(service as IFloorService);
+
+		// Act
+		await ctrl.listFloorsWithBuildingConnections(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({
+			"id":"123", 
+			"buildingId": req.body.buildingId,
+  			"number": req.body.number,
+  			"description": req.body.description,
+  			"map": req.body.map
+		}));
+	});
+
+	it('fail  listFloorsWithBuildingConnections floorController unit test using floorService stub', async function () {
+		// Arrange
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let floorServiceInstance = Container.get("FloorService");
+		const service=sinon.stub(floorServiceInstance, "listFloorsWithBuildingConnections").returns( Result.fail<IFloorDTO>( {
+      		"error":"aaaaaaaaaaaaaaaaaa"
+		} ));
+
+		const ctrl = new FloorController(service as IFloorService);
+
+		// Act
+		await ctrl.listFloorsWithBuildingConnections(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaa"}));
+	});
+
 
 	//INTEGRATION TESTS
 
@@ -264,6 +320,51 @@ describe('Floor controller', function () {
 		// Assert
 		sinon.assert.calledOnce(res.json);
 		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaaaaa"}));
+	});
+
+	it('listFloorsWithBuildingConnections floorController + floorService integration test using floorRepository and floor stubs', async function () {	
+		// Arrange	
+        let req: Partial<Request> = {};
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		sinon.stub(Floor, "create").returns(Result.ok({
+			"id":"123", 
+			"buildingId": "123",
+  			"number": 1,
+  			"description": "abcd",
+  			"map": [[1, 2, 3]]
+		}));
+
+		let floorRepoInstance = Container.get("FloorRepo");
+		sinon.stub(floorRepoInstance, "findAll").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create({
+				"id":"123", 
+				"buildingId": "123",
+  				"number": 1,
+  				"description": "abcd",
+  				"map": [[1, 2, 3]]
+			}).getValue())
+		}));
+
+		let floorServiceInstance = Container.get("FloorService");
+
+		const ctrl = new FloorController(floorServiceInstance as IFloorService);
+
+		// Act
+		await ctrl.listFloorsWithBuildingConnections(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({
+			"id":"123", 
+			"buildingId": "123",
+  			"number": 1,
+  			"description": "abcd",
+  			"map": [[1, 2, 3]]
+		}));
 	});
 });
 

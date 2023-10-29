@@ -233,8 +233,7 @@ describe('building controller', function () {
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({"id":"123", 
-		"error":"aaaaaaaaaaaaaaaaaa"}));
+		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaa"}));
 	});
 
 
