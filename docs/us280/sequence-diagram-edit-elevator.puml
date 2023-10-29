@@ -55,18 +55,18 @@ activate route
     mapper1 -> domain:getCode()
     activate domain
     domain--> mapper1:code
-    mapper1 -> domain:getName()
-    domain--> mapper1:name
-    mapper1 -> domain:getDescription()
-    domain--> mapper1:description
-    mapper1 -> domain:getDimensions()
-    domain--> mapper1:dimensions
-    mapper1 -> domain:getBuilding()
+    mapper1 -> domain:getBrand()
+    domain--> mapper1:brand
+    mapper1 -> domain:getModel()
+    domain--> mapper1:model
+    mapper1 -> domain:getSerialNumber()
+    domain--> mapper1:serialNumber
+    mapper1 -> domain:getBuildingId()
     domain--> mapper1:building
-    mapper1 -> domain:getFloors()
+    mapper1 -> domain:getFloorsIds()
     domain--> mapper1:floors
     deactivate
-    mapper1 -> data**:create(code,name,dimensions,description, building, floor ...)
+    mapper1 -> data**:create(code,brand,model,serialNumber, buildingId, floorIds ...)
     data --> mapper1:ElevatorData
     mapper1 --> repository:ElevatorData
     deactivate
@@ -90,17 +90,17 @@ activate route
     savedDomain --> jsonMapper:name
     jsonMapper -> savedDomain: getCode()
     savedDomain --> jsonMapper:code
-    jsonMapper -> savedDomain: getDescription()
-    savedDomain --> jsonMapper:description
-    jsonMapper -> savedDomain: getDimensions()
-    savedDomain --> jsonMapper:dimensions
-    jsonMapper -> savedDomain: getBuilding()
-    savedDomain --> jsonMapper:building
-    jsonMapper -> savedDomain: getFloors()
-    savedDomain --> jsonMapper:floors
+    jsonMapper -> savedDomain: getBrand()
+    savedDomain --> jsonMapper:brand
+    jsonMapper -> savedDomain: getModel()
+    savedDomain --> jsonMapper:model
+    jsonMapper -> savedDomain: getSerialNumber()
+    savedDomain --> jsonMapper:serialNumber
+    jsonMapper -> savedDomain: getFloorsIds()
+    savedDomain --> jsonMapper:floorsIds
 
     deactivate
-    jsonMapper --> dto2**:create(name,code,dimensions,description,building,floors ...)
+    jsonMapper --> dto2**:create(code,brand,model,serialNumber, buildingId, floorIds ...)
     dto2 --> jsonMapper:savedElevatorDTO
     jsonMapper --> service: savedElevatorDTO
     deactivate
