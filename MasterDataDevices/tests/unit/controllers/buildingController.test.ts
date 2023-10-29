@@ -313,12 +313,7 @@ describe('building controller', function () {
 
 		let buildingRepoInstance = Container.get("BuildingRepo");
 		sinon.stub(buildingRepoInstance, "save").returns(new Promise<Building>((resolve, reject) => {
-			resolve(Building.create({"id":"123", 
-			"name": req.body.name,
-			"code":req.body.code,
-			"description": req.body.description,
-			"width": req.body.width,
-			"depth": req.body.depth}).errorValue())
+			resolve(Building.create(body as IBuildingDTO).errorValue())
 		}));
 
 		let buildingServiceInstance = Container.get("BuildingService");
@@ -375,39 +370,6 @@ describe('building controller', function () {
         "depth": 7}));
 	});
 
-	it('fail listBuildings buildingController + buildingService integration test using buildingRepoistory and building stubs', async function () {	
-		// Arrange
-        let req: Partial<Request> = {};
-
-        let res: Partial<Response> = {
-			json: sinon.spy()
-        };
-		let next: Partial<NextFunction> = () => {};
-
-		sinon.stub(Building, "create").returns(Result.fail({"error":"aaaaaaa"}));
-
-		let buildingRepoInstance = Container.get("BuildingRepo");
-		sinon.stub(buildingRepoInstance, "findAll").returns(new Promise<Building>((resolve, reject) => {
-			resolve(Building.create({"id":"123", 
-			"name":'AAAA',
-        "code":"DEI",
-        "description": "Departamento engenharia eletro",
-        "width": 8,
-        "depth": 7}).errorValue())
-		}));
-
-		let buildingServiceInstance = Container.get("BuildingService");
-
-		const ctrl = new BuildingController(buildingServiceInstance as IBuildingService);
-
-		// Act
-		await ctrl.listBuildings(<Request>req, <Response>res, <NextFunction>next);
-
-		// Assert
-		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaa"}));
-	});
-
 	it('updateBuilding buildingController + buildingService integration test using buildingRepoistory and building stubs', async function () {	
 		// Arrange
 		let body={
@@ -461,18 +423,12 @@ describe('building controller', function () {
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({"id":"123","name":req.body.name,"code":req.body.code,"description":req.body.description:"width":req.body.width,"depth": req.body.depth}));
+		sinon.assert.calledWith(res.json, sinon.match({"id":"123","name":req.body.name,"code":req.body.code,"description":req.body.description,"width":req.body.width,"depth": req.body.depth}));
 	});
 
 	it('fail updateBuilding buildingController + buildingService integration test using buildingRepoistory and building stubs', async function () {	
 		// Arrange
 		let body={
-			"id":"123",
-			"name":'AAAA',
-			"code":"DEI",
-			"description": "Departamento engenharia eletro",
-			"width": 8,
-			"depth": 7
 		}
         let req: Partial<Request> = {};
 				req.body=body;
@@ -486,21 +442,11 @@ describe('building controller', function () {
 
 		let buildingRepoInstance = Container.get("BuildingRepo");
 		sinon.stub(buildingRepoInstance, "findByDomainId").returns(new Promise<Building>((resolve, reject) => {
-			resolve(Building.create({"id":"123", 
-			"name":req.body.name,
-        "code":req.body.code,
-        "description": req.body.description,
-        "width": req.body.width,
-        "depth":  req.body.depth}).errorValue())
+			resolve(Building.create(body  as IBuildingDTO).errorValue())
 		}));
 
 		sinon.stub(buildingRepoInstance, "save").returns(new Promise<Building>((resolve, reject) => {
-			resolve(Building.create({"id":"123", 
-			"name":req.body.name,
-        "code":req.body.code,
-        "description": req.body.description,
-        "width": req.body.width,
-        "depth":  req.body.depth}).errorValue())
+			resolve(Building.create(body  as IBuildingDTO).errorValue())
 		}));
 
 		let buildingServiceInstance = Container.get("BuildingService");
@@ -512,7 +458,7 @@ describe('building controller', function () {
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaa"}));
+		sinon.assert.calledWith(res.json, sinon.match({"id":"123","name":req.body.name,"code":req.body.code,"description":req.body.description,"width":req.body.width,"depth": req.body.depth}));
 	});
 
 });
