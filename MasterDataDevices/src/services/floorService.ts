@@ -7,7 +7,6 @@ import IFloorService from './IServices/IFloorService';
 import { Result } from "../core/logic/Result";
 import { FloorMap } from "../mappers/FloorMap";
 import IBuildingRepo from './IRepos/IBuildingRepo';
-import IBuildingDTO from '../dto/IBuildingDTO';
 import IBuildingConnectionRepo from './IRepos/IBuildingConnectionRepo';
 import IElevatorDTO from '../dto/IElevatorDTO';
 import IRoomDTO from '../dto/IRoomDTO';
@@ -107,15 +106,10 @@ export default class FloorService implements IFloorService {
 
       if (floors.length != 0) {
         const buildingConnections = await this.buildingConnectionRepo.findAll();
-        console.log("entrei 1º if");
         if (buildingConnections.length != 0) {
-          console.log("entrei 2º if");
           for (let i = 0; i < buildingConnections.length; i++) {
-            console.log("entrei 1º loop");
             for (let j = 0; j < floors.length; j++) {
-              console.log("entrei 2º loop");
               if (((buildingConnections[i].floor1Id === floors[j].id.toString()) || (buildingConnections[i].floor2Id === floors[j].id.toString())) && !floorsWithBuildingConnections.includes(floors[j])) {
-                console.log("dei push");
                 floorsWithBuildingConnections.push(FloorMap.toDTO(floors[j]));
               }
             }

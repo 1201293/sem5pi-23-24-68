@@ -7,7 +7,6 @@ import IRobotTypeRepo from '../services/IRepos/IRobotTypeRepo';
 import IRobotService from './IServices/IRobotService';
 import { Result } from "../core/logic/Result";
 import { RobotMap } from "../mappers/RobotMap";
-import { type } from 'os';
 
 @Service()
 export default class RobotService implements IRobotService {
@@ -58,6 +57,10 @@ export default class RobotService implements IRobotService {
 
       if (robotOrError === null) {
         return Result.fail<IRobotDTO>({"error": "Could not find robot"});
+      }
+
+      if (robotOrError.status === false) {
+        return Result.fail<IRobotDTO>({"error": "The robot is already disabled"});
       }
 
       robotOrError.status = false;
