@@ -61,7 +61,9 @@ describe('Floor controller', function () {
 		sandbox.restore();
 	});
 
-    it('FloorController unit test using FloorService stub', async function () {
+	//UNIT TESTS
+
+    it('createFloor FloorController unit test using FloorService stub', async function () {
 		// Arrange
         let body = { "buildingId":'123',
         "number":1,
@@ -80,7 +82,7 @@ describe('Floor controller', function () {
 			"buildingId": req.body.buildingId,
 			"number":req.body.number,
 			"description": req.body.description,
-			"map": req.body.map
+			"map":req.body.map
 		} ));
 
 		const ctrl = new FloorController(service as IFloorService);
@@ -98,7 +100,98 @@ describe('Floor controller', function () {
 			"map": req.body.map}));
 	});
 
-    it('FloorController + FloorService integration test using FloorRepoistory and Floor stubs', async function () {	
+	it('fail createFloor FloorController unit test using FloorService stub', async function () {
+		// Arrange
+        let body = { "buildingId":'123',
+        "number":1,
+        "description": "Departamento engenharia eletro",
+        "map":[[]]};
+        let req: Partial<Request> = {};
+		req.body = body;
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let FloorServiceInstance = Container.get("FloorService");
+		const service=sinon.stub(FloorServiceInstance, "createFloor").returns( Result.fail<IFloorDTO>( {
+      "error":"aaaaaaaaaaaaaa"
+		} ));
+
+		const ctrl = new FloorController(service as IFloorService);
+
+		// Act
+		await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaa"}));
+	});
+
+	it('loadMap FloorController unit test using FloorService stub', async function () {
+		// Arrange
+        let body = { "id":'123',
+        "map":[[]]};
+        let req: Partial<Request> = {};
+		req.body = body;
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let FloorServiceInstance = Container.get("FloorService");
+		const service=sinon.stub(FloorServiceInstance, "createFloor").returns( Result.ok<IFloorDTO>( {
+      "id":req.body.id, 
+			"buildingId": "122",
+			"number":1,
+			"description": "desc",
+			"map":req.body.map
+		} ));
+
+		const ctrl = new FloorController(service as IFloorService);
+
+		// Act
+		await ctrl.loadMap(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ 
+      "id":req.body.id, 
+			"buildingId": "122",
+			"number":1,
+			"description": "desc",
+			"map":req.body.map}));
+	});
+
+	it('fail loadMap FloorController unit test using FloorService stub', async function () {
+		// Arrange
+        let body = {};
+        let req: Partial<Request> = {};
+		req.body = body;
+        let res: Partial<Response> = {
+			json: sinon.spy()
+        };
+		let next: Partial<NextFunction> = () => {};
+
+		let FloorServiceInstance = Container.get("FloorService");
+		const service=sinon.stub(FloorServiceInstance, "createFloor").returns( Result.fail<IFloorDTO>( {"error":"aaaaaaaaaaa"
+		} ));
+
+		const ctrl = new FloorController(service as IFloorService);
+
+		// Act
+		await ctrl.loadMap(<Request>req, <Response>res, <NextFunction>next);
+
+		// Assert
+		sinon.assert.calledOnce(res.json);
+		sinon.assert.calledWith(res.json, sinon.match({ "error":"aaaaaaaaaaa"}));
+	});
+
+
+	//INTEGRATION TESTS
+
+
+	it('FloorController + FloorService integration test using FloorRepoistory and Floor stubs', async function () {	
 		// Arrange	
         let body = { "buildingId":'123',
         "number":1,
@@ -143,33 +236,34 @@ describe('Floor controller', function () {
     "map": req.body.map}));
 	});
 
-	it('FloorController unit test using FloorService stub fail', async function () {
-		// Arrange
-        let body = { "name":'AAAA',
-        "code":"DEI",
-        "description": "Departamento engenharia eletro",
-        "width": 8,
-        "depth": 7};
+	it('fail FloorController + FloorService integration test using FloorRepoistory and Floor stubs', async function () {	
+		// Arrange	
+        let body = {};
         let req: Partial<Request> = {};
 		req.body = body;
+
         let res: Partial<Response> = {
 			json: sinon.spy()
         };
 		let next: Partial<NextFunction> = () => {};
 
-		let FloorServiceInstance = Container.get("FloorService");
-		const service=sinon.stub(FloorServiceInstance, "createFloor").returns( Result.fail<IFloorDTO>( {
-      "error":"aaaaaaaaaaaaaaaaaa"
-		} ));
+		sinon.stub(Floor, "create").returns(Result.fail({"error":"aaaaaaaaaaaaaaaaaaaaa"}));
 
-		const ctrl = new FloorController(service as IFloorService);
+		let FloorRepoInstance = Container.get("FloorRepo");
+		sinon.stub(FloorRepoInstance, "save").returns(new Promise<Floor>((resolve, reject) => {
+			resolve(Floor.create(body  as IFloorDTO).errorValue())
+		}));
+
+		let FloorServiceInstance = Container.get("FloorService");
+
+		const ctrl = new FloorController(FloorServiceInstance as IFloorService);
 
 		// Act
 		await ctrl.createFloor(<Request>req, <Response>res, <NextFunction>next);
 
 		// Assert
 		sinon.assert.calledOnce(res.json);
-		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaa"}));
+		sinon.assert.calledWith(res.json, sinon.match({"error":"aaaaaaaaaaaaaaaaaaaaa"}));
 	});
 });
 
