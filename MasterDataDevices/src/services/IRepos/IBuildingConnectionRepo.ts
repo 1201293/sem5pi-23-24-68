@@ -6,4 +6,5 @@ export default interface IBuildingConnectionRepo extends Repo<BuildingConnection
   save(buildingConnection: BuildingConnection): Promise<BuildingConnection>;
   findByDomainId (buildingConnectionId: BuildingConnectionId | string): Promise<BuildingConnection>;
   findAll():Promise<Array<BuildingConnection>>;
+  checkConnection(floor1: string, floor2: string): Promise<boolean>;
 }

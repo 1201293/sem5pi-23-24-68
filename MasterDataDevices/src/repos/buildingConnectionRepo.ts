@@ -79,4 +79,20 @@ export default class BuildingConnectionRepo implements IBuildingConnectionRepo {
       }
       return buildingConnections;
   }
+
+  public async checkConnection(floor1: string, floor2: string): Promise<boolean> {
+    let query = { floor1Id: floor1, floor2Id: floor2};
+    let buildingConnectionResult = await this.buildingConnectionSchema.findOne(query as FilterQuery<IBuildingConnectionPersistence & Document>);
+    if( buildingConnectionResult == null) {
+      query = { floor1Id: floor2, floor2Id: floor1};
+      buildingConnectionResult = await this.buildingConnectionSchema.findOne(query as FilterQuery<IBuildingConnectionPersistence & Document>);
+      if (buildingConnectionResult == null) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
 }

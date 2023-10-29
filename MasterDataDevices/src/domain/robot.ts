@@ -87,7 +87,7 @@ export class Robot extends AggregateRoot<RobotProps> {
     }else if (!!robotDTO.description === true && robotDTO.description.length > 250) {
       return Result.fail<Robot>('Robot description has a maximum of 250 characters');
     }else {
-      const robot = new Robot({ code: robotDTO.code, name: robotDTO.name, robotTypeId: robotDTO.robotTypeId, number: robotDTO.number, status: true, description: robotDTO.description }, id);
+      const robot = new Robot({ code: robotDTO.code, name: robotDTO.name, robotTypeId: robotDTO.robotTypeId, number: robotDTO.number, status: robotDTO.status, description: robotDTO.description }, id);
       return Result.ok<Robot>( robot )
     }
   }
