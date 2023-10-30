@@ -5,4 +5,6 @@ export interface IFloorPersistence {
   number: number;
   description: string;
   map: number[][];
+  initialPosition: number[];
+  initialDirection: number;
 }

@@ -35,6 +35,8 @@ export default (app: Router) => {
         map: Joi.array().items(
           Joi.array().items(Joi.number())
         ).required(),
+        initialPosition: Joi.array().items(Joi.number()).required(),
+        initialDirection: Joi.number().required(),
         rooms: Joi.array().items(
           Joi.object({
               id: Joi.string(),
