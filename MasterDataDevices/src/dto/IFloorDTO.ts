@@ -5,4 +5,6 @@ export default interface IFloorDTO {
   number: number;
   description: string;
   map: number[][];
+  initialPosition: number[];
+  initialDirection: number;
 }

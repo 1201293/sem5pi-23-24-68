@@ -9,4 +9,6 @@ export interface IRoomPersistence {
     posY: number;
     width: number;
     height: number;
+    doorPosX: number;
+    doorPosY: number;
   }

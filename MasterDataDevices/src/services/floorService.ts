@@ -152,7 +152,7 @@ export default class FloorService implements IFloorService {
   }
 
 
-  public async loadMap(floorId: string, map: number[][], roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
+  public async loadMap(floorId: string, map: number[][], initialPosition: number[], initialDirection: number, roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {
         const floorOrError= await this.floorRepo.findByDomainId(floorId);
 
@@ -166,8 +166,12 @@ export default class FloorService implements IFloorService {
           return Result.fail<IFloorDTO>({"error":"Something went wrong! Please contact the administrators"});
         }
 
-        if(buildingOrError.depth === map.length-1 &&buildingOrError.width === map[0].length-1){
+        if (initialPosition.length !== 2) {
+          return Result.fail<IFloorDTO>({"error":"Initial position must be an array of two numbers"});
+        }
 
+        if(buildingOrError.depth === map.length-1 && buildingOrError.width === map[0].length-1){
+          
           let  rooms=[]
 
           for(let i=0;i<roomsDTO.length;i++){
@@ -185,6 +189,8 @@ export default class FloorService implements IFloorService {
             roomOrError.posY=roomsDTO[i].posY;
             roomOrError.height=roomsDTO[i].height;
             roomOrError.width=roomsDTO[i].width;
+            roomOrError.doorPosX=roomsDTO[i].doorPosX;
+            roomOrError.doorPosY=roomsDTO[i].doorPosY;
              
             rooms.push(roomOrError);
           }

@@ -21,6 +21,8 @@ export class RoomMap extends Mapper<Room> {
       posY: room.posY,
       width: room.width,
       height: room.height,
+      doorPosX: room.doorPosX,
+      doorPosY: room.doorPosY,
     } as IRoomDTO;
   }
 
@@ -46,6 +48,8 @@ export class RoomMap extends Mapper<Room> {
       posY: room.posY,
       width: room.width,
       height: room.height,
+      doorPosX: room.doorPosX,
+      doorPosY: room.doorPosY,
     }
   }
 }

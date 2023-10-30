@@ -11,6 +11,8 @@ interface FloorProps {
   number: number;
   description: string;
   map:number[][];
+  initialPosition: number[];
+  initialDirection: number;
 }
 
 export class Floor extends AggregateRoot<FloorProps> {
@@ -38,6 +40,14 @@ export class Floor extends AggregateRoot<FloorProps> {
     return  this.props.map;
   }
 
+  get initialPosition (): number[]{
+    return this.props.initialPosition;
+  }
+
+  get initialDirection (): number{
+    return this.props.initialDirection;
+  }
+
   set buildingId ( value: string) {
     this.props.buildingId = value;
   }
@@ -54,6 +64,14 @@ export class Floor extends AggregateRoot<FloorProps> {
     this.props.map=value;
   }
 
+  set initialPosition ( value: number[]) {
+    this.props.initialPosition=value;
+  }
+
+  set initialDirection ( value: number) {
+    this.props.initialDirection=value;
+  }
+
   private constructor (props: FloorProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -67,7 +85,7 @@ export class Floor extends AggregateRoot<FloorProps> {
     }else if(!!floorDTO.buildingId === false ){
       return Result.fail<Floor>('Must provide the buildingId that the floor is in');
     } else {
-      const floor = new Floor({ buildingId: floorDTO.buildingId,number: floorDTO.number,description:floorDTO.description,map: undefined }, id);
+      const floor = new Floor({ buildingId: floorDTO.buildingId,number: floorDTO.number,description:floorDTO.description,map: undefined , initialPosition: undefined, initialDirection: undefined}, id);
       return Result.ok<Floor>( floor )
     }
   }
