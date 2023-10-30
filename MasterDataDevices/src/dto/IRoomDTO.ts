@@ -9,5 +9,7 @@ export default interface IRoomDTO {
     posY: number;
     width: number;
     height: number;
+    doorPosX: number;
+    doorPosY: number;
   }
   

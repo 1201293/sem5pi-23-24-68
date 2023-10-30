@@ -12,6 +12,8 @@ const RoomSchema = new mongoose.Schema(
     posY:  {type:Number,unique:false},
     width:  {type:Number,unique:false},
     height: {type:Number,unique:false},
+    doorPosX:  {type:Number,unique:false},
+    doorPosY:  {type:Number,unique:false},
   }, 
   {
     timestamps: true

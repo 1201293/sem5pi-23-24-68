@@ -189,6 +189,8 @@ export default class FloorService implements IFloorService {
             roomOrError.posY=roomsDTO[i].posY;
             roomOrError.height=roomsDTO[i].height;
             roomOrError.width=roomsDTO[i].width;
+            roomOrError.doorPosX=roomsDTO[i].doorPosX;
+            roomOrError.doorPosY=roomsDTO[i].doorPosY;
              
             rooms.push(roomOrError);
           }

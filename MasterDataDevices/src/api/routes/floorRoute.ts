@@ -44,6 +44,8 @@ export default (app: Router) => {
               posY: Joi.number().integer(),
               width: Joi.number().integer(),
               height: Joi.number().integer(),
+              doorPosX: Joi.number().integer(),
+              doorPosY: Joi.number().integer(),
           })
         ),
         elevator: Joi.object({
