@@ -1,9 +1,11 @@
 import attachCurrentUser from './attachCurrentUser';
 import isAuth from './isAuth';
-import checkUserRole from './checkUserRole';
+import checkGestorFrota from './checkGestorFrota';
+import checkGestorCampus from './checkGestorCampus';
 
 export default {
   attachCurrentUser,
   isAuth,
-  checkUserRole
+  checkGestorFrota,
+  checkGestorCampus
 };

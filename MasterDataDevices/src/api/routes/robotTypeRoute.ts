@@ -14,7 +14,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.robotType.name) as IRobotTypeController;
 
-  route.post('',middlewares.checkUserRole,
+  route.post('',middlewares.checkGestorFrota,
     celebrate({
       body: Joi.object({
         type: Joi.string().required(),
