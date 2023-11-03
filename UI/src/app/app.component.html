@@ -11,16 +11,17 @@
         <nav>
             <ul id="principal-ul">
                 <li class="li-p"><a routerLink="">Home</a></li>
+                <li class="li-p"><a routerLink="auth/sign-in">Login</a></li>
                 <li class="li-p">
                     <a (click)="toggleMenuBuildings()">Building <img src="../assets/arrow.png"  width="10"></a>
                     <ul class="building-opts" [ngClass]="{  'on': menuBuildings }">
-                      <li><a routerLink="">Create</a></li>
+                      <li><a routerLink="buildings">Create</a></li>
                     </ul>
                 </li>
                 <li class="li-p">
                   <a (click)="toggleMenuFloors()">Floor <img src="../assets/arrow.png"  width="10"></a>
                   <ul class="floor-opts" [ngClass]="{  'on': menuFloors }">
-                    <li><a routerLink="floor">Create</a></li>
+                    <li><a routerLink="floors">Create</a></li>
                   </ul>
               </li>
             </ul>

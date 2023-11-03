@@ -12,7 +12,7 @@
             <div class="form-group">
                 <label for="building">Building:</label>
                 <select id="building" name="building" class="form-control" [(ngModel)]="floor.buildingId" required>
-                  <option *ngFor="let building of buildings" [value]="building.id">{{ building.code }}</option>
+                  <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
                 </select>
             </div>
 
