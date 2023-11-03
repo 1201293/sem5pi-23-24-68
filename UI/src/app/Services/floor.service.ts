@@ -12,18 +12,18 @@ export class FloorService {
 
   constructor(private  http:HttpClient) { }
 
-   httpOptions = {
-    headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'my-auth-token'
-    })
-    };
+   
 
   createFloor(floor: Floor):Observable<Floor>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
     return this.http.post<Floor>(
       "http://localhost:4000/api/floors",
       floor,
-      this.httpOptions
+      httpOptions
       );
   }
 }

@@ -1,23 +1,38 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import  {User} from '../Interfaces/user';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private token: string|null;
+  token: any|unknown;
 
-  constructor(private  http:HttpClient) {this.token=null};
+  constructor(private  http:HttpClient) {};
 
-  getToken():string|null{
+  getToken():unknown{
     return this.token;
   }
 
-  setToken(token: string){
+  setToken(token: any){
     this.token=token;
+  }
+
+  sign_in(user:User):Observable<User>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'my-auth-token'
+      })
+      };
+      return this.http.post<User>(
+        "http://localhost:4000/api/auth/signin",
+        user,
+        httpOptions
+      )
   }
   
 }

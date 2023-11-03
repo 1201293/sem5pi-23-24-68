@@ -14,7 +14,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.robot.name) as IRobotController;
 
-  route.post('',middlewares.checkUserRole,
+  route.post('',middlewares.checkGestorFrota,
     celebrate({
       body: Joi.object({
         code: Joi.string().required(),
@@ -26,7 +26,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createRobot(req, res, next) );
 
-  route.patch('/disable',middlewares.checkUserRole,
+  route.patch('/disable',middlewares.checkGestorFrota,
     celebrate({
       body: Joi.object({
         id: Joi.string().required()
@@ -34,8 +34,8 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.disableRobot(req, res, next) );
 
-  route.get('', middlewares.checkUserRole, (req,res,next) => ctrl.listRobots(req,res,next));
+  route.get('', middlewares.checkGestorFrota, (req,res,next) => ctrl.listRobots(req,res,next));
 
-  route.get('/:TaskOrDesignation', middlewares.checkUserRole, (req, res, next) => ctrl.listRobotsByTaskOrDesignation(req, res, next));
+  route.get('/:TaskOrDesignation', middlewares.checkGestorFrota, (req, res, next) => ctrl.listRobotsByTaskOrDesignation(req, res, next));
 
   }

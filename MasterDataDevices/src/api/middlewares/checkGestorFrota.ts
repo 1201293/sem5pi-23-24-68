@@ -31,7 +31,7 @@ const getTokenFromHeader = req => {
  * @param {*} res  Express res Object
  * @param {*} next  Express next Function
  */
-const checkUserRole = async (req, res, next) => {
+const checkGestorFrota = async (req, res, next) => {
   const Logger = Container.get('logger') as winston.Logger;
   try {
     
@@ -63,4 +63,4 @@ const checkUserRole = async (req, res, next) => {
   }
 };
 
-export default checkUserRole;
+export default checkGestorFrota;

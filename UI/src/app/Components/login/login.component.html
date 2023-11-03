@@ -10,8 +10,8 @@
         <h1>Login</h1>
         <form (ngSubmit)="login()">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username"  [(ngModel)]="user.username" required>
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email"  [(ngModel)]="user.email" required>
             </div>
 
             <div class="form-group">
@@ -19,7 +19,7 @@
                 <input type="password" id="password" name="password"  [(ngModel)]="user.password" required>
             </div>
 
-            <button type="submit">Login</button>
+            <button type="submit">Sign In</button>
         </form>
     </div>
 </body>
