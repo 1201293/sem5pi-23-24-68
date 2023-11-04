@@ -8,13 +8,17 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
+import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
+import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateFloorComponent,
     LoginComponent,
-    ListFloorsComponent
+    ListFloorsComponent,
+    ListFloorsWithConnectionsComponent,
+    EditFloorsComponent
   ],
   imports: [
     BrowserModule,

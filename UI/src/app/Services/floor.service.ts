@@ -33,4 +33,11 @@ export class FloorService {
       {observe: 'body', responseType: 'json'}
       );
   }
+
+  getFloorsWithConnections(id:string|undefined):Observable<Floor[]>{
+    return this.http.get<Floor[]>(
+      "http://localhost:4000/api/floors/withConnections/"+id,
+      {observe: 'body', responseType: 'json'}
+      );
+  }
 }
