@@ -26,4 +26,11 @@ export class FloorService {
       httpOptions
       );
   }
+
+  getFloors(id:string|undefined):Observable<Floor[]>{
+    return this.http.get<Floor[]>(
+      "http://localhost:4000/api/floors/"+id,
+      {observe: 'body', responseType: 'json'}
+      );
+  }
 }
