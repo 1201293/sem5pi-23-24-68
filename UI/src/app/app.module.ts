@@ -7,12 +7,14 @@ import { CreateFloorComponent } from './Components/create-floor/create-floor.com
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateFloorComponent,
-    LoginComponent
+    LoginComponent,
+    ListFloorsComponent
   ],
   imports: [
     BrowserModule,
