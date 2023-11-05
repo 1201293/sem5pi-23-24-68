@@ -8,11 +8,15 @@ import { Component } from '@angular/core';
 export class AppComponent {
   menuFloors:boolean=false;
   menuBuildings:boolean=false;
+  menuBuildingConnections:boolean=false;
 
   toggleMenuFloors(){
     this.menuFloors=!this.menuFloors;
   }
   toggleMenuBuildings(){
     this.menuBuildings=!this.menuBuildings;
+  }
+  toggleMenuBuildingConnections(){
+    this.menuBuildingConnections=!this.menuBuildingConnections;
   }
 }
