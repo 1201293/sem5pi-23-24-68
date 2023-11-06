@@ -21,7 +21,7 @@ export class BuildingConnectionService {
       })
       };
     return this.http.post<BuildingConnection>(
-      "http://localhost:4000/api/buildingconnections",
+      "http://localhost:4000/api/buildingConnections",
       buildingconnection,
       httpOptions
       );

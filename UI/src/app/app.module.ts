@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
 import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
+import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EditFloorsComponent } from './Components/edit-floors/edit-floors.compon
     LoginComponent,
     ListFloorsComponent,
     ListFloorsWithConnectionsComponent,
-    EditFloorsComponent
+    EditFloorsComponent,
+    CreateBuildingConnectionComponent
   ],
   imports: [
     BrowserModule,
