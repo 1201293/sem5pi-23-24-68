@@ -11,38 +11,51 @@ import { FloorService } from 'src/app/Services/floor.service';
   styleUrls: ['./edit-floors.component.css']
 })
 export class EditFloorsComponent {
-  floor ={
-    buildingId: '',
-    number: 0,
-    description: ''
-  };
-  currentFloor?:Floor;
+
+  floor:Floor={}
   buildingId?:string;
   floors$?:Observable<Floor[]>;
   menuBuilding:Boolean=false;
-  menuInfo:Boolean=false;
+  menuFloor:Boolean=false;
+  menuEdit:Boolean=false;
 
   buildings$:Observable<Building[]>;
 
   constructor(private buildingService:BuildingService,private floorService:FloorService){this.buildings$=buildingService.getBuildings()
   }
 
-  toggleBoth(){
-    this.menuBuilding=!this.menuBuilding;
-    this.menuInfo=!this.menuInfo;
-  }
-
-  toggleInfo(){
+  toggleFloor(){
     if(this.buildingId===undefined){
-      alert("Error: Failed to list floors.\nReason: You must select one building.");
-      this.menuInfo=false;
+      alert("Error: Failed to edit floors.\nReason: You must select one building.");
       this.menuBuilding=false;
+      this.menuFloor=false;
     }else{
+      this.menuBuilding=!this.menuBuilding;
+      this.menuFloor=!this.menuFloor;
       this.floors$=this.floorService.getFloors(this.buildingId);
     }
   }
 
+  toggleEdit(){
+    if(this.floor.id===undefined){
+      alert("Error: Failed to list floors.\nReason: You must select one floor.");
+      this.menuFloor=true;
+      this.menuEdit=false;
+    }else{
+      this.menuFloor=!this.menuFloor;
+      this.menuEdit=!this.menuEdit;
+    }
+  }
+
   editFloor() {
+    if(this.floor.buildingId!=undefined && this.floor.number!=undefined && this.floor.description!=undefined ){
+      this.floorService.updateAllFloor(this.floor as Floor).subscribe();
+    }else{
+      this.floorService.updateFloor(this.floor as Floor).subscribe();
+    }
+    this.menuEdit=!this.menuEdit;
+    this.menuBuilding=!this.menuBuilding;
+    this.floor={}
     
   }
 

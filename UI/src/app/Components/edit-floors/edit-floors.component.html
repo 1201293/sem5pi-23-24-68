@@ -7,37 +7,41 @@
 </head>
 <body>
     <div class="container">
-        <h1>List the Floors</h1>
-        <form (ngSubmit)="toggleInfo()" >
+        <h1>Edit Floors</h1>
+        <form (ngSubmit)="toggleFloor()" >
         <div class="form-group" [ngClass]="{  'off': menuBuilding }" >
           <label for="building">Building:</label>
           <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
             <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
           </select>
-          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Floor</button></div>
-      </div>
-    </form>
-    <form (ngSubmit)="editFloor()" [ngClass]="{  'on': menuInfo }">
-      <div class="form-group">
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building</button></div>
+        </div>
+        </form>
+        <form (ngSubmit)="toggleEdit()" >
+          <div class="form-group2" [ngClass]="{  'on': menuFloor }">
           <label for="floor">Floor:</label>
-          <select id="floor" name="floor" class="form-control" [(ngModel)]="currentFloor" required>
+          <select id="floor" name="floor" class="form-control" [(ngModel)]="floor.id" required>
             <option *ngFor="let floor of floors$ |async" [value]="floor.id">{{ floor.number }}</option>
           </select>
-      </div>
-
-      <div class="form-group">
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Edit Floor</button></div>
+          </div>
+        </form>
+        <form (ngSubmit)="editFloor()" >
+          <div class="form-group3" [ngClass]="{  'on': menuEdit }">
+          <label for="building">Building:</label>
+          <select id="building" name="building" class="form-control" [(ngModel)]="floor.buildingId" required>
+            <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
+          </select>
+          
           <label for="number">Floor Number:</label>
-          <input type="text" id="number" name="number" value=currentFloor.number [(ngModel)]="floor.number" required>
-      </div>
+          <input type="text" id="number" name="number" [(ngModel)]="floor.number" required>
 
-      <div class="form-group">
           <label for="description">Description:</label>
-          <textarea id="description" name="description" value=currentFloor.description [(ngModel)]="floor.description"  required></textarea>
-      </div>
+          <textarea id="description" name="description" [(ngModel)]="floor.description"  required></textarea>
 
-      <button id="otherBuilding" style="float: left;" (click)="toggleBoth()" >Other Building</button>
-      <button type="submit" id="next" style="float: right;" (click)="editFloor()">Edit Floor</button>
-  </form>
+          <button type="submit" id="next" style="float: right;">Edit Floor</button>
+        </div>
+      </form>
     </div>
 </body>
 </html>

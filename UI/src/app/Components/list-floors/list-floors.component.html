@@ -15,12 +15,11 @@
             <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
           </select>
           <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Floor</button></div>
-      </div>
-    </form>
-    <div class="info" [ngClass]="{  'on': menuInfo }">
+        </div>
+        </form>
+        <div class="info" [ngClass]="{  'on': menuInfo }">
         <div class="list-info" *ngIf="currentFloor"> 
           <h2>Floor Information</h2>
-          <p>Building Code: {{ buildingId }}</p>
           <p>Number: {{ currentFloor.number }}</p>
           <p>Description: {{ currentFloor.description }}</p>
         </div>
@@ -29,7 +28,7 @@
         </div>
         <button id="previous" style="float:left" (click)="changeFloorInfo(-1)">Previous</button>
         <button id="next" style="float: right;" (click)="changeFloorInfo(1)">Next</button>
-    </div>
+      </div>
     </div>
 </body>
 </html>
