@@ -73,3 +73,26 @@ body {
     background-color: #373534;
   }
   
+  .form-group1.on {
+    display: block;
+  }
+
+  .form-group1 {
+    display: none;
+  }
+
+  .form-group2.off {
+    display: none;
+  }
+
+  .form-group2 {
+    display: block;
+  }
+
+  .form-group3.off {
+    display: none;
+  }
+
+  .form-group3 {
+    display: block;
+  }

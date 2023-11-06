@@ -14,31 +14,48 @@ import { ElevatorService } from 'src/app/Services/elevator.service';
 })
 export class CreateElevatorComponent {
 
-  elevator ={
-    buildingId: '',
-    floorsId: [],
-    code: '',
-    brand: '',
-    model: '',
-    serialNumber: '',
-    description: ''
-  };
+  elevator : Elevator = {};
+
+  floorsId = [];
+
+  menuBuilding = true;
+
+  menuFloors = true;
+
+  menuElevator = true;
 
   buildings$:Observable<Building[]>;
 
   floors$:Observable<Floor[]>;
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService, private elevatorService:ElevatorService){this.buildings$=buildingService.getBuildings(), this.floors$=floorService.getFloors(this.buildings$)}
+  constructor(private buildingService:BuildingService,private floorService:FloorService, private elevatorService:ElevatorService) {
+    this.buildings$ = buildingService.getBuildings()
+  }
+
+  buildingMenu() {
+    if (!!this.elevator.buildingId === false) {
+      alert("Error: Failed to create elevator.\nReason: You must select one building.");
+    } else {
+      this.floors$ = this.floorService.getFloors(this.elevator.buildingId);
+      this.menuBuilding = !this.menuBuilding;
+      this.menuFloors = !this.menuFloors;
+    }
+  }
+
+  floorMenu() {
+    if (this.floorsId.length === 0) {
+      alert("Error: Failed to create elevator.\nReason: You must select at least one floor.");
+    } else {
+      this.menuFloors = !this.menuFloors;
+      this.menuElevator = !this.menuElevator;
+    }
+  }
 
   createElevator() {
-    if(!!this.elevator.buildingId === false){
-      alert("Error: Failed to create elevator.\nReason: You must select one building.");
-    }else if(!!this.elevator.floorsId === null){
-        alert("Error: Failed to create elevator.\nReason: You must select one floor.");
-    }else if(!!this.elevator.description === false){
-      alert("Error: Failed to create elevator.\nReason: You must write a description.");
-    }else{
-      const elevator1=this.elevatorService.createElevator(this.elevator as Elevator).subscribe(
+    if(!!this.elevator.code === false){
+      alert("Error: Failed to create elevator.\nReason: You must write a code.");
+    } else {
+      const elevator1 = this.elevatorService.createElevator(this.elevator as Elevator).subscribe(
         (response) => {
           alert("Success: Elevator created successfully");
         },
@@ -46,8 +63,8 @@ export class CreateElevatorComponent {
           alert("Error: Failed to create elevator.\nReason: "+error.error.error);
         }
       );
+      this.menuElevator = !this.menuElevator;
+      this.menuBuilding = !this.menuBuilding;
     }
   }
-
-  
 }
