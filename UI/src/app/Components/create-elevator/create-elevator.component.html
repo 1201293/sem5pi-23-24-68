@@ -11,41 +11,41 @@
         <form (ngSubmit)="createElevator()">
             <div class="form-group">
                 <label for="building">Building:</label>
-                <select id="building" name="building" class="form-control" [(ngModel)]="floor.buildingId" required>
+                <select id="building" name="building" class="form-control" [(ngModel)]="elevator.buildingId" required>
                   <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="floors">Floors:</label>
-                <select id="floor" name="floor" class="form-control" [(ngModel)]="floor.buildingId" required>
+                <select id="floor" name="floor" class="form-control" [(ngModel)]="elevator.floorId" required>
                   <option *ngFor="let floor of floors$ |async" [value]="floor.id">{{ floor.code }}</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="code">Code:</label>
-                <textarea id="code" name="code" [(ngModel)]="floor.description" rows="1" required></textarea>
+                <textarea id="code" name="code" [(ngModel)]="elevator.code" rows="1" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="brand">Brand:</label>
-                <textarea id="brand" name="brand" [(ngModel)]="floor.description" rows="1" required></textarea>
+                <textarea id="brand" name="brand" [(ngModel)]="elevator.brand" rows="1" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="model">Model:</label>
-                <textarea id="model" name="model" [(ngModel)]="floor.description" rows="1" required></textarea>
+                <textarea id="model" name="model" [(ngModel)]="elevator.model" rows="1" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="serialNumber">Serial Number:</label>
-                <textarea id="serialNumber" name="serialNumber" [(ngModel)]="floor.description" rows="1" required></textarea>
+                <textarea id="serialNumber" name="serialNumber" [(ngModel)]="elevator.serialNumber" rows="1" required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" [(ngModel)]="floor.description" rows="4" required></textarea>
+                <textarea id="description" name="description" [(ngModel)]="elevator.description" rows="4" required></textarea>
             </div>
 
             <button type="submit">Create Floor</button>

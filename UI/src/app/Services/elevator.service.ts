@@ -19,19 +19,19 @@ export class ElevatorService {
       headers: new HttpHeaders({
       'Content-Type': 'application/json',
       })
-      };
+    };
     return this.http.post<Elevator>(
-      "http://localhost:4000/api/floors",
+      "http://localhost:4000/api/elevators",
       elevator,
       httpOptions
-      );
+    );
   }
 
   getElevators(id:string|undefined):Observable<Elevator[]>{
     return this.http.get<Elevator[]>(
-      "http://localhost:4000/api/floors/"+id,
+      "http://localhost:4000/api/elevators/building/"+id,
       {observe: 'body', responseType: 'json'}
-      );
+    );
   }
 
   updateElevator(elevator:Elevator):Observable<Elevator>{
