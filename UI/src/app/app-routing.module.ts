@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent },
   { path: 'list-floors', component: ListFloorsComponent },
   { path: 'list-floors-with-connections', component: ListFloorsWithConnectionsComponent },
+  { path: 'edit-floor', component: EditFloorsComponent},
   { path: 'create-floor', component: CreateFloorComponent },
   { path: 'create-building-connection', component: CreateBuildingConnectionComponent },
   { path: '', redirectTo: '', pathMatch: 'full' }, // Rota padrão
