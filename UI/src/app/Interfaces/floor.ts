@@ -6,4 +6,5 @@ export interface Floor {
   map?: number[][];
   initialPosition?: number[];
   initialDirection?: number;
+  isChecked?:boolean;
 }

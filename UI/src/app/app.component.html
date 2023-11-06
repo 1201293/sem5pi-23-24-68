@@ -33,6 +33,12 @@
                     <li><a routerLink="create-building-connection">Create</a></li>
                   </ul>
               </li>
+              <li class="li-p">
+                <a (click)="toggleMenuElevators()">Elevator <img src="../assets/arrow.png"  width="10"></a>
+                <ul class="elevator-opts" [ngClass]="{  'on': menuElevators }">
+                  <li><a routerLink="create-elevator">Create</a></li>
+                </ul>
+            </li>
             </ul>
         </nav>
     </header>

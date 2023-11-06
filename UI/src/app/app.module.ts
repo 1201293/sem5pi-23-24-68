@@ -11,6 +11,7 @@ import { ListFloorsComponent } from './Components/list-floors/list-floors.compon
 import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
+import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateBuildingConnectionComponent } from './Components/create-building-
     ListFloorsComponent,
     ListFloorsWithConnectionsComponent,
     EditFloorsComponent,
-    CreateBuildingConnectionComponent
+    CreateBuildingConnectionComponent,
+    CreateElevatorComponent
   ],
   imports: [
     BrowserModule,

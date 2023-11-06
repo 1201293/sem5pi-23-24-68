@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
 import { Floor } from 'src/app/Interfaces/floor';
 import { FloorService } from 'src/app/Services/floor.service';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { ElevatorService } from 'src/app/Services/elevator.service';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-create-elevator',
@@ -16,8 +17,6 @@ export class CreateElevatorComponent {
 
   elevator : Elevator = {};
 
-  floorsId = [];
-
   menuBuilding = true;
 
   menuFloors = true;
@@ -26,24 +25,32 @@ export class CreateElevatorComponent {
 
   buildings$:Observable<Building[]>;
 
-  floors$:Observable<Floor[]>;
+  floors:Floor[]=[];
 
   constructor(private buildingService:BuildingService,private floorService:FloorService, private elevatorService:ElevatorService) {
     this.buildings$ = buildingService.getBuildings()
+  }
+
+  extractCheckedFloorIds(): void {
+    this.elevator.floorsIds=(this.floors.filter((floor)=> floor.isChecked).map((floor)=> floor.id)).filter((value):value is string => typeof value === 'string');
   }
 
   buildingMenu() {
     if (!!this.elevator.buildingId === false) {
       alert("Error: Failed to create elevator.\nReason: You must select one building.");
     } else {
-      this.floors$ = this.floorService.getFloors(this.elevator.buildingId);
+      this.floorService.getFloors(this.elevator.buildingId).pipe(
+        first()
+      ).subscribe(firstFloor => {
+        this.floors=firstFloor;
+      });
       this.menuBuilding = !this.menuBuilding;
       this.menuFloors = !this.menuFloors;
     }
   }
 
   floorMenu() {
-    if (this.floorsId.length === 0) {
+    if (!!this.elevator.floorsIds === false || this.elevator.floorsIds?.length===0) {
       alert("Error: Failed to create elevator.\nReason: You must select at least one floor.");
     } else {
       this.menuFloors = !this.menuFloors;

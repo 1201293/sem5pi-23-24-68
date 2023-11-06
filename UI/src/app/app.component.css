@@ -64,3 +64,11 @@ ul li ul  li{
 .building-connection-opts.on{
   display: block;
 }
+
+.elevator-opts{
+  display: none;
+}
+
+.elevator-opts.on{
+  display: block;
+}
