@@ -77,32 +77,12 @@ body {
   .info{
     display: none;
   }
-  .form-group.off{
-    display: none;
-  }
-  .form-group2.on{
-    display: block;
-  }
-  .form-group3.on{
-    display: block;
-  }
-  .form-group4.on{
-    display: block;
-  }
-  .form-group5.on{
+  
+  .info.on{
     display: block;
   }
   
-  .form-group2{
-    display: none;
-  }
-  .form-group3{
-    display: none;
-  }
-  .form-group4{
-    display: none;
-  }
-  .form-group5{
+  .form-group.off{
     display: none;
   }
   

@@ -9,15 +9,19 @@ import { EditFloorsComponent } from './Components/edit-floors/edit-floors.compon
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
+import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
+import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent },
   { path: 'list-floors', component: ListFloorsComponent },
   { path: 'list-floors-with-connections', component: ListFloorsWithConnectionsComponent },
+  { path: 'list-floors-with-elevator', component: ListFloorsWithElevatorComponent },
   { path: 'edit-floor', component: EditFloorsComponent},
   { path: 'load-floor-map', component: LoadFlorMapComponent},
   { path: 'create-elevator', component: CreateElevatorComponent },
   { path: 'list-elevator', component: ListElevatorComponent },
+  { path: 'edit-elevator', component: EditElevatorComponent},
   { path: 'create-floor', component: CreateFloorComponent },
   { path: 'create-building-connection', component: CreateBuildingConnectionComponent },
   { path: '', redirectTo: '', pathMatch: 'full' }, // Rota padrão

@@ -18,6 +18,7 @@ export class ListElevatorComponent {
   elevators:Elevator[]=[];
   floorsNumber:(number|undefined)[]=[];
   buildings$:Observable<Building[]>;
+  floorsCode!:string;
   size:number=0;
   index:number=0;
   menuBuilding:Boolean=false;
@@ -46,6 +47,14 @@ export class ListElevatorComponent {
           }
         }
       }
+      this.floorsCode = ("[");
+      for (let i = 0; i < this.floorsNumber.length; i++) {
+        this.floorsCode += this.floorsNumber[i];
+        if (i != (this.floorsNumber.length - 1)) {
+          this.floorsCode += ", ";
+        }
+      }
+      this.floorsCode += ("]");
       this.elevatorService.getElevators(this.buildingId).pipe(
         first()
       ).subscribe(firstElevator => {
@@ -60,6 +69,8 @@ export class ListElevatorComponent {
   toggleBoth(){
     this.menuBuilding=!this.menuBuilding;
     this.menuInfo=!this.menuInfo;
+    this.floorsNumber=[];
+    this.currentElevator={};
   }
 
 

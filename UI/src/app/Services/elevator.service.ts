@@ -32,7 +32,29 @@ export class ElevatorService {
     );
   }
 
-  /*updateElevator(elevator:Elevator):Observable<Elevator>{
-    
-  }*/
+  updateAllElevator(elevator:Elevator){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.put<Elevator>(
+      "http://localhost:4000/api/elevators",
+      elevator,
+      httpOptions
+      );
+  }
+
+  updateElevator(elevator:Elevator){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.patch<Elevator>(
+      "http://localhost:4000/api/elevators",
+      elevator,
+      httpOptions
+      );
+  }
 }

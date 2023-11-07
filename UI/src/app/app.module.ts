@@ -15,6 +15,7 @@ import { CreateElevatorComponent } from './Components/create-elevator/create-ele
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
+import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.
     CreateElevatorComponent,
     ListElevatorComponent,
     LoadFlorMapComponent,
-    EditElevatorComponent
+    EditElevatorComponent,
+    ListFloorsWithElevatorComponent
   ],
   imports: [
     BrowserModule,

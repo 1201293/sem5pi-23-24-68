@@ -29,21 +29,25 @@
         <form (ngSubmit)="editBuilding()">
             <div class="form-group4" [ngClass]="{  'on': menuEditBuilding }">
                 <label for="building">Building:</label>
-                <select id="building" name="building" class="form-control" [(ngModel)]="floor.buildingId" required>
+                <select id="building" name="building" class="form-control" [(ngModel)]="elevator.buildingId" required>
                     <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
                 </select>
+                <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building</button></div>
             </div>
+        </form>
+        <form (ngSubmit)="editFloors()">
+          <div class="form-group5" [ngClass]="{  'on': menuEditFloors }">
+            <label>Floors:</label>
+              <div *ngFor="let floor of floors">
+                  <label>
+                    <input type="checkbox" [(ngModel)]="floor.isChecked" [ngModelOptions]="{standalone: true}"> {{ floor.number }}
+                  </label>
+              </div>
+            <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click)="extractCheckedFloorIds()">List Floor</button></div>
+          </div>
         </form>
         <form (ngSubmit)="editElevator()" >
           <div class="form-group3" [ngClass]="{  'on': menuEdit }">
-            <label>Floors:</label>
-                <div *ngFor="let floor of floors">
-                    <label>
-                        <input type="checkbox" [(ngModel)]="floor.isChecked" [ngModelOptions]="{standalone: true}"> {{ floor.number }}
-                    </label>
-                </div>
-            <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click)="extractCheckedFloorIds()">List Floor</button></div>
-          
             <label for="code">Elevator Code:</label>
             <input type="text" id="code" name="code" [(ngModel)]="elevator.code" required>
 
