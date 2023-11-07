@@ -11,6 +11,7 @@ import { ListFloorsComponent } from './Components/list-floors/list-floors.compon
 import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
+import { ListBuildingConnectionsComponent } from './Components/list-building-connections/list-building-connections.component';
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
@@ -26,6 +27,7 @@ import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-e
     ListFloorsWithConnectionsComponent,
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
+    ListBuildingConnectionsComponent,
     CreateElevatorComponent,
     ListElevatorComponent,
     LoadFlorMapComponent,

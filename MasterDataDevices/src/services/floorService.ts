@@ -152,7 +152,7 @@ export default class FloorService implements IFloorService {
   }
 
 
-  public async loadMap(floorId: string, map: number[][], initialPosition: number[], initialDirection: number, roomsDTO: IRoomDTO[], elevatorDTO: IElevatorDTO, buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
+  public async loadMap(floorId: string, map: number[][], initialPosition: number[], initialDirection: number, roomsDTO: IRoomDTO[], elevatorsDTO: IElevatorDTO[], buildingConnectionsDTO: IBuildingConnectionDTO[]): Promise<Result<IFloorDTO>> {
       try {
         const floorOrError= await this.floorRepo.findByDomainId(floorId);
 
@@ -216,22 +216,25 @@ export default class FloorService implements IFloorService {
             buildingConnections.push(buildingConnectionOrError);
           }
 
-         if(elevatorDTO != null){
-          const elevatorOrError= await this.elevatorRepo.findByDomainId(elevatorDTO.id);
+          let elevators=[]
 
-          if(elevatorOrError == null){
-            return Result.fail<IFloorDTO>({"error":"Must provide a valid elevator id!"});
+          for (let i = 0; i < elevatorsDTO.length; i++) {
+            const elevatorOrError= await this.elevatorRepo.findByDomainId(elevatorsDTO[i].id);
+    
+            if(elevatorOrError == null){
+              return Result.fail<IFloorDTO>({"error":"Must provide a valid elevator id!"});
+            }
+    
+            if(elevatorOrError.buildingId != floorOrError.buildingId){
+              return Result.fail<IFloorDTO>({"error":"Must provide an elevator that is installed in the same  building of the floor!"});
+            }
+    
+            elevatorOrError.posX=elevatorsDTO[i].posX;
+            elevatorOrError.posY=elevatorsDTO[i].posY;
+
+            elevators.push(elevatorOrError);
           }
-
-          if(elevatorOrError.buildingId != floorOrError.buildingId){
-            return Result.fail<IFloorDTO>({"error":"Must provide an elevator that is installed in the same  building of the floor!"});
-          }
-
-          elevatorOrError.posX=elevatorDTO.posX;
-          elevatorOrError.posY=elevatorDTO.posY;
-
-          await this.elevatorRepo.save(elevatorOrError);
-          }
+            
 
           for(let i=0;i<rooms.length;i++){
             await this.roomRepo.save(rooms[i]);
@@ -241,7 +244,13 @@ export default class FloorService implements IFloorService {
             await this.buildingConnectionRepo.save(buildingConnections[i]);
           }
 
+          for (let i = 0; i < elevators.length; i++) {
+            await this.elevatorRepo.save(elevators[i]);
+          }
+
           floorOrError.map=map;
+          floorOrError.initialDirection=initialDirection;
+          floorOrError.initialPosition=initialPosition;
 
           await this.floorRepo.save(floorOrError);
 

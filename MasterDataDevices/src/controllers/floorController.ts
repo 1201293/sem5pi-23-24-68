@@ -84,7 +84,14 @@ export default class FloorController implements IFloorController /* TODO: extend
         }
       }
 
-      const floorOrError = await this.floorServiceInstance.loadMap(req.body.id,req.body.map,rooms,req.body.elevator as IElevatorDTO,connections) as Result<IFloorDTO>;
+      let elevators=[];
+      if(req.body.elevators!=null){
+        for(let i=0;i<req.body.elevators.length;i++){
+          connections.push(req.body.elevators[i] as IElevatorDTO);
+        }
+      }
+
+      const floorOrError = await this.floorServiceInstance.loadMap(req.body.id,req.body.map,req.body.initialPosition,req.body.initialDirection,rooms,elevators,connections) as Result<IFloorDTO>;
 
       if (floorOrError.isFailure) {
         return res.status(402).json(floorOrError.errorValue()).send();

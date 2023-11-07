@@ -7,4 +7,6 @@ export interface Elevator {
   model?: string;
   serialNumber?: string;
   description?: string;
+  isChecked?:boolean;
 }
+

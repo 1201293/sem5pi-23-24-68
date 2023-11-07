@@ -16,6 +16,7 @@ export class EditElevatorComponent {
   elevator:Elevator={};
   elevators$?:Observable<Elevator[]>;
   floors:Floor[]=[];
+  floor!:Floor;
   buildingId?:string;
   menuBuilding:Boolean=false;
   menuElevator:Boolean=false;
