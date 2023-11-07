@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="load-flor-map.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Load Floor Map</h1>
+        <form (ngSubmit)="toggleFloorMenu()" >
+        <div class="form-group" [ngClass]="{  'off': menuBuilding }" >
+          <label>Building:</label>
+          <select id="building" name="building" class="form-control" [(ngModel)]="currentBuilding"  required>
+            <option *ngFor="let building of buildings$ | async" [ngValue]="building">{{ building.code }}</option>
+          </select>
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building</button></div>
+        </div>
+        </form>
+        <form (ngSubmit)="toggleLoadMapMenu()" >
+          <div class="form-group2" [ngClass]="{  'on': menuFloor }" >
+            <label>Floor:</label>
+            <select id="floor" name="floor" class="form-control" [(ngModel)]="floor$.id"  required>
+              <option *ngFor="let floor of floors$ | async" [value]="floor.id">{{ floor.number }}</option>
+            </select>
+            <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Floor</button></div>
+          </div>
+          </form>
+        <form (ngSubmit)="toggleElevatorsMenu()" >
+            <div class="form-group3" [ngClass]="{  'on': menuLoadMap }" >
+              <label>Map:<br>(0 - no walls)<br>(1 - west wall)<br>(2 - north wall)<br>(3 - both walls)</label>
+              <table class="matrix-table">
+                <tbody>
+                  <tr *ngFor="let row of matrix; let i = index">
+                    <td *ngFor="let cell of row; let j = index">
+                      <input type="number" min="0" max="3" [(ngModel)]="matrix[i][j]" [ngModelOptions]="{standalone: true}">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Load Map</button></div>
+            </div>
+        </form>
+        <form (ngSubmit)="toggleBuildingConnectionsMenu()" >
+          <div class="form-group4" [ngClass]="{  'on': menuElevator }" >
+            <label>Elevators:</label>
+            <div *ngFor="let elevator of elevators$ | async">
+              <label>
+                  <input type="checkbox" [(ngModel)]="elevator.isChecked" [ngModelOptions]="{standalone: true}"> {{ elevator.code }}
+              </label>
+          </div>
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click)="extractCheckedElevatorIds()">Choose Elevators</button></div>
+          </div>
+      </form>
+        <form (ngSubmit)="toggleBuildingConnectionsMenu()" >
+          <div class="form-group5" [ngClass]="{  'on': menuBuildingConnection }" >
+            
+            <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building Connections</button></div>
+          </div>
+      </form>
+    </div>
+</body>
+</html>

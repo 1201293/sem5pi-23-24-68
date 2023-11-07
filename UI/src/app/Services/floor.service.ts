@@ -40,4 +40,37 @@ export class FloorService {
       {observe: 'body', responseType: 'json'}
       );
   }
+
+  getFloorsWithElevator(id:string|undefined):Observable<Floor[]>{
+    return this.http.get<Floor[]>(
+      "http://localhost:4000/api/floors/buildings/elevator/"+id,
+      {observe: 'body', responseType: 'json'}
+      );
+  }
+
+  updateAllFloor(floor:Floor){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.put<Floor>(
+      "http://localhost:4000/api/floors",
+      floor,
+      httpOptions
+      );
+  }
+
+  updateFloor(floor:Floor){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.patch<Floor>(
+      "http://localhost:4000/api/floors",
+      floor,
+      httpOptions
+      );
+  }
 }

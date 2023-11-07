@@ -72,3 +72,15 @@ button {
 button:hover {
   background-color: #373534;
 }
+
+.form-group1.off{
+  display:none;
+}
+
+.form-group2.on{
+  display:block;
+}
+
+.form-group2{
+  display: none;
+}

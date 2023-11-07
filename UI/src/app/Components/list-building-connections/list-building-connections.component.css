@@ -19,6 +19,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 350px;
+    align-items: center;
   }
   
   h1 {
@@ -32,7 +33,7 @@ body {
     flex-direction: column;
   }
   
-  .form-group {
+  .list-info {
     margin-bottom: 15px;
   }
   
@@ -59,7 +60,7 @@ body {
     font-size: 16px;
   }
   
-  button {
+  button{
     background-color: black;
     color: #fff;
     border: none;
@@ -73,26 +74,14 @@ body {
     background-color: #373534;
   }
   
-  .form-group1.on {
-    display: block;
-  }
-
-  .form-group1 {
+  .info{
     display: none;
   }
-
-  .form-group2.off {
-    display: none;
-  }
-
-  .form-group2 {
+  
+  .info.on{
     display: block;
   }
-
-  .form-group3.off {
+  
+  .form-group.off{
     display: none;
-  }
-
-  .form-group3 {
-    display: block;
   }

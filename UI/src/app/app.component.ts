@@ -9,6 +9,7 @@ export class AppComponent {
   menuFloors:boolean=false;
   menuBuildings:boolean=false;
   menuBuildingConnections:boolean=false;
+  menuElevators:boolean=false;
 
   toggleMenuFloors(){
     this.menuFloors=!this.menuFloors;
@@ -18,5 +19,9 @@ export class AppComponent {
   }
   toggleMenuBuildingConnections(){
     this.menuBuildingConnections=!this.menuBuildingConnections;
+  }
+
+  toggleMenuElevators(){
+    this.menuElevators=!this.menuElevators;
   }
 }

@@ -14,14 +14,8 @@
                 <select id="building" name="building" class="form-control" [(ngModel)]="floor.buildingId" required>
                   <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
                 </select>
-            </div>
-
-            <div class="form-group">
                 <label for="number">Floor Number:</label>
                 <input type="text" id="number" name="number"  [(ngModel)]="floor.number" required>
-            </div>
-
-            <div class="form-group">
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" [(ngModel)]="floor.description" rows="4" required></textarea>
             </div>

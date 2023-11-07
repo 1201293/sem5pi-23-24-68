@@ -56,3 +56,19 @@ ul li ul  li{
 .building-opts.on{
   display: block;
 }
+
+.building-connection-opts{
+  display: none;
+}
+
+.building-connection-opts.on{
+  display: block;
+}
+
+.elevator-opts{
+  display: none;
+}
+
+.elevator-opts.on{
+  display: block;
+}

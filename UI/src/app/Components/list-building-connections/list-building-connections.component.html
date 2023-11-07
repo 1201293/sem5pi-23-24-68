@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="list-building-connections.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>List Building Connections</h1>
+    <form (ngSubmit)="toggleInfo()" >
+        <div class="form-group" [ngClass]="{'off':menuBuildings}">
+            <label for="building1">Building1:</label>
+            <select id="building1" name="building1" class="form-control" [(ngModel)]="buildingId1" required>
+              <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
+            </select>
+            <label for="building2">Building2:</label>
+            <select id="building2" name="building2" class="form-control" [(ngModel)]="buildingId2" required>
+              <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
+            </select>
+            <div id = "submit" style="text-align: center; padding: 10px;"><button type="submit" (click) = "toggleBoth()">List Building Connections</button></div>
+        </div>
+    </form>
+    <div class="info" [ngClass]="{'on': menuInfo }">
+        <div class="list-info" *ngIf="currentBuildingConnection"> 
+          <h2>Building Connection Information</h2>
+          <p>Floor1 number: {{ currentBuildingConnection.floor1Id }}</p>
+          <p>Floor2 number: {{ currentBuildingConnection.floor2Id }}</p>
+        </div>
+        <div style="text-align: center; padding: 10px;">
+          <button id="otherBuildings" style="float: rigth;" (click)="toggleBoth()">Other Buildings</button>
+        </div>
+        <button id="previous" style="float:left" (click)="changeBuildingConnectionInfo(-1)">Previous</button>
+        <button id="next" style="float: right;" (click)="changeBuildingConnectionInfo(1)">Next</button>
+    </div>
+    </div>
+</body>
+</html>

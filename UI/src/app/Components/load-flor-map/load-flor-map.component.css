@@ -74,22 +74,69 @@ button:hover {
   background-color: #373534;
 }
 
-.info{
-  display: none;
-}
 .form-group.off{
   display: none;
-}
-.form-group2.on{
-  display: block;
-}
-.form-group3.on{
-  display: block;
 }
 
 .form-group2{
   display: none;
 }
+
+.form-group2.on{
+  display: block;
+}
+
 .form-group3{
   display: none;
 }
+
+.form-group3.on{
+  display: block;
+}
+
+.form-group4{
+  display: none;
+}
+
+.form-group4.on{
+  display: block;
+} 
+
+.form-group5{
+  display: none;
+}
+
+.form-group5.on{
+  display: block;
+}
+
+/* matrix.component.css */
+.matrix-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.matrix-table th,
+.matrix-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.matrix-table th {
+  background-color: #f2f2f2;
+}
+
+.matrix-table input {
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  border: none; /* Remove input borders */
+  background-color: transparent; /* Make input background transparent */
+  color: #000; /* Set text color to black */
+  font-weight: bold; /* Make text bold for visibility */
+}
+
+
+
+

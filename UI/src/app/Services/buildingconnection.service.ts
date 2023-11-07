@@ -21,9 +21,16 @@ export class BuildingConnectionService {
       })
       };
     return this.http.post<BuildingConnection>(
-      "http://localhost:4000/api/buildingconnections",
+      "http://localhost:4000/api/buildingConnections",
       buildingconnection,
       httpOptions
+      );
+  }
+
+  getBuildingConnections(id1:string|undefined, id2:string|undefined):Observable<BuildingConnection[]>{
+    return this.http.get<BuildingConnection[]>(
+      "http://localhost:4000/api/buildingConnections/"+id1+"/"+id2,
+      {observe: 'body', responseType: 'json'}
       );
   }
 

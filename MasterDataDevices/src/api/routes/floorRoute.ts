@@ -48,11 +48,11 @@ export default (app: Router) => {
               doorPosY: Joi.number().integer(),
           })
         ),
-        elevator: Joi.object({
+        elevators:Joi.array().items( Joi.object({
           id: Joi.string(),
           posX: Joi.number().required(),
           posY: Joi.number().required()
-        }),
+        })),
         buildingConnections: Joi.array().items(
           Joi.object({
               id: Joi.string(),

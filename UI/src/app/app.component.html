@@ -24,14 +24,26 @@
                     <li><a routerLink="create-floor">Create</a></li>
                     <li><a routerLink="list-floors">List</a></li>
                     <li><a routerLink="list-floors-with-connections">List With Connections</a></li>
+                    <li><a routerLink="list-floors-with-elevator">List With Elevator</a></li>
+                    <li><a routerLink="edit-floor">Edit</a></li>
+                    <li><a routerLink="load-floor-map">Load Map</a></li>
                   </ul>
                 </li>
                 <li class="li-p">
                   <a (click)="toggleMenuBuildingConnections()">Building Connection <img src="../assets/arrow.png"  width="10"></a>
                   <ul class="building-connection-opts" [ngClass]="{  'on': menuBuildingConnections }">
                     <li><a routerLink="create-building-connection">Create</a></li>
+                    <li><a routerLink="list-building-connections">List</a></li>
                   </ul>
               </li>
+              <li class="li-p">
+                <a (click)="toggleMenuElevators()">Elevator <img src="../assets/arrow.png"  width="10"></a>
+                <ul class="elevator-opts" [ngClass]="{  'on': menuElevators }">
+                  <li><a routerLink="create-elevator">Create</a></li>
+                  <li><a routerLink="list-elevator">List</a></li>
+                  <li><a routerLink="edit-elevator">Edit</a></li>
+                </ul>
+            </li>
             </ul>
         </nav>
     </header>

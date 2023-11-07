@@ -3,31 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="list-floors.component.css">
+    <link rel="stylesheet" href="list-elevator.component.css">
 </head>
 <body>
     <div class="container">
-        <h1>List Floors</h1>
+        <h1>List Elevators</h1>
         <form (ngSubmit)="toggleInfo()" >
         <div class="form-group" [ngClass]="{  'off': menuBuilding }" >
           <label for="building">Building:</label>
           <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
             <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
           </select>
-          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Floor</button></div>
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Elevator</button></div>
         </div>
         </form>
         <div class="info" [ngClass]="{  'on': menuInfo }">
-        <div class="list-info" *ngIf="currentFloor"> 
-          <h2>Floor Information</h2>
-          <p>Number: {{ currentFloor.number }}</p>
-          <p>Description: {{ currentFloor.description }}</p>
+        <div class="list-info" *ngIf="currentElevator"> 
+          <h2>Elevator Information</h2>
+          <p>Floors: {{ floorsCode }}</p>
+          <p>Code: {{ currentElevator.code }}</p>
+          <p>Brand: {{ currentElevator.brand }}</p>
+          <p>Model: {{ currentElevator.model }}</p>
+          <p>Serial Number: {{ currentElevator.serialNumber }}</p>
+          <p>Description: {{ currentElevator.description }}</p>
         </div>
         <div style="text-align: center; padding: 10px;">
           <button id="otherBuilding" style="float: rigth;" (click)="toggleBoth()"  >Other Building</button>
         </div>
-        <button id="previous" style="float:left" (click)="changeFloorInfo(-1)">Previous</button>
-        <button id="next" style="float: right;" (click)="changeFloorInfo(1)">Next</button>
+        <button id="previous" style="float:left" (click)="changeElevatorInfo(-1)">Previous</button>
+        <button id="next" style="float: right;" (click)="changeElevatorInfo(1)">Next</button>
       </div>
     </div>
 </body>
