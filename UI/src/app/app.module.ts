@@ -12,6 +12,10 @@ import { ListFloorsWithConnectionsComponent } from './Components/list-floors-wit
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
 import { ListBuildingConnectionsComponent } from './Components/list-building-connections/list-building-connections.component';
+import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
+import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
+import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
+import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { ListBuildingConnectionsComponent } from './Components/list-building-con
     ListFloorsWithConnectionsComponent,
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
-    ListBuildingConnectionsComponent
+    ListBuildingConnectionsComponent,
+    CreateElevatorComponent,
+    ListElevatorComponent,
+    LoadFlorMapComponent,
+    EditElevatorComponent
   ],
   imports: [
     BrowserModule,

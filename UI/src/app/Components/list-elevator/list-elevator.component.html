@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="list-elevators.component.css">
+    <link rel="stylesheet" href="list-elevator.component.css">
 </head>
 <body>
     <div class="container">
@@ -14,14 +14,13 @@
           <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
             <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
           </select>
-          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Floor</button></div>
-      </div>
-    </form>
-    <div class="info" [ngClass]="{  'on': menuInfo }">
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Elevator</button></div>
+        </div>
+        </form>
+        <div class="info" [ngClass]="{  'on': menuInfo }">
         <div class="list-info" *ngIf="currentElevator"> 
           <h2>Elevator Information</h2>
-          <p>Building Code: {{ buildingId }}</p>
-          <p>Floors Code: {{ currentElevator.floorId }}</p>
+          <p>Floors: {{ floorsNumber }}</p>
           <p>Code: {{ currentElevator.code }}</p>
           <p>Brand: {{ currentElevator.brand }}</p>
           <p>Model: {{ currentElevator.model }}</p>
@@ -33,7 +32,7 @@
         </div>
         <button id="previous" style="float:left" (click)="changeElevatorInfo(-1)">Previous</button>
         <button id="next" style="float: right;" (click)="changeElevatorInfo(1)">Next</button>
-    </div>
+      </div>
     </div>
 </body>
 </html>

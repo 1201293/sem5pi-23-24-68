@@ -77,19 +77,11 @@ button:hover {
 .info{
   display: none;
 }
-.form-group.off{
-  display: none;
-}
-.form-group2.on{
-  display: block;
-}
-.form-group3.on{
+
+.info.on{
   display: block;
 }
 
-.form-group2{
-  display: none;
-}
-.form-group3{
+.form-group.off{
   display: none;
 }

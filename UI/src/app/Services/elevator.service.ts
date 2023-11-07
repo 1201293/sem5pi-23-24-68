@@ -1,9 +1,7 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Elevator } from '../Interfaces/elevator';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +32,7 @@ export class ElevatorService {
     );
   }
 
-  updateElevator(elevator:Elevator):Observable<Elevator>{
+  /*updateElevator(elevator:Elevator):Observable<Elevator>{
     
-  }
+  }*/
 }

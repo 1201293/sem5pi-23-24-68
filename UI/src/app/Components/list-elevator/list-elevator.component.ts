@@ -1,30 +1,30 @@
 import { Component } from '@angular/core';
-import { Observable, isEmpty,first,elementAt } from 'rxjs';
-import { Floor } from 'src/app/Interfaces/floor';
+import { Observable, first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
-import { BuildingService } from 'src/app/Services/building.service';
-import { FloorService } from 'src/app/Services/floor.service';
 import { Elevator } from 'src/app/Interfaces/elevator';
+import { Floor } from 'src/app/Interfaces/floor';
+import { BuildingService } from 'src/app/Services/building.service';
 import { ElevatorService } from 'src/app/Services/elevator.service';
+import { FloorService } from 'src/app/Services/floor.service';
 
 @Component({
-  selector: 'app-list-elevators',
-  templateUrl: './list-elevators.component.html',
-  styleUrls: ['./list-elevators.component.css']
+  selector: 'app-list-elevator',
+  templateUrl: './list-elevator.component.html',
+  styleUrls: ['./list-elevator.component.css']
 })
-export class ListElevatorsComponent {
+export class ListElevatorComponent {
   buildingId?:string;
-  floorId?:string;
-  buildings$:Observable<Building[]>;
-  floors$:Observable<Floor[]>;
+  floors:Floor[]=[];
   elevators:Elevator[]=[];
+  floorsNumber:(number|undefined)[]=[];
+  buildings$:Observable<Building[]>;
   size:number=0;
   index:number=0;
   menuBuilding:Boolean=false;
   menuInfo:Boolean=false;
   currentElevator?:Elevator;
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService){
+  constructor(private buildingService:BuildingService, private floorService:FloorService, private elevatorService:ElevatorService){
     this.buildings$=buildingService.getBuildings();
   }
 
@@ -34,6 +34,18 @@ export class ListElevatorsComponent {
       this.menuInfo=false;
       this.menuBuilding=false;
     }else{
+      this.floorService.getFloors(this.buildingId).pipe(first()).subscribe(firstFloor=>{
+        this.floors=firstFloor;
+      });
+      if (this.currentElevator && this.currentElevator.floorsIds) {
+        for (let i = 0; i < this.floors.length; i++) {
+          for (let j = 0; j < this.currentElevator.floorsIds.length; j++) {
+            if  (this.currentElevator.floorsIds[j] == this.floors[i].id) {
+              this.floorsNumber[i] = this.floors[i].number;
+            }
+          }
+        }
+      }
       this.elevatorService.getElevators(this.buildingId).pipe(
         first()
       ).subscribe(firstElevator => {
