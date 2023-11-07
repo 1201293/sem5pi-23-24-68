@@ -31,7 +31,7 @@ export class CreateBuildingConnectionComponent {
 
   loadFloors(){
     if(this.buildingId1 === undefined || this.buildingId2 === undefined || (this.buildingId1 === this.buildingId2)){
-      alert("");
+      alert("Error: The buildings selected are invalid or the same building was introduced on both boxes.");
       this.menuBuilding = false;
       this.menuFloors = false;
     }
@@ -49,9 +49,9 @@ export class CreateBuildingConnectionComponent {
 
   createBuildingConnection() {
     if(!!this.buildingconnection.floor1Id === false){
-      alert("Error: Failed to create building connection.\nReason: You must select one floor.");
+      alert("Error: Failed to create building connection.\nReason: You must select the floor number 1.");
     }else if(!!this.buildingconnection.floor2Id === false){
-      alert("Error: Failed to create building connection.\nReason: You must select one floor.");
+      alert("Error: Failed to create building connection.\nReason: You must select the floor number 2.");
     }else{
       const buildingconnection1=this.buildingconnectionService.createBuildingConnection(this.buildingconnection as BuildingConnection).subscribe(
         (response) => {
