@@ -24,6 +24,19 @@ export class BuildingService {
     );
   }
 
+  updateBuilding(building: Building):Observable<Building>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+    };
+    return this.http.patch<Building>(
+      "http://localhost:4000/api/buildings",
+      building,
+      httpOptions
+    );
+  }
+
   getBuildings():Observable<Building[]>{
     return this.http.get<Building[]>(
       "http://localhost:4000/api/buildings",
