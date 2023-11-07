@@ -38,7 +38,7 @@ export class EditFloorsComponent {
 
   toggleEdit(){
     if(this.floor.id===undefined){
-      alert("Error: Failed to list floors.\nReason: You must select one floor.");
+      alert("Error: Failed to edit floors.\nReason: You must select one floor.");
       this.menuFloor=true;
       this.menuEdit=false;
     }else{
