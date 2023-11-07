@@ -13,6 +13,8 @@ import { EditFloorsComponent } from './Components/edit-floors/edit-floors.compon
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
+import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
+import { EditElevatorComponent } from './Component/edit-elevator/edit-elevator.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
     CreateElevatorComponent,
-    ListElevatorComponent
+    ListElevatorComponent,
+    LoadFlorMapComponent,
+    EditElevatorComponent
   ],
   imports: [
     BrowserModule,

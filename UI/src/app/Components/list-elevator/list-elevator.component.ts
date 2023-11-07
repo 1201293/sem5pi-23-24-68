@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable, First } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { Floor } from 'src/app/Interfaces/floor';
@@ -34,7 +34,9 @@ export class ListElevatorComponent {
       this.menuInfo=false;
       this.menuBuilding=false;
     }else{
-      this.floors = this.floorService.getFloors(this.buildingId);
+      this.floorService.getFloors(this.buildingId).pipe(first()).subscribe(firstFloor=>{
+        this.floors=firstFloor;
+      });
       if (this.currentElevator && this.currentElevator.floorsIds) {
         for (let i = 0; i < this.floors.length; i++) {
           for (let j = 0; j < this.currentElevator.floorsIds.length; j++) {

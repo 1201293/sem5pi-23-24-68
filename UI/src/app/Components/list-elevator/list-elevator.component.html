@@ -14,7 +14,7 @@
           <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
             <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
           </select>
-          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Floor</button></div>
+          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Elevator</button></div>
         </div>
         </form>
         <div class="info" [ngClass]="{  'on': menuInfo }">
@@ -22,16 +22,16 @@
           <h2>Elevator Information</h2>
           <p>Floors: {{ floorsNumber }}</p>
           <p>Code: {{ currentElevator.code }}</p>
-          <p>Brand: {{ currentFloor.brand }}</p>
-          <p>Model: {{ currentFloor.model }}</p>
-          <p>Serial Number: {{ currentFloor.serialNumber }}</p>
-          <p>Description: {{ currentFloor.description }}</p>
+          <p>Brand: {{ currentElevator.brand }}</p>
+          <p>Model: {{ currentElevator.model }}</p>
+          <p>Serial Number: {{ currentElevator.serialNumber }}</p>
+          <p>Description: {{ currentElevator.description }}</p>
         </div>
         <div style="text-align: center; padding: 10px;">
           <button id="otherBuilding" style="float: rigth;" (click)="toggleBoth()"  >Other Building</button>
         </div>
-        <button id="previous" style="float:left" (click)="changeFloorInfo(-1)">Previous</button>
-        <button id="next" style="float: right;" (click)="changeFloorInfo(1)">Next</button>
+        <button id="previous" style="float:left" (click)="changeElevatorInfo(-1)">Previous</button>
+        <button id="next" style="float: right;" (click)="changeElevatorInfo(1)">Next</button>
       </div>
     </div>
 </body>
