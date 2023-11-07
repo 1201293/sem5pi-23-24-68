@@ -11,8 +11,8 @@
         <form (ngSubmit)="toggleFloorMenu()" >
         <div class="form-group" [ngClass]="{  'off': menuBuilding }" >
           <label for="building">Building:</label>
-          <select id="building" name="building" class="form-control" [(ngModel)]="currentBuilding" required>
-            <option *ngFor="let building of buildings$ |async" [value]="building">{{ building.code }}</option>
+          <select id="building" name="building" class="form-control" [(ngModel)]="currentBuilding"  required>
+            <option *ngFor="let building of buildings$ | async" [ngValue]="building">{{ building.code }}</option>
           </select>
           <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building</button></div>
         </div>

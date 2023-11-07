@@ -12,11 +12,9 @@ import { FloorService } from 'src/app/Services/floor.service';
 })
 export class LoadFlorMapComponent {
   currentFloor:Floor={};
-  currentBuilding:Building={};
+  currentBuilding:any;
   buildingId?:string;
   buildings$:Observable<Building[]>
-  width?:number;
-  depth?:number;
   floors$?:Observable<Floor[]>
   menuFloor:Boolean=false;
   menuBuilding:Boolean=false;
@@ -26,19 +24,18 @@ export class LoadFlorMapComponent {
     this.buildings$=buildingService.getBuildings();
   }
 
-  selectBuilding(building:Building){
-    this.building=building;
-  }
+  
 
   toggleFloorMenu(){
     console.log(this.currentBuilding);
     if(!!this.currentBuilding.id===false){
       alert('');
     }else{
-      console.log(this.building.width +  " " + this.building.depth);
       this.floors$=this.floorService.getFloors(this.buildingId);
       this.menuBuilding=!this.menuBuilding;
       this.menuFloor=!this.menuFloor;
     }
   }
+
+  toggle
 }
