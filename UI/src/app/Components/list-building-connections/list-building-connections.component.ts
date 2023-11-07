@@ -4,6 +4,8 @@ import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
 import { BuildingConnection } from 'src/app/Interfaces/buildingconnection';
 import { BuildingConnectionService } from 'src/app/Services/buildingconnection.service';
+import { Floor } from 'src/app/Interfaces/floor';
+import { FloorService } from 'src/app/Services/floor.service';
 
 @Component({
     selector: 'app-list-building-connections',
@@ -21,7 +23,7 @@ export class ListBuildingConnectionsComponent {
     menuInfo:Boolean=false;
     currentBuildingConnection?:BuildingConnection;
   
-    constructor(private buildingService:BuildingService,private buildingconnectionService:BuildingConnectionService){this.buildings$=buildingService.getBuildings()}
+    constructor(private buildingService:BuildingService,private buildingconnectionService:BuildingConnectionService,private floorService:FloorService){this.buildings$=buildingService.getBuildings()}
   
     toggleInfo(){
         if(this.buildingId1 === undefined || this.buildingId2 === undefined || (this.buildingId1 === this.buildingId2)){
