@@ -14,7 +14,9 @@ import { FloorService } from 'src/app/Services/floor.service';
 })
 export class EditElevatorComponent {
   elevator:Elevator={};
+  elevators$!:Observable<Elevator[]>;
   floors:Floor[]=[];
+  floor!:Floor;
   buildingId?:string;
   menuBuilding:Boolean=false;
   menuElevator:Boolean=false;
@@ -27,6 +29,10 @@ export class EditElevatorComponent {
     this.buildings$=buildingService.getBuildings()
   }
 
+  extractCheckedFloorIds(){}
+
+  editElevator(){}
+
   toggleElevator(){
     if(this.buildingId===undefined){
       alert("Error: Failed to edit elevator.\nReason: You must select one building.");
@@ -35,8 +41,8 @@ export class EditElevatorComponent {
     }else{
       this.menuBuilding=!this.menuBuilding;
       this.menuElevator=!this.menuElevator;
-      this.floors=this.floorService.getFloors(this.buildingId);
-      this.elevator=this.elevatorService.getElevators(this.buildingId);
+      this.floorService.getFloors(this.buildingId);
+      this.elevatorService.getElevators(this.buildingId);
     }
   }
 
@@ -56,13 +62,13 @@ export class EditElevatorComponent {
   }
 
   editFloor() {
-    if(this.floor.buildingId!=undefined && this.floor.number!=undefined && this.floor.description!=undefined ){
+   /* if(this.floor.buildingId!=undefined && this.floor.number!=undefined && this.floor.description!=undefined ){
       this.floorService.updateAllFloor(this.floor as Floor).subscribe();
     }else{
       this.floorService.updateFloor(this.floor as Floor).subscribe();
     }
     this.menuEdit=!this.menuEdit;
     this.menuBuilding=!this.menuBuilding;
-    this.floor={}
+    this.floor={}*/
   }
 }
