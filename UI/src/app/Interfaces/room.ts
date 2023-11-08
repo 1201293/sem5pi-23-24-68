@@ -9,4 +9,5 @@ export interface Room {
     height?: number;
     doorPosX?: number;
     doorPosY?: number;
+    isChecked?:boolean;
   }

@@ -4,10 +4,12 @@ import { Building } from 'src/app/Interfaces/building';
 import { BuildingConnection } from 'src/app/Interfaces/buildingconnection';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { Floor } from 'src/app/Interfaces/floor';
+import { Room } from 'src/app/Interfaces/room';
 import { BuildingService } from 'src/app/Services/building.service';
 import { BuildingConnectionService } from 'src/app/Services/buildingconnection.service';
 import { ElevatorService } from 'src/app/Services/elevator.service';
 import { FloorService } from 'src/app/Services/floor.service';
+import { RoomService } from 'src/app/Services/room.service';
 
 @Component({
   selector: 'app-load-flor-map',
@@ -35,7 +37,7 @@ export class LoadFlorMapComponent {
   rooms$?:Observable<Room[]>
   buildingConnections$?:Observable<BuildingConnection[]>;
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private bcService:BuildingConnectionService){
+  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private bcService:BuildingConnectionService,private roomService:RoomService){
     this.buildings$=buildingService.getBuildings();
   }
 
