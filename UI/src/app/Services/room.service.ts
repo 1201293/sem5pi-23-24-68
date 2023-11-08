@@ -27,4 +27,11 @@ export class RoomService {
       );
   }
 
+  listRoomsByFloorId(floorId:string):Observable<Room[]>{
+    return this.http.get<Room[]>(
+      "http://localhost:4000/api/rooms"+floorId,
+      {observe: 'body', responseType: 'json'}
+      );
+  }
+
 }

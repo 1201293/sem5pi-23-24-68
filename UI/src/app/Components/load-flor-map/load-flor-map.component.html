@@ -73,10 +73,10 @@
       </form>
         <form (ngSubmit)="toggleRoomsMenu()" >
           <div class="form-group6" [ngClass]="{  'on': menuBuildingConnection }" >
-            <label>Elevators:</label>
+            <label>Building Connections:</label>
             <div *ngFor="let bc of buildingConnections$ | async">
               <label>
-                  <input type="checkbox" [(ngModel)]="bc.isChecked" [ngModelOptions]="{standalone: true}"> {{ elevator.code }}
+                  <input type="checkbox" [(ngModel)]="bc.isChecked" [ngModelOptions]="{standalone: true}"> {{ bc.description }}
               </label>
           </div>
             <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Building Connections</button></div>
@@ -84,7 +84,12 @@
       </form>
       <form (ngSubmit)="toggleInitMenu()" >
         <div class="form-group7" [ngClass]="{  'on': menuRoom }" >
-          
+          <label>Rooms:</label>
+            <div *ngFor="let room of rooms$ | async">
+              <label>
+                  <input type="checkbox" [(ngModel)]="room.isChecked" [ngModelOptions]="{standalone: true}"> {{ room.description }}
+              </label>
+          </div>
           <div id="submit" style="text-align: center; padding: 10px;"><button type="submit">Choose Rooms</button></div>
         </div>
     </form>
