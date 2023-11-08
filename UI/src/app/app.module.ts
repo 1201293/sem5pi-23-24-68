@@ -17,6 +17,7 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
+import { CreateRoom } from './Components/create-room/create-room.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-e
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
     ListBuildingConnectionsComponent,
+    CreateRoom,
     CreateElevatorComponent,
     ListElevatorComponent,
     LoadFlorMapComponent,

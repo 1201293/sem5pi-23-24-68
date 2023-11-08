@@ -7,10 +7,7 @@ import IElevatorService from "./IServices/IElevatorService";
 import { Result } from "../core/logic/Result";
 import { ElevatorMap } from "../mappers/ElevatorMap";
 import IFloorRepo from "./IRepos/IFloorRepo";
-import IFloorDTO from "../dto/IFloorDTO";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
-import IBuildingDTO from "../dto/IBuildingDTO";
-import { BuildingId } from "../domain/buildingId";
 
 @Service()
 export default class ElevatorService implements IElevatorService{
@@ -76,6 +73,10 @@ export default class ElevatorService implements IElevatorService{
 
             if(elevatorResult == null){
                 return Result.fail<IElevatorDTO>("Elevator Id does not exist");
+            }
+
+            if(!!elevatorDTO.floorsIds) {
+                elevatorResult.floorsIds = elevatorDTO.floorsIds;
             }
 
             if(!!elevatorDTO.code){

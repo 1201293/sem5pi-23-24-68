@@ -72,3 +72,11 @@ ul li ul  li{
 .elevator-opts.on{
   display: block;
 }
+
+.room-opts{
+  display: none;
+}
+
+.room-opts.on{
+  display: block;
+}

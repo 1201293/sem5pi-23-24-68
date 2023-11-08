@@ -12,6 +12,7 @@ import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.c
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
+import { CreateRoom } from './Components/create-room/create-room.component';
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'create-floor', component: CreateFloorComponent },
   { path: 'create-building-connection', component: CreateBuildingConnectionComponent },
   { path: 'list-building-connections', component: ListBuildingConnectionsComponent },
+  { path: 'create-room', component: CreateRoom },
   { path: '', redirectTo: '', pathMatch: 'full' }, // Rota padrão
 ];
 

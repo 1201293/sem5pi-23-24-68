@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="create-building.component.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1> Create a New Building</h1>
+            <form (ngSubmit)="create-building()">
+                <div class="form-group">
+                    <label for="code">Building Code:</label>
+                    <input type="text" id="code" name="code" [(ngModel)]="building.code" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Building Name:</label>
+                    <input type="text" id="name" name="name" [(ngModel)]="building.name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" [(ngModel)]="building.description" rows="4" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="width">Width:</label>
+                    <input type="text" id="width" name="width" [(ngModel)]="building.width" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="depth">Depth:</label>
+                    <input type="text" id="depth" name="depth" [(ngModel)]="building.depth" required>
+                </div>
+
+                <button type="submit">Create Building</button>
+            </form>
+        </div>
+    </body>
+
+
+</html>

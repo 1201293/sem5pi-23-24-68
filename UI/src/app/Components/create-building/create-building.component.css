@@ -19,7 +19,6 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 350px;
-    align-items: center;
   }
   
   h1 {
@@ -33,7 +32,7 @@ body {
     flex-direction: column;
   }
   
-  .list-info {
+  .form-group {
     margin-bottom: 15px;
   }
   
@@ -60,7 +59,7 @@ body {
     font-size: 16px;
   }
   
-  button{
+  button {
     background-color: black;
     color: #fff;
     border: none;
@@ -72,31 +71,5 @@ body {
   
   button:hover {
     background-color: #373534;
-  }
-  
-  .info{
-    display: none;
-  }
-  .form-group.off{
-    display: none;
-  }
-  .form-group2.on{
-    display: block;
-  }
-  .form-group3.on{
-    display: block;
-  }
-  .form-group5.on{
-    display: block;
-  }
-  
-  .form-group2{
-    display: none;
-  }
-  .form-group3{
-    display: none;
-  }
-  .form-group5{
-    display: none;
   }
   
