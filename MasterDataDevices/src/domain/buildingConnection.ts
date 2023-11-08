@@ -9,6 +9,7 @@ import IBuildingConnectionDTO from "../dto/IBuildingConnectionDTO";
 interface BuildingConnectionProps {
   floor1Id: string;
   floor2Id: string;
+  description:string;
   posX: number;
   posY: number;
 }
@@ -38,6 +39,10 @@ export class BuildingConnection extends AggregateRoot<BuildingConnectionProps> {
     return this.props.posY;
   }
 
+  get description():string{
+    return this.props.description;
+  }
+
   set floor1Id ( value: string) {
     this.props.floor1Id = value;
   }
@@ -54,6 +59,10 @@ export class BuildingConnection extends AggregateRoot<BuildingConnectionProps> {
     this.props.posY=value;
   }
 
+  set description(value:string){
+    this.props.description=value;
+  }
+
   private constructor (props: BuildingConnectionProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -62,8 +71,10 @@ export class BuildingConnection extends AggregateRoot<BuildingConnectionProps> {
 
     if (!!buildingConnectionDTO.floor1Id === false || !!buildingConnectionDTO.floor2Id === false) {
         return Result.fail<BuildingConnection>('Must provide a floor id');
+    }else if(!!buildingConnectionDTO.description ===false){
+      return Result.fail<BuildingConnection>('Must provide a description');
     }else {
-      const buildingConnection = new BuildingConnection({ floor1Id: buildingConnectionDTO.floor1Id, floor2Id: buildingConnectionDTO.floor2Id,posX: undefined,posY:undefined },id);
+      const buildingConnection = new BuildingConnection({ floor1Id: buildingConnectionDTO.floor1Id, floor2Id: buildingConnectionDTO.floor2Id,posX: undefined,posY:undefined,description:buildingConnectionDTO.description },id);
       return Result.ok<BuildingConnection>( buildingConnection )
     }
   }

@@ -49,6 +49,7 @@ export default class BuildingConnectionRepo implements IBuildingConnectionRepo {
         buildingConnectionDocument.floor2Id = buildingConnection.floor2Id;
         buildingConnectionDocument.posX = buildingConnection.posX;
         buildingConnectionDocument.posY = buildingConnection.posY;
+        buildingConnectionDocument.description=buildingConnection.description;
         await buildingConnectionDocument.save();
 
         return buildingConnection;

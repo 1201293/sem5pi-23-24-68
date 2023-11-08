@@ -119,13 +119,11 @@ export default class ElevatorService implements IElevatorService{
 
             const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
 
-            if(elevatorsResult.length == 0){
-                return Result.fail<IElevatorDTO[]>("No Elevators found for this building");
+            if(elevatorsResult.length != 0){
+                elevatorsResult.forEach(elevator => {
+                    elevatorList.push(ElevatorMap.toDto(elevator));
+                });
             }
-
-            elevatorsResult.forEach(elevator => {
-                elevatorList.push(ElevatorMap.toDto(elevator));
-            });
 
 
             return Result.ok<IElevatorDTO[]>(elevatorList);

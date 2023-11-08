@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
+import { BuildingConnection } from 'src/app/Interfaces/buildingconnection';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { Floor } from 'src/app/Interfaces/floor';
 import { BuildingService } from 'src/app/Services/building.service';
+import { BuildingConnectionService } from 'src/app/Services/buildingconnection.service';
 import { ElevatorService } from 'src/app/Services/elevator.service';
 import { FloorService } from 'src/app/Services/floor.service';
 
@@ -13,7 +15,7 @@ import { FloorService } from 'src/app/Services/floor.service';
   styleUrls: ['./load-flor-map.component.css']
 })
 export class LoadFlorMapComponent {
-  floor$:Floor={};
+  floorId?:string;
   currentBuilding:Building={};
   buildings$:Observable<Building[]>
   floors$?:Observable<Floor[]>
@@ -26,8 +28,14 @@ export class LoadFlorMapComponent {
   menuElevator:Boolean=false;
   matrix!:number[][];
   elevators$?:Observable<Elevator[]>;
+  menuInitial:Boolean=false;
+  initialPosition:number[]=[0,0];
+  initialDirection:number=0;
+  menuRoom:Boolean=false;
+  rooms$?:Observable<Room[]>
+  buildingConnections$?:Observable<BuildingConnection[]>;
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService){
+  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private bcService:BuildingConnectionService){
     this.buildings$=buildingService.getBuildings();
   }
 
@@ -49,12 +57,11 @@ export class LoadFlorMapComponent {
   }
 
   toggleLoadMapMenu(){
-    if(!!this.currentBuilding.id===false){
+    if(!!this.floorId===false){
       alert('');
     }else{
       this.menuFloor=!this.menuFloor;
       this.menuLoadMap=!this.menuLoadMap;
-      this.elevators$=this.elevatorService.getElevators(this.currentBuilding.id);
     }
   }
 
@@ -63,13 +70,28 @@ export class LoadFlorMapComponent {
   }
 
   toggleElevatorsMenu(){
-    this.menuLoadMap=!this.menuLoadMap;
+    this.menuInitial=!this.menuInitial;
     this.menuElevator=!this.menuElevator;
-    this.floor$.map=this.matrix;
+  }
+
+  toggleInitialMenu(){
+    this.menuLoadMap=!this.menuLoadMap;
+    this.menuInitial=!this.menuInitial;
   }
 
   toggleBuildingConnectionsMenu(){
-    
+    this.menuElevator=!this.menuElevator;
+    this.menuBuildingConnection=!this.menuBuildingConnection;
+  }
+
+  toggleRoomsMenu(){
+    this.menuBuildingConnection=!this.menuBuildingConnection;
+    this.menuRoom=!this.menuRoom;
+  }
+
+  toggleInitMenu(){
+    this.menuRoom=!this.menuRoom;
+    this.menuBuilding=!this.menuBuilding;
   }
 
 }

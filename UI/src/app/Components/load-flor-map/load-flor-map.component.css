@@ -43,7 +43,7 @@ label {
   margin-bottom: 5px;
 }
 
-input[type="text"],
+input[type="text"],.initial,
 textarea {
   width: 94%;
   padding: 10px;
@@ -110,7 +110,22 @@ button:hover {
   display: block;
 }
 
-/* matrix.component.css */
+.form-group6{
+  display: none;
+}
+
+.form-group6.on{
+  display: block;
+}
+
+.form-group7{
+  display: none;
+}
+
+.form-group7.on{
+  display: block;
+}
+
 .matrix-table {
   border-collapse: collapse;
   width: 100%;
@@ -131,10 +146,10 @@ button:hover {
   width: 100%;
   padding: 5px;
   text-align: center;
-  border: none; /* Remove input borders */
-  background-color: transparent; /* Make input background transparent */
-  color: #000; /* Set text color to black */
-  font-weight: bold; /* Make text bold for visibility */
+  border: none;
+  background-color: transparent;
+  color: #000;
+  font-weight: bold;
 }
 
 
