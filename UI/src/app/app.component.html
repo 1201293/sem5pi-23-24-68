@@ -43,7 +43,13 @@
                   <li><a routerLink="list-elevator">List</a></li>
                   <li><a routerLink="edit-elevator">Edit</a></li>
                 </ul>
-            </li>
+              </li>
+              <li class="li-p">
+                <a (click)="toggleMenuRooms()">Room <img src="../assets/arrow.png"  width="10"></a>
+                <ul class="room-opts" [ngClass]="{  'on': menuRooms }">
+                  <li><a routerLink="create-room">Create</a></li>
+                </ul>
+              </li>
             </ul>
         </nav>
     </header>
