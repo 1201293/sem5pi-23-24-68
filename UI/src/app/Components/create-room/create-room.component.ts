@@ -45,7 +45,7 @@ export class CreateRoomComponent {
     this.menuRoom = !this.menuRoom;
   }
 
-  createBuildingConnection() {
+  createRoom() {
     if(!!this.room.floorId === false){
       alert("Error: Failed to create room.\nReason: You must select one floor.");
     }else if(!!this.room.name === false){
