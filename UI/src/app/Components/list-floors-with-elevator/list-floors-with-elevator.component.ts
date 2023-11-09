@@ -30,7 +30,7 @@ export class ListFloorsWithElevatorComponent {
       this.menuInfo=false;
       this.menuBuilding=false;
     }else{
-      this.floorService.getFloors(this.buildingId).pipe(
+      this.floorService.getFloorsWithElevator(this.buildingId).pipe(
         first()
       ).subscribe(firstFloor => {
         this.floors=firstFloor;

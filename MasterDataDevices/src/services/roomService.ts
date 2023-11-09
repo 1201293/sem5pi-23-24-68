@@ -41,17 +41,20 @@ export default class RoomService implements IRoomService {
     }
   }
 
-  public async listRooms(): Promise<Result<IRoomDTO[]>> {
+  public async listRoomsByFloorId(floorId:string): Promise<Result<IRoomDTO[]>> {
     try {
-      const roomResult = await this.roomRepo.findAll();
+      const roomResult = await this.roomRepo.findByFloorId(floorId);
 
-      const rooms=[];
+      const rooms= [];
 
-      if(roomResult.length != 0){
-        roomResult.forEach((element) => {
-          rooms.push(RoomMap.toDTO(element));
-        })
+      if(roomResult.length == 0){
+        return Result.ok<IRoomDTO[]>( rooms );
       }
+
+      roomResult.forEach(elevator => {
+        rooms.push(RoomMap.toDTO(elevator));
+      });
+
       return Result.ok<IRoomDTO[]>( rooms );
     } catch (e) {
       throw e;

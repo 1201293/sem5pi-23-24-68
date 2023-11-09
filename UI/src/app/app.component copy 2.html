@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="app.component.css">
+    
+</head>
+<body>
+    <header class="taskbar">
+        <nav>
+            <ul id="principal-ul">
+                <li class="li-p"><a routerLink="">Home</a></li>
+                <li class="li-p"><a routerLink="auth/sign-in">Login</a></li>
+                <li class="li-p">
+                    <a (click)="toggleMenuBuildings()">Building <img src="../assets/arrow.png"  width="10"></a>
+                    <ul class="building-opts" [ngClass]="{  'on': menuBuildings }">
+                      <li><a routerLink="buildings" (click)="menuBuildings =false">Create</a></li>
+                    </ul>
+                </li>
+                <li class="li-p">
+                  <a (click)="toggleMenuFloors()">Floor <img src="../assets/arrow.png"  width="10"></a>
+                  <ul class="floor-opts" [ngClass]="{  'on': menuFloors }" >
+                    <li><a routerLink="create-floor" (click)="menuFloors =false">Create</a></li>
+                    <li><a routerLink="list-floors"(click)="menuFloors =false">List</a></li>
+                    <li><a routerLink="list-floors-with-connections"(click)="menuFloors =false">List With Connections</a></li>
+                    <li><a routerLink="list-floors-with-elevator"(click)="menuFloors =false">List With Elevator</a></li>
+                    <li><a routerLink="edit-floor"(click)="menuFloors =false">Edit</a></li>
+                    <li><a routerLink="load-floor-map"(click)="menuFloors =false">Load Map</a></li>
+                  </ul>
+                </li>
+                <li class="li-p">
+                  <a (click)="toggleMenuBuildingConnections()">Building Connection <img src="../assets/arrow.png"  width="10"></a>
+                  <ul class="building-connection-opts" [ngClass]="{  'on': menuBuildingConnections }">
+                    <li><a routerLink="create-building-connection"(click)="menuBuildingConnections =false">Create</a></li>
+                    <li><a routerLink="list-building-connections"(click)="menuBuildingConnections =false">List</a></li>
+                  </ul>
+              </li>
+              <li class="li-p">
+                <a (click)="toggleMenuElevators()">Elevator <img src="../assets/arrow.png"  width="10"></a>
+                <ul class="elevator-opts" [ngClass]="{  'on': menuElevators }">
+                  <li><a routerLink="create-elevator" (click)="menuElevators =false">Create</a></li>
+                  <li><a routerLink="list-elevator" (click)="menuElevators =false">List</a></li>
+                  <li><a routerLink="edit-elevator" (click)="menuElevators =false">Edit</a></li>
+                </ul>
+              </li>
+              <li class="li-p">
+                <a (click)="toggleMenuRooms()">Room <img src="../assets/arrow.png"  width="10"></a>
+                <ul class="room-opts" [ngClass]="{  'on': menuRooms }">
+                  <li><a routerLink="create-room" (click)="menuRooms =false">Create</a></li>
+                </ul>
+              </li>
+            </ul>
+        </nav>
+    </header>
+    <router-outlet></router-outlet>
+</body>
+</html>

@@ -24,27 +24,7 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createRoom(req, res, next));
 
-    route.get('',(req,res,next) => ctrl.listRooms(req,res,next));
+    route.get('/:id',(req,res,next) => ctrl.listRoomsByFloorId(req,res,next));
 
-    route.put('',celebrate({
-      body:Joi.object({
-        id: Joi.string().required(),
-        floorId: Joi.string().required(),
-        name: Joi.string().required(),
-        category: Joi.string().required(),
-        description: Joi.string().required(),
-      })
-    }),
-    (req, res, next) => ctrl.updateRoom(req, res, next));
-
-    route.patch('',celebrate({
-      body:Joi.object({
-        id: Joi.string().required(),
-        floorId: Joi.string().required(),
-        name: Joi.string(),
-        category: Joi.string(),
-        description: Joi.string(),
-      })
-    }),
-    (req, res, next) => ctrl.updateRoom(req, res, next));
+    
 };

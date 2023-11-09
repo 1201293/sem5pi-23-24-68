@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateFloorComponent } from './Components/create-floor/create-floor.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
@@ -17,8 +17,6 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
-import { CreateBuildingComponent } from './Components/create-building/create-building-component';
-import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 
 @NgModule({
   declarations: [
@@ -31,18 +29,21 @@ import { ListBuildingsComponent } from './Components/list-buildings/list-buildin
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
     ListBuildingConnectionsComponent,
+    //CreateRoom,
     CreateElevatorComponent,
     ListElevatorComponent,
     LoadFlorMapComponent,
     EditElevatorComponent,
-    ListFloorsWithElevatorComponent,
-    ListBuildingsComponent
+    ListFloorsWithElevatorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

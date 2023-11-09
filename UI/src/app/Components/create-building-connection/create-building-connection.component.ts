@@ -17,6 +17,7 @@ export class CreateBuildingConnectionComponent {
   buildingconnection ={
     floor1Id: '',
     floor2Id: '',
+    description: ''
   };
 
   floors1$?:Observable<Floor[]>;
@@ -52,6 +53,8 @@ export class CreateBuildingConnectionComponent {
       alert("Error: Failed to create building connection.\nReason: You must select the floor number 1.");
     }else if(!!this.buildingconnection.floor2Id === false){
       alert("Error: Failed to create building connection.\nReason: You must select the floor number 2.");
+    }else if(!!this.buildingconnection.description === false){
+      alert("Error: Failed to create building connection.\nReason: You must write a description.");
     }else{
       const buildingconnection1=this.buildingconnectionService.createBuildingConnection(this.buildingconnection as BuildingConnection).subscribe(
         (response) => {

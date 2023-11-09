@@ -7,10 +7,7 @@ import IElevatorService from "./IServices/IElevatorService";
 import { Result } from "../core/logic/Result";
 import { ElevatorMap } from "../mappers/ElevatorMap";
 import IFloorRepo from "./IRepos/IFloorRepo";
-import IFloorDTO from "../dto/IFloorDTO";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
-import IBuildingDTO from "../dto/IBuildingDTO";
-import { BuildingId } from "../domain/buildingId";
 
 @Service()
 export default class ElevatorService implements IElevatorService{
@@ -78,6 +75,10 @@ export default class ElevatorService implements IElevatorService{
                 return Result.fail<IElevatorDTO>("Elevator Id does not exist");
             }
 
+            if(!!elevatorDTO.floorsIds) {
+                elevatorResult.floorsIds = elevatorDTO.floorsIds;
+            }
+
             if(!!elevatorDTO.code){
                 elevatorResult.code = elevatorDTO.code;
             }
@@ -119,13 +120,11 @@ export default class ElevatorService implements IElevatorService{
 
             const elevatorsResult = await this.elevatorRepo.findByBuildingId(buildingId);
 
-            if(elevatorsResult.length == 0){
-                return Result.fail<IElevatorDTO[]>("No Elevators found for this building");
+            if(elevatorsResult.length != 0){
+                elevatorsResult.forEach(elevator => {
+                    elevatorList.push(ElevatorMap.toDto(elevator));
+                });
             }
-
-            elevatorsResult.forEach(elevator => {
-                elevatorList.push(ElevatorMap.toDto(elevator));
-            });
 
 
             return Result.ok<IElevatorDTO[]>(elevatorList);
