@@ -7,50 +7,7 @@
     
 </head>
 <body>
-<<<<<<< HEAD
-    <header class="taskbar">
-        <nav>
-            <ul id="principal-ul">
-                <li class="li-p"><a routerLink="">Home</a></li>
-                <li class="li-p"><a routerLink="auth/sign-in">Login</a></li>
-                <li class="li-p">
-                    <a (click)="toggleMenuBuildings()">Building <img src="../assets/arrow.png"  width="10"></a>
-                    <ul class="building-opts" [ngClass]="{  'on': menuBuildings }">
-                      <li><a routerLink="create-building">Create</a></li>
-                    </ul>
-                </li>
-                <li class="li-p">
-                  <a (click)="toggleMenuFloors()">Floor <img src="../assets/arrow.png"  width="10"></a>
-                  <ul class="floor-opts" [ngClass]="{  'on': menuFloors }">
-                    <li><a routerLink="create-floor">Create</a></li>
-                    <li><a routerLink="list-floors">List</a></li>
-                    <li><a routerLink="list-floors-with-connections">List With Connections</a></li>
-                    <li><a routerLink="list-floors-with-elevator">List With Elevator</a></li>
-                    <li><a routerLink="edit-floor">Edit</a></li>
-                    <li><a routerLink="load-floor-map">Load Map</a></li>
-                  </ul>
-                </li>
-                <li class="li-p">
-                  <a (click)="toggleMenuBuildingConnections()">Building Connection <img src="../assets/arrow.png"  width="10"></a>
-                  <ul class="building-connection-opts" [ngClass]="{  'on': menuBuildingConnections }">
-                    <li><a routerLink="create-building-connection">Create</a></li>
-                    <li><a routerLink="list-building-connections">List</a></li>
-                  </ul>
-              </li>
-              <li class="li-p">
-                <a (click)="toggleMenuElevators()">Elevator <img src="../assets/arrow.png"  width="10"></a>
-                <ul class="elevator-opts" [ngClass]="{  'on': menuElevators }">
-                  <li><a routerLink="create-elevator">Create</a></li>
-                  <li><a routerLink="list-elevator">List</a></li>
-                  <li><a routerLink="edit-elevator">Edit</a></li>
-                </ul>
-            </li>
-            </ul>
-        </nav>
-    </header>
-=======
     <app-taskbar></app-taskbar>
->>>>>>> 9e81d8d08f25f3710c41c92dfefb7399d81cd80c
     <router-outlet></router-outlet>
 </body>
 </html>

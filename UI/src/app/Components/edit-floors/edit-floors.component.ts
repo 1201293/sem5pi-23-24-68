@@ -1,62 +1,96 @@
-import { Component } from '@angular/core';
-import { Observable,first } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Observable,of,catchError,tap } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
 import { Floor } from 'src/app/Interfaces/floor';
 import { FloorService } from 'src/app/Services/floor.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-floors',
   templateUrl: './edit-floors.component.html',
   styleUrls: ['./edit-floors.component.css']
 })
-export class EditFloorsComponent {
+export class EditFloorsComponent implements OnInit {
 
-  floor:Floor={}
+  floor!:Floor;
   buildingId?:string;
-  floors$?:Observable<Floor[]>;
-  menuBuilding:Boolean=false;
-  menuFloor:Boolean=false;
-  menuEdit:Boolean=false;
+  floors?:Floor[];
+  isLinear=true;
+  buildings!:Building[];
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
+  thirdFormGroup!: FormGroup;
 
-  buildings$:Observable<Building[]>;
-
-  constructor(private buildingService:BuildingService,private floorService:FloorService){this.buildings$=buildingService.getBuildings()
+  constructor(private buildingService:BuildingService,private floorService:FloorService,private _formBuilder:FormBuilder,private _snackBar:MatSnackBar){
   }
 
-  toggleFloor(){
-    if(this.buildingId===undefined){
-      alert("Error: Failed to edit floors.\nReason: You must select one building.");
-      this.menuBuilding=false;
-      this.menuFloor=false;
+  ngOnInit() {
+    this.getBuildings();
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: [null, Validators.required],
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: [null, Validators.required],
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      firstCtrl: [null, Validators.required],
+      secondCtrl: [null, Validators.required],
+      thirdCtrl: [null, Validators.required],
+    });
+  }
+
+  getBuildings(){
+    this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
+  }
+
+  getFloors(){
+    this.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
+    if(!!this.buildingId === false){
+      this.floors=undefined;
     }else{
-      this.menuBuilding=!this.menuBuilding;
-      this.menuFloor=!this.menuFloor;
-      this.floors$=this.floorService.getFloors(this.buildingId);
+      this.floorService.getFloors(this.buildingId).subscribe(floors => this.floors=floors);
     }
   }
 
-  toggleEdit(){
-    if(this.floor.id===undefined){
-      alert("Error: Failed to edit floors.\nReason: You must select one floor.");
-      this.menuFloor=true;
-      this.menuEdit=false;
-    }else{
-      this.menuFloor=!this.menuFloor;
-      this.menuEdit=!this.menuEdit;
-    }
+  choosedFloor(){
+    this.floor=this.secondFormGroup.get("secondCtrl")?.value;
+    this.thirdFormGroup.get("secondCtrl")?.setValue(this.floor.number);
+    this.thirdFormGroup.get("thirdCtrl")?.setValue(this.floor.description);
   }
 
   editFloor() {
-    if(this.floor.buildingId!=undefined && this.floor.number!=undefined && this.floor.description!=undefined ){
-      this.floorService.updateAllFloor(this.floor as Floor).subscribe();
+    if(this.floor.buildingId!=this.thirdFormGroup.get("firstCtrl")?.value && this.floor.number!=this.thirdFormGroup.get("secondCtrl")?.value && this.floor.description!=this.thirdFormGroup.get("thirdCtrl")?.value){
+      this.floorService.updateAllFloor(this.floor as Floor).pipe(
+        catchError(error => {
+        this._snackBar.open("Couldn't update the floor!\n Reason: " + error.error.error,'Close',{duration:3000});
+        return of();
+      }),
+        tap(result =>{
+          this._snackBar.open("Floor updated successfully!",'Close',{duration:3000});
+      })).subscribe();
     }else{
-      this.floorService.updateFloor(this.floor as Floor).subscribe();
+      const floor1:Floor={};
+      floor1.id=this.floor.id;
+      if(this.floor.buildingId!=this.thirdFormGroup.get("firstCtrl")?.value && this.thirdFormGroup.get("firstCtrl")?.value!=null ){
+        floor1.buildingId=this.thirdFormGroup.get("firstCtrl")?.value;
+        console.log(this.thirdFormGroup.get("firstCtrl")?.value)
+      }
+      if(this.floor.number!=this.thirdFormGroup.get("secondCtrl")?.value){
+        floor1.number=this.thirdFormGroup.get("secondCtrl")?.value;
+      }
+      if(this.floor.description!=this.thirdFormGroup.get("thirdCtrl")?.value){
+        floor1.description=this.thirdFormGroup.get("thirdCtrl")?.value;
+      }
+      this.floorService.updateFloor(floor1 as Floor).pipe(catchError(error => {
+        this._snackBar.open("Couldn't update the floor!\n Reason: " + error.error.error,'Close',{duration:3000});
+        return of();
+        }),
+        tap(result =>{
+            this._snackBar.open("Floor updated successfully!",'Close',{duration:3000});
+        })).subscribe();
+      }
+      this.floors=undefined;
     }
-    this.menuEdit=!this.menuEdit;
-    this.menuBuilding=!this.menuBuilding;
-    this.floor={}
-    
-  }
-
 }

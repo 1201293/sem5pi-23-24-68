@@ -13,6 +13,8 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
 import { CreateRoomComponent } from './Components/create-room/create-room.component';
+import { CreateBuildingComponent } from './Components/create-building/create-building.component';
+
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent }, 

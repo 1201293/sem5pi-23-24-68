@@ -1,4 +1,4 @@
-<mat-horizontal-stepper [linear]=true #stepper>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
 <mat-step [stepControl]="firstFormGroup">
 <form [formGroup]="firstFormGroup" >
   <ng-template matStepLabel>Select one building</ng-template>

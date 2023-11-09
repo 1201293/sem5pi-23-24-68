@@ -30,7 +30,7 @@ export class CreateFloorComponent implements OnInit {
   ngOnInit() {
     this.getBuildings();
     this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
+      firstCtrl: [' ', Validators.required],
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required],
@@ -46,12 +46,7 @@ export class CreateFloorComponent implements OnInit {
     this.floor.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
     this.floor.number=this.secondFormGroup.get("secondCtrl")?.value;
     this.floor.description=this.secondFormGroup.get("thirdCtrl")?.value;
-    if(!!this.floor.buildingId === false){
-      this._snackBar.open("You must select one building.",'Close',{duration:3000});
-    }else if(!!this.floor.description === false){
-      this._snackBar.open("You must write a description.",'Close',{duration:3000});
-    }else{
-        this.floorService.createFloor(this.floor as Floor).pipe(
+    this.floorService.createFloor(this.floor as Floor).pipe(
         catchError(error => {
           this._snackBar.open("Couldn't create the floor!\n Reason: " + error.error.error,'Close',{duration:3000});
           return of();
@@ -59,7 +54,6 @@ export class CreateFloorComponent implements OnInit {
         tap(result =>{
             this._snackBar.open("Floor created successfully!",'Close',{duration:3000});
         })).subscribe();
-    }
   }
 
   

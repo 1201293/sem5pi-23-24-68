@@ -21,6 +21,7 @@ import { CreateRoomComponent } from './Components/create-room/create-room.compon
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './Modules/material/material.module';
 import { TaskbarComponent } from './Components/taskbar/taskbar.component';
+import { CreateBuildingComponent } from './Components/create-building/create-building.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TaskbarComponent } from './Components/taskbar/taskbar.component';
     ListElevatorComponent,
     LoadFlorMapComponent,
     EditElevatorComponent,
-    ListFloorsWithElevatorComponent
+    ListFloorsWithElevatorComponent,
+    TaskbarComponent
   ],
   imports: [
     BrowserModule,
