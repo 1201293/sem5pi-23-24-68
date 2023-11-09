@@ -17,10 +17,13 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
+import { CreateBuildingComponent } from './Components/create-building/create-building-component';
+import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CreateBuildingComponent,
     CreateFloorComponent,
     LoginComponent,
     ListFloorsComponent,
@@ -32,7 +35,8 @@ import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-e
     ListElevatorComponent,
     LoadFlorMapComponent,
     EditElevatorComponent,
-    ListFloorsWithElevatorComponent
+    ListFloorsWithElevatorComponent,
+    ListBuildingsComponent
   ],
   imports: [
     BrowserModule,
