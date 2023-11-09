@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Observable,first } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
 import { Floor } from 'src/app/Interfaces/floor';
@@ -7,13 +7,15 @@ import { FloorService } from 'src/app/Services/floor.service';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { ElevatorService } from 'src/app/Services/elevator.service';
 import { __values } from 'tslib';
+import { catchError, of, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-elevator',
   templateUrl: './create-elevator.component.html',
   styleUrls: ['./create-elevator.component.css']
 })
-export class CreateElevatorComponent {
+export class CreateElevatorComponent implements OnInit {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
   thirdFormGroup!: FormGroup;
@@ -23,7 +25,7 @@ export class CreateElevatorComponent {
   elevator:Elevator ={};
 
   buildings!:Building[];
-  floors!:Floors[];
+  floors!:Floor[];
   
 
   constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private _snackBar:MatSnackBar,private _formBuilder: FormBuilder){}
