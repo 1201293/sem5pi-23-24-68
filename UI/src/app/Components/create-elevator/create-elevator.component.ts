@@ -14,64 +14,61 @@ import { __values } from 'tslib';
   styleUrls: ['./create-elevator.component.css']
 })
 export class CreateElevatorComponent {
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
+  thirdFormGroup!: FormGroup;
 
-  elevator : Elevator = {};
+  isLinear=true;
 
-  menuBuilding = true;
+  elevator:Elevator ={};
 
-  menuFloors = true;
+  buildings!:Building[];
+  floors!:Floors[];
+  
 
-  menuElevator = true;
+  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private _snackBar:MatSnackBar,private _formBuilder: FormBuilder){}
 
-  buildings$:Observable<Building[]>;
-
-  floors:Floor[]=[];
-
-  constructor(private buildingService:BuildingService,private floorService:FloorService, private elevatorService:ElevatorService) {
-    this.buildings$ = buildingService.getBuildings()
+  ngOnInit() {
+    this.getBuildings();
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required],
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required],
+      fourthCtrl: ['', Validators.required],
+      fifthCtrl: ['', Validators.required],
+      sixthCtrl: ['', Validators.required],
+      seventhCtrl: ['', Validators.required]
+    })
   }
 
-  extractCheckedFloorIds(): void {
-    this.elevator.floorsIds=(this.floors.filter((floor)=> floor.isChecked).map((floor)=> floor.id)).filter((value):value is string => typeof value === 'string');
+  getBuildings(){
+    this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
   }
 
-  buildingMenu() {
-    if (!!this.elevator.buildingId === false) {
-      alert("Error: Failed to create elevator.\nReason: You must select one building.");
-    } else {
-      this.floorService.getFloors(this.elevator.buildingId).pipe(
-        first()
-      ).subscribe(firstFloor => {
-        this.floors=firstFloor;
-      });
-      this.menuBuilding = !this.menuBuilding;
-      this.menuFloors = !this.menuFloors;
-    }
-  }
-
-  floorMenu() {
-    if (!!this.elevator.floorsIds === false || this.elevator.floorsIds?.length===0) {
-      alert("Error: Failed to create elevator.\nReason: You must select at least one floor.");
-    } else {
-      this.menuFloors = !this.menuFloors;
-      this.menuElevator = !this.menuElevator;
-    }
+  getFloors() {
+    this.floorService.getFloors(this.firstFormGroup.get("firstCtrl")?.value).subscribe(floors => this.floors=floors);
   }
 
   createElevator() {
-    if(!!this.elevator.code === false){
-      alert("Error: Failed to create elevator.\nReason: You must write a code.");
-    } else {
-      const elevator1 = this.elevatorService.createElevator(this.elevator as Elevator).subscribe(
-        (response) => {
-          alert("Success: Elevator created successfully");
-        },
-        (error) => {
-          alert("Error: Failed to create elevator.\nReason: "+error.error.error);
-        }
-      );
-      this.menuElevator = !this.menuElevator;
-      this.menuBuilding = !this.menuBuilding;
-    }
+    this.elevator.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
+    this.elevator.floorsIds=this.firstFormGroup.get("secondCtrl")?.value;
+    this.elevator.code=this.firstFormGroup.get("thirdCtrl")?.value;
+    this.elevator.brand=this.firstFormGroup.get("fourthCtrl")?.value;
+    this.elevator.model=this.firstFormGroup.get("fifthCtrl")?.value;
+    this.elevator.serialNumber=this.firstFormGroup.get("sixthCtrl")?.value;
+    this.elevator.description=this.secondFormGroup.get("seventhCtrl")?.value;
+    this.elevatorService.createElevator(this.elevator as Elevator).pipe(
+      catchError(error => {
+        this._snackBar.open("Couldn't create the elevator!\n Reason: " + error.error.error,'Close',{duration:3000});
+        return of();
+      }),
+      tap(result =>{
+        this._snackBar.open("Elevator created successfully!",'Close',{duration:3000});
+      })
+    ).subscribe();
   }
 }
