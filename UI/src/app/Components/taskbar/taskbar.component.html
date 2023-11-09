@@ -1,0 +1,55 @@
+<button mat-button><mat-icon>home</mat-icon></button>
+<button mat-button [matMenuTriggerFor]="building">
+  <div class="valign-center"><span>Building</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+<button mat-button [matMenuTriggerFor]="floor">
+  <div class="valign-center"><span>Floor</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+<button mat-button [matMenuTriggerFor]="bc">
+  <div class="valign-center"><span>Building Connection</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+<button mat-button [matMenuTriggerFor]="elevator">
+  <div class="valign-center"><span>Elevator</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+<button mat-button [matMenuTriggerFor]="room">
+  <div class="valign-center"><span>Room</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+
+<mat-menu #building="matMenu">
+  <button mat-menu-item>Create</button>
+  <button mat-menu-item>Edit</button>
+</mat-menu>
+
+<mat-menu #floor="matMenu">
+  <button mat-menu-item routerLink="create-floor">Create</button>
+  <button mat-menu-item routerLink="edit-floor">Edit</button>
+  <button mat-menu-item routerLink="list-floors">List From Buildings</button>
+  <button mat-menu-item routerLink="list-floors-with-connections">List With Connections</button>
+  <button mat-menu-item routerLink="list-floors-with-elevator">List With Elevator</button>
+  <button mat-menu-item routerLink="load-floor-map">Load Map</button>
+</mat-menu>
+
+<mat-menu #bc="matMenu">
+  <button mat-menu-item routerLink="create-building-connection">Create</button>
+  <button mat-menu-item routerLink="list-building-connections">List</button>
+</mat-menu>
+
+<mat-menu #elevator="matMenu">
+  <button mat-menu-item routerLink="create-elevator">Create</button>
+  <button mat-menu-item routerLink="edit-elevator">Edit</button>
+  <button mat-menu-item routerLink="list-elevator">List From Buildings</button>
+</mat-menu>
+
+<mat-menu #room="matMenu">
+  <button mat-menu-item routerLink="create-room">Create</button>
+</mat-menu>

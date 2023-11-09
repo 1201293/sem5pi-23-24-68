@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CreateFloorComponent } from './Components/create-floor/create-floor.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './Components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
@@ -17,7 +17,10 @@ import { ListElevatorComponent } from './Components/list-elevator/list-elevator.
 import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
-import { CreateRoom } from './Components/create-room/create-room.component';
+//import { CreateRoom } from './Components/create-room/create-room.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './Modules/material/material.module';
+import { TaskbarComponent } from './Components/taskbar/taskbar.component';
 
 @NgModule({
   declarations: [
@@ -29,18 +32,22 @@ import { CreateRoom } from './Components/create-room/create-room.component';
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
     ListBuildingConnectionsComponent,
-    CreateRoom,
+    //CreateRoom,
     CreateElevatorComponent,
     ListElevatorComponent,
     LoadFlorMapComponent,
     EditElevatorComponent,
-    ListFloorsWithElevatorComponent
+    ListFloorsWithElevatorComponent,
+    TaskbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
