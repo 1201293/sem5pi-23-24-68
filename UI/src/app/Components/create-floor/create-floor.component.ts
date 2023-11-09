@@ -51,19 +51,13 @@ export class CreateFloorComponent implements OnInit {
     }else if(!!this.floor.description === false){
       this._snackBar.open("You must write a description.",'Close',{duration:3000});
     }else{
-      const floor1=this.floorService.createFloor(this.floor as Floor).pipe(
+        this.floorService.createFloor(this.floor as Floor).pipe(
         catchError(error => {
-          console.error('Error:', error);
-          // Handle the error and continue with a placeholder response
-          this._snackBar.open("Couldn't create the floor!",'Close',{duration:3000});
-          return of('error');
+          this._snackBar.open("Couldn't create the floor!\n Reason: " + error.error.error,'Close',{duration:3000});
+          return of();
         }),
         tap(result =>{
-          if(result instanceof Error){
-            this._snackBar.open("Couldn't create the floor!",'Close',{duration:3000});
-          }else{
             this._snackBar.open("Floor created successfully!",'Close',{duration:3000});
-          }
         })).subscribe();
     }
   }
