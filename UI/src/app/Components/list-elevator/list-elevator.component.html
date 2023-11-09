@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="list-elevator.component.css">
-</head>
-<body>
-    <div class="container">
-        <h1>List Elevators</h1>
-        <form (ngSubmit)="toggleInfo()" >
-        <div class="form-group" [ngClass]="{  'off': menuBuilding }" >
-          <label for="building">Building:</label>
-          <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
-            <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
-          </select>
-          <div id="submit" style="text-align: center; padding: 10px;"><button type="submit" (click) ="toggleBoth()">List Elevator</button></div>
-        </div>
-        </form>
-        <div class="info" [ngClass]="{  'on': menuInfo }">
-        <div class="list-info" *ngIf="currentElevator"> 
-          <h2>Elevator Information</h2>
-          <p>Floors: {{ floorsCode }}</p>
-          <p>Code: {{ currentElevator.code }}</p>
-          <p>Brand: {{ currentElevator.brand }}</p>
-          <p>Model: {{ currentElevator.model }}</p>
-          <p>Serial Number: {{ currentElevator.serialNumber }}</p>
-          <p>Description: {{ currentElevator.description }}</p>
-        </div>
-        <div style="text-align: center; padding: 10px;">
-          <button id="otherBuilding" style="float: rigth;" (click)="toggleBoth()"  >Other Building</button>
-        </div>
-        <button id="previous" style="float:left" (click)="changeElevatorInfo(-1)">Previous</button>
-        <button id="next" style="float: right;" (click)="changeElevatorInfo(1)">Next</button>
-      </div>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+  <form [formGroup]="firstFormGroup" >
+    <ng-template matStepLabel>Select one building</ng-template>
+    <mat-form-field>
+      <mat-select name="buildingId" formControlName="firstCtrl">
+        <mat-option *ngFor="let building of buildings" [value]="building.id">{{building.code}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button matStepperNext (click)="getElevators()">Next</button>
     </div>
-</body>
-</html>
+  </form>
+  </mat-step>
+  <mat-step>
+    <mat-divider></mat-divider>
+      <ng-template matStepLabel>Elevators List</ng-template>
+      <mat-list role="list" *ngIf="(elevators!=undefined); else noElevators">
+        <mat-list-item *ngFor="let elevator of elevators">{{elevator.floorsIds}} {{elevator.code}} {{elevator.brand}} {{elevator.model}} {{elevator.serialNumber}} {{elevator.description}}</mat-list-item>
+      </mat-list>
+      <mat-divider></mat-divider>
+      <div>
+        <br>
+        <button mat-button (click)="stepper.reset();reset();">List elevators for other building</button>
+      </div>
+    </mat-step>
+    <ng-template #noElevators><br><mat-spinner [diameter]="30"></mat-spinner><br></ng-template>
+  </mat-horizontal-stepper>
