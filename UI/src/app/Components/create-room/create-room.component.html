@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="create-room.component.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Create a New Room</h1>
+        <form (ngSubmit)="loadFloors()">
+            <div class="form-group1" [ngClass]="{'off':menuBuilding}">
+                <label for="building">Building:</label>
+                <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
+                  <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
+                </select>
+                <div id = "submit" style="text-align: center; padding: 10px;"><button type="submit" (click) = "toggleBoth()">Select Building</button></div>
+            </div>
+
+        </form>
+
+        <form (ngSubmit)="createRoom()">
+
+            <div class="form-group2" [ngClass]="{'on':menuRoom}">
+                <label for="floor">Floor:</label>
+                <select id="floor" name="floor" class="form-control" [(ngModel)]="room.floorId" required>
+                  <option *ngFor="let floor of floors$ |async" [value]="floor.id">{{ floor.number }}</option>
+                </select>
+                <label for="name">Name:</label>
+                <textarea id="name" name="name" [(ngModel)]="room.name" rows="1" required></textarea>
+                <label for="category">Category:</label>
+                <textarea id="category" name="category" [(ngModel)]="room.category" rows="1" required></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" [(ngModel)]="room.description" rows="4" required></textarea>
+                <div id = "submit" style="text-align: center; padding: 10px;"><button type="submit" (click) = "toggleBoth()">Create Room</button></div>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
