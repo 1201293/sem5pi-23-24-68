@@ -25,6 +25,7 @@ import { TaskbarComponent } from './Components/taskbar/taskbar.component';
 @NgModule({
   declarations: [
     AppComponent,
+    CreateBuildingComponent,
     CreateFloorComponent,
     LoginComponent,
     ListFloorsComponent,
@@ -37,8 +38,7 @@ import { TaskbarComponent } from './Components/taskbar/taskbar.component';
     ListElevatorComponent,
     LoadFlorMapComponent,
     EditElevatorComponent,
-    ListFloorsWithElevatorComponent,
-    TaskbarComponent
+    ListFloorsWithElevatorComponent
   ],
   imports: [
     BrowserModule,
