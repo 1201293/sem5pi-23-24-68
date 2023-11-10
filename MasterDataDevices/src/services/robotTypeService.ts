@@ -20,7 +20,7 @@ export default class RobotTypeService implements IRobotTypeService {
       const robotTypeOrError = await RobotType.create( robotTypeDTO );
 
       if (robotTypeOrError.isFailure) {
-        return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
+        return Result.fail<IRobotTypeDTO>({"error":robotTypeOrError.errorValue()});
       }
 
       const robotTypeResult = robotTypeOrError.getValue();

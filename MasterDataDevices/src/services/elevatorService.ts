@@ -26,7 +26,7 @@ export default class ElevatorService implements IElevatorService{
             const buildingOrError= await this.buildingRepo.findByDomainId(elevatorDTO.buildingId);
 
             if(buildingOrError == null){
-                return Result.fail<IElevatorDTO>(elevatorDTO);
+                return Result.fail<IElevatorDTO>({"error":elevatorDTO});
             }
 
             // Check if Floors Exists
@@ -34,7 +34,7 @@ export default class ElevatorService implements IElevatorService{
             elevatorDTO.floorsIds.forEach(async (floorId) => {
                 const floorOrError = await this.floorRepo.findByDomainId(floorId);
                 if(floorOrError == null){
-                    return Result.fail<IElevatorDTO>(elevatorDTO);
+                    return Result.fail<IElevatorDTO>({"error":elevatorDTO});
                 }
             });
 
@@ -45,13 +45,13 @@ export default class ElevatorService implements IElevatorService{
             // if building has elevator, then it will fail
 
             if(buildingHasElevator.length != 0){
-                return Result.fail<IElevatorDTO>(elevatorDTO);
+                return Result.fail<IElevatorDTO>({"error":elevatorDTO});
             }
 
             const elevatorOrError = await Elevator.create(elevatorDTO);
 
             if(elevatorOrError.isFailure){
-                return Result.fail<IElevatorDTO>(elevatorOrError.errorValue());
+                return Result.fail<IElevatorDTO>({"error":elevatorOrError.errorValue()});
             }
 
             const elevatorResult = elevatorOrError.getValue();
@@ -72,7 +72,7 @@ export default class ElevatorService implements IElevatorService{
             const elevatorResult = await this.elevatorRepo.findByDomainId(elevatorDTO.id);
 
             if(elevatorResult == null){
-                return Result.fail<IElevatorDTO>("Elevator Id does not exist");
+                return Result.fail<IElevatorDTO>({"error":"Elevator Id does not exist"});
             }
 
             if(!!elevatorDTO.floorsIds) {

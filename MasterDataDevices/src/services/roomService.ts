@@ -27,7 +27,7 @@ export default class RoomService implements IRoomService {
       const roomOrError = await Room.create( roomDTO );
 
       if (roomOrError.isFailure) {
-        return Result.fail<IRoomDTO>(roomOrError.errorValue());
+        return Result.fail<IRoomDTO>({"error":roomOrError.errorValue()});
       }
 
       const roomResult = roomOrError.getValue();

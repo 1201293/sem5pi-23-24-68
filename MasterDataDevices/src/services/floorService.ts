@@ -52,7 +52,7 @@ export default class FloorService implements IFloorService {
       const floorOrError = await Floor.create( floorDTO );
 
       if (floorOrError.isFailure) {
-        return Result.fail<IFloorDTO>(floorOrError.errorValue());
+        return Result.fail<IFloorDTO>({"error":floorOrError.errorValue()});
       }
 
       const floorResult = floorOrError.getValue();
@@ -273,11 +273,7 @@ export default class FloorService implements IFloorService {
       const floorResult = await this.floorRepo.findByDomainId(floorDTO.id);
 
       if(floorResult == null){
-          return Result.fail<IFloorDTO>("Floor does not exist");
-      }
-
-      if(!!floorDTO.buildingId){ 
-        floorResult.buildingId = floorDTO.buildingId;
+          return Result.fail<IFloorDTO>({"error":"Floor does not exist"});
       }
 
       if(!!floorDTO.number){
@@ -286,6 +282,16 @@ export default class FloorService implements IFloorService {
 
       if(!!floorDTO.description){
         floorResult.description = floorDTO.description;
+      }
+
+      if(!!floorDTO.buildingId){
+        const floorResult1 = await this.floorRepo.findByBuildingId(floorDTO.buildingId);
+        for(let i=0;i<floorResult1.length;i++){
+          if(floorResult.number === floorResult1[i].number){
+            return Result.fail<IFloorDTO>({"error":"Duplicated floor in that building"});
+          }
+        }
+        floorResult.buildingId = floorDTO.buildingId;
       }
 
       await this.floorRepo.save(floorResult);

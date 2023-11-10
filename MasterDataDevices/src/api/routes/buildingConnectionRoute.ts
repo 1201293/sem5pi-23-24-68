@@ -17,8 +17,7 @@ export default (app: Router) => {
     celebrate({
       body: Joi.object({
         floor1Id: Joi.string().required(),
-        floor2Id: Joi.string().required(),
-        description:Joi.string().required()
+        floor2Id: Joi.string().required()
       })
     }),
     (req, res, next) => ctrl.createBuildingConnection(req, res, next) );
@@ -29,8 +28,7 @@ export default (app: Router) => {
       body:Joi.object({
         id: Joi.string().required(),
         floor1Id: Joi.string().required(),
-        floor2Id: Joi.string().required(),
-        description:Joi.string().required()
+        floor2Id: Joi.string().required()
       })
     }),
     (req, res, next) => ctrl.updateBuildingConnection(req, res, next) );
@@ -40,7 +38,6 @@ export default (app: Router) => {
         id: Joi.string().required(),
         floor1Id: Joi.string(),
         floor2Id: Joi.string(),
-        description:Joi.string(),
       })
     }),
     (req, res, next) => ctrl.updateBuildingConnection(req, res, next) );

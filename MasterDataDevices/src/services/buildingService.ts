@@ -21,7 +21,7 @@ export default class BuildingService implements IBuildingService {
       const buildingOrError = await Building.create( buildingDTO );
 
       if (buildingOrError.isFailure) {
-        return Result.fail<IBuildingDTO>(buildingOrError.errorValue());
+        return Result.fail<IBuildingDTO>({"error":buildingOrError.errorValue()});
       }
 
       const buildingResult = buildingOrError.getValue();
@@ -77,7 +77,7 @@ export default class BuildingService implements IBuildingService {
         const buildingResult= await this.buildingRepo.findByDomainId(buildingDTO.id);
 
         if(buildingResult == null){
-            return Result.fail<IBuildingDTO>("Building Id does not exist");
+            return Result.fail<IBuildingDTO>({"error":"Building Id does not exist"});
         }
 
         if(!!buildingDTO.code){
