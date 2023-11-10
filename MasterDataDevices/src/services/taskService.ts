@@ -33,7 +33,7 @@ export default class TaskService implements ITaskService {
   public async createTask(taskDTO: ITaskDTO): Promise<Result<ITaskDTO>> {
     try {
 
-      const taskOrError = await Task.create( taskDTO );
+      const taskOrError = Task.create( taskDTO );
 
       if (taskOrError.isFailure) {
         return Result.fail<ITaskDTO>({"error":taskOrError.errorValue()});

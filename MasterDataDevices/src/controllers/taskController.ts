@@ -13,7 +13,7 @@ import { ParsedQs } from 'qs';
 @Service()
 export default class TaskController implements ITaskController /* TODO: extends ../core/infra/BaseController */ {
   constructor(
-      @Inject(config.services.role.name) private taskServiceInstance : ITaskService
+      @Inject(config.services.task.name) private taskServiceInstance : ITaskService
   ) {}
 
   public async createTask(req: Request, res: Response, next: NextFunction) {

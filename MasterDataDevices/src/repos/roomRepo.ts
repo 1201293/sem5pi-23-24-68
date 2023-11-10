@@ -94,7 +94,7 @@ export default class RoomRepo implements IRoomRepo {
     
     if(roomRecord.length != 0){
       roomRecord.forEach((element) => {
-        rooms.push(RoomMap.toDTO(element));
+        rooms.push(RoomMap.toDomain(element));
       })
     }
     return rooms;

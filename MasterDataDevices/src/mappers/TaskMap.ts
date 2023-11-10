@@ -18,7 +18,7 @@ export class TaskMap extends Mapper<Task> {
   }
 
   public static toDomain (task: any | Model<ITaskPersistence & Document> ): Task {
-    const taskOrError = task.create(
+    const taskOrError = Task.create(
       task,
       new UniqueEntityID(task.domainId)
     );

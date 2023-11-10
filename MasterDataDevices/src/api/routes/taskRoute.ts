@@ -11,7 +11,7 @@ const route = Router();
 export default (app: Router) => {
   app.use('/tasks', route);
 
-  const ctrl = Container.get(config.controllers.role.name) as ITaskController;
+  const ctrl = Container.get(config.controllers.task.name) as ITaskController;
 
   route.post('',
     celebrate({
