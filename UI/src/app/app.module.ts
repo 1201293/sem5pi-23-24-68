@@ -22,6 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './Modules/material/material.module';
 import { TaskbarComponent } from './Components/taskbar/taskbar.component';
 import { CreateBuildingComponent } from './Components/create-building/create-building.component';
+import { CreateRobotComponent } from './Components/create-robot/create-robot.component';
+import { CreateRobotTypeComponent } from './Components/create-robot-type/create-robot-type.component';
+import { ListRobotsComponent } from './Components/list-robots/list-robots.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { CreateBuildingComponent } from './Components/create-building/create-bui
     LoadFlorMapComponent,
     EditElevatorComponent,
     ListFloorsWithElevatorComponent,
+    CreateRobotTypeComponent,
+    CreateRobotComponent,
+    ListRobotsComponent,
     TaskbarComponent
   ],
   imports: [
