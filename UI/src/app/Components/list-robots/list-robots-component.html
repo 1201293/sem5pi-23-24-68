@@ -1,0 +1,11 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+<mat-step>
+    <mat-divider></mat-divider>
+    <ng-template matStepLabel>Robots List</ng-template>
+    <mat-list role="list" *ngIf="(robots!=undefined); else noFloors">
+        <mat-list-item *ngFor="let robot of robots">{{robot.id}} {{robot.code}} {{robot.name}} {{robot.robotTypeId}} {{robot.number}} {{robot.status}} {{robot.description}}</mat-list-item>
+    </mat-list>
+    <mat-divider></mat-divider>
+    </mat-step>
+    <ng-template #noFloors><br><mat-spinner [diameter]="30"></mat-spinner><br></ng-template>
+</mat-horizontal-stepper>
