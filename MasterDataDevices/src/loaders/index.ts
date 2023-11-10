@@ -21,6 +21,12 @@ export default async ({ expressApp }) => {
     schema: '../persistence/schemas/roleSchema',
   };
 
+  const taskSchema = {
+    // compare with the approach followed in repos and services
+    name: 'taskSchema',
+    schema: '../persistence/schemas/taskSchema',
+  };
+
   const buildingSchema = {
     // compare with the approach followed in repos and services
     name: 'buildingSchema',
@@ -66,6 +72,11 @@ export default async ({ expressApp }) => {
     path: config.controllers.role.path
   }
 
+  const taskController = {
+    name: config.controllers.task.name,
+    path: config.controllers.task.path
+  }
+
   const buildingController = {
     name: config.controllers.building.name,
     path: config.controllers.building.path
@@ -104,6 +115,11 @@ export default async ({ expressApp }) => {
   const roleRepo = {
     name: config.repos.role.name,
     path: config.repos.role.path
+  }
+
+  const taskRepo = {
+    name: config.repos.task.name,
+    path: config.repos.task.path
   }
 
   const userRepo = {
@@ -151,6 +167,11 @@ export default async ({ expressApp }) => {
     path: config.services.role.path
   }
 
+  const taskService = {
+    name: config.services.task.name,
+    path: config.services.task.path
+  }
+
   const buildingService = {
     name: config.services.building.name,
     path: config.services.building.path
@@ -191,6 +212,7 @@ export default async ({ expressApp }) => {
     schemas: [
       userSchema,
       roleSchema,
+      taskSchema,
       buildingSchema,
       floorSchema,
       roomSchema,
@@ -201,6 +223,7 @@ export default async ({ expressApp }) => {
     ],
     controllers: [
       roleController,
+      taskController,
       buildingController,
       floorController,
       roomController,
@@ -211,6 +234,7 @@ export default async ({ expressApp }) => {
     ],
     repos: [
       roleRepo,
+      taskRepo,
       userRepo,
       buildingRepo,
       floorRepo,
@@ -222,6 +246,7 @@ export default async ({ expressApp }) => {
     ],
     services: [
       roleService,
+      taskService,
       buildingService,
       floorService,
       roomService,

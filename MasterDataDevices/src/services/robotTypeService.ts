@@ -6,16 +6,29 @@ import IRobotTypeRepo from '../services/IRepos/IRobotTypeRepo';
 import IRobotTypeService from './IServices/IRobotTypeService';
 import { Result } from "../core/logic/Result";
 import { RobotTypeMap } from "../mappers/RobotTypeMap";
+import ITaskRepo from './IRepos/ITaskRepo';
 
 @Service()
 export default class RobotTypeService implements IRobotTypeService {
   constructor(
-      @Inject(config.repos.robotType.name) private robotTypeRepo : IRobotTypeRepo
+      @Inject(config.repos.robotType.name) private robotTypeRepo : IRobotTypeRepo,
+      @Inject(config.repos.task.name) private taskRepo : ITaskRepo
   ) {}
 
 
   public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
     try {
+
+      const tasksIds=[]
+
+      for (let i = 0; i < robotTypeDTO.possibleTasks.length; i++) {
+        const taskResult=await this.taskRepo.findByDomainId(robotTypeDTO.possibleTasks[i]);
+        if(taskResult == null){
+          return Result.fail<IRobotTypeDTO>({"error": "Must provide valid tasks"});
+        }else{
+          tasksIds.push(taskResult.id);
+        }
+      }
 
       const robotTypeOrError = await RobotType.create( robotTypeDTO );
 

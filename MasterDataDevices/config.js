@@ -45,6 +45,10 @@ export default {
       name: "RoleController",
       path: "../controllers/roleController"
     },
+    task: {
+      name: "TaskController",
+      path: "../controllers/taskController"
+    },
     building:{
       name: "BuildingController",
       path:"../controllers/buildingController"
@@ -79,6 +83,10 @@ export default {
     role: {
       name: "RoleRepo",
       path: "../repos/roleRepo"
+    },
+    task: {
+      name: "TaskRepo",
+      path: "../repos/taskRepo"
     },
     building: {
       name: "BuildingRepo",
@@ -118,6 +126,10 @@ export default {
     role: {
       name: "RoleService",
       path: "../services/roleService"
+    },
+    task: {
+      name: "TaskService",
+      path: "../services/taskService"
     },
     building: {
       name: "BuildingService",

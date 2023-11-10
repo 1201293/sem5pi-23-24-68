@@ -29,4 +29,8 @@ export default (app: Router) => {
       }),
     }),
     (req, res, next) => ctrl.updateRole(req, res, next) );
+
+    route.get('', (req, res, next) => ctrl.getRoles(req, res, next));
+
+    route.get('/:id', (req, res, next) => ctrl.getRole(req, res, next));
 };

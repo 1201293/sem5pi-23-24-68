@@ -7,6 +7,8 @@ import IRoleService from '../services/IServices/IRoleService';
 import IRoleDTO from '../dto/IRoleDTO';
 
 import { Result } from "../core/logic/Result";
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
 
 @Service()
 export default class RoleController implements IRoleController /* TODO: extends ../core/infra/BaseController */ {
@@ -44,5 +46,39 @@ export default class RoleController implements IRoleController /* TODO: extends 
     catch (e) {
       return next(e);
     }
-  };
+  }
+  
+  public async getRoles(req: Request, res: Response, next: NextFunction) {
+    try {
+      const roleOrError = await this.roleServiceInstance.getRoles() as Result<IRoleDTO[]>;
+
+      if (roleOrError.isFailure) {
+        return res.status(404).json(roleOrError.errorValue()).send();
+      }
+
+      const roleDTO = roleOrError.getValue();
+      return res.status(201).json( roleDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
+
+  public async getRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      let aux=req.params.id;
+      const roleOrError = await this.roleServiceInstance.getRole(aux) as Result<IRoleDTO>;
+
+      if (roleOrError.isFailure) {
+        return res.status(404).json(roleOrError.errorValue()).send();
+      }
+
+      const roleDTO = roleOrError.getValue();
+      return res.status(201).json( roleDTO );
+    }
+    catch (e) {
+      return next(e);
+    }
+  }
+
 }
