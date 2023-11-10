@@ -24,4 +24,7 @@ export default (app: Router) => {
       })
     }),
     (req, res, next) => ctrl.createRobotType(req, res, next) );
+
+  route.get('', middlewares.checkGestorFrota, (req,res,next) => ctrl.listRobotTypes(req,res,next));
+
 };

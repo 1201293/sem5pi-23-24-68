@@ -24,4 +24,10 @@ export class RobotTypeService {
     );
   }
 
+  getRobotTypes():Observable<RobotType[]>{
+    return this.http.get<RobotType[]>(
+      "http://localhost:4000/api/robotTypes",
+      {observe: 'body', responseType: 'json'}
+      );
+  }
 }
