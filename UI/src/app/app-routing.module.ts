@@ -15,12 +15,14 @@ import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-e
 import { CreateRoomComponent } from './Components/create-room/create-room.component';
 import { CreateBuildingComponent } from './Components/create-building/create-building.component';
 import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
+import { ListBuildingsByMinMaxNumberOfFloorsComponent } from './Components/list-buildings-by-min-max-number-of-floors/list-buildings-by-min-max-number-of-floors.component';
 
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent }, 
   { path: 'create-building', component: CreateBuildingComponent},
   { path: 'list-buildings', component: ListBuildingsComponent},
+  { path: 'list-buildings-by-min-max-number-of-floors', component: ListBuildingsByMinMaxNumberOfFloorsComponent},
   { path: 'list-floors', component: ListFloorsComponent },
   { path: 'list-floors-with-connections', component: ListFloorsWithConnectionsComponent },
   { path: 'list-floors-with-elevator', component: ListFloorsWithElevatorComponent },

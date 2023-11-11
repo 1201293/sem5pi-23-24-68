@@ -43,4 +43,11 @@ export class BuildingService {
       {observe: 'body', responseType: 'json'}
       );
   }
+
+  getBuildingByMinMaxFloors(min: number, max: number):Observable<Building[]>{
+    return this.http.get<Building[]>(
+      "http://localhost:4000/api/buildings/inFloorLimit/:" + min + "/:" + max,
+      {observe: 'body', responseType: 'json'}
+      );
+  }
 }
