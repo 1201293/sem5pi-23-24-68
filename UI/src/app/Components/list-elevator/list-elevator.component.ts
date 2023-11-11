@@ -18,7 +18,8 @@ export class ListElevatorComponent {
   buildingId?:string;
   elevators?:Elevator[];
   buildings!:Building[];
-  floors!:Floor[];
+  floors:Floor[]=[];
+  floorsNumbers:number[]=[];
 
   constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private _formBuilder:FormBuilder){}
 
@@ -39,7 +40,25 @@ export class ListElevatorComponent {
       this.elevators=undefined;
     }else{
       this.elevatorService.getElevators(this.buildingId).subscribe(elevators => this.elevators=elevators);
+      this.floorService.getFloors(this.buildingId).subscribe(floors => this.floors=floors);
     }
+  }
+
+  mapFloorIdsToNumbers(floorsIds?: string[]) {
+    this.floorsNumbers = [];
+    if (floorsIds) {
+      for (let i = 0; i < floorsIds.length; i++) {
+        for (let j = 0; j < this.floors.length; j++) {
+          if (floorsIds[i] === this.floors[j].id) {
+            let number = this.floors[j].number;
+            if (number != undefined) {
+              this.floorsNumbers.push(number);
+            }
+          }
+        }
+      }
+    }
+    return this.floorsNumbers
   }
 
   reset(){

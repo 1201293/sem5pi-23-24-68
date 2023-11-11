@@ -26,6 +26,7 @@ import { CreateRobotComponent } from './Components/create-robot/create-robot.com
 import { CreateRobotTypeComponent } from './Components/create-robot-type/create-robot-type.component';
 import { ListRobotsComponent } from './Components/list-robots/list-robots.component';
 import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
+import { ListBuildingsByMinMaxNumberOfFloorsComponent } from './Components/list-buildings-by-min-max-number-of-floors/list-buildings-by-min-max-number-of-floors.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ListBuildingsComponent } from './Components/list-buildings/list-buildin
     CreateRobotTypeComponent,
     CreateRobotComponent,
     ListRobotsComponent,
-    TaskbarComponent
+    TaskbarComponent,
+    ListBuildingsByMinMaxNumberOfFloorsComponent
   ],
   imports: [
     BrowserModule,
