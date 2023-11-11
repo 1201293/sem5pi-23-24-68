@@ -8,7 +8,7 @@ import { ListFloorsComponent } from './Components/list-floors/list-floors.compon
 import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
-import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
+import { LoadFloorMapComponent } from './Components/load-floor-map/load-floor-map.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: 'list-floors-with-connections', component: ListFloorsWithConnectionsComponent },
   { path: 'list-floors-with-elevator', component: ListFloorsWithElevatorComponent },
   { path: 'edit-floor', component: EditFloorsComponent},
-  { path: 'load-floor-map', component: LoadFlorMapComponent},
+  { path: 'load-floor-map', component: LoadFloorMapComponent},
   { path: 'create-elevator', component: CreateElevatorComponent },
   { path: 'list-elevator', component: ListElevatorComponent },
   { path: 'edit-elevator', component: EditElevatorComponent},

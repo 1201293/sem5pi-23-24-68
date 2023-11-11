@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title="UI";
   menuFloors:boolean=false;
   menuBuildings:boolean=false;
   menuBuildingConnections:boolean=false;

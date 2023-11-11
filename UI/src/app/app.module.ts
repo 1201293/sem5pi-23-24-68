@@ -14,7 +14,7 @@ import { CreateBuildingConnectionComponent } from './Components/create-building-
 import { ListBuildingConnectionsComponent } from './Components/list-building-connections/list-building-connections.component';
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
-import { LoadFlorMapComponent } from './Components/load-flor-map/load-flor-map.component';
+import { LoadFloorMapComponent } from './Components/load-floor-map/load-floor-map.component';
 import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.component';
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
 import { CreateRoomComponent } from './Components/create-room/create-room.component';
@@ -42,7 +42,7 @@ import { ListBuildingsComponent } from './Components/list-buildings/list-buildin
     CreateRoomComponent,
     CreateElevatorComponent,
     ListElevatorComponent,
-    LoadFlorMapComponent,
+    LoadFloorMapComponent,
     EditElevatorComponent,
     ListFloorsWithElevatorComponent,
     CreateRobotTypeComponent,

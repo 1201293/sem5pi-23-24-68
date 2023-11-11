@@ -11,7 +11,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatCardModule} from '@angular/material/card'
+import {MatCardModule} from '@angular/material/card';
+import { MatSortModule} from '@angular/material/sort';
 
 
 
@@ -19,10 +20,10 @@ import {MatCardModule} from '@angular/material/card'
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,MatButtonModule,MatToolbarModule,MatMenuModule,MatStepperModule,MatIconModule,MatSnackBarModule,MatFormFieldModule,MatInputModule,MatSelectModule,MatListModule,MatProgressSpinnerModule,MatCardModule
+    CommonModule,MatButtonModule,MatToolbarModule,MatMenuModule,MatStepperModule,MatIconModule,MatSnackBarModule,MatFormFieldModule,MatInputModule,MatSelectModule,MatListModule,MatProgressSpinnerModule,MatCardModule,MatSortModule
   ],
   exports: [
-    MatButtonModule,MatToolbarModule,MatMenuModule,MatStepperModule,MatIconModule,MatSnackBarModule,MatFormFieldModule,MatInputModule,MatSelectModule,MatListModule,MatProgressSpinnerModule,MatCardModule
+    MatButtonModule,MatToolbarModule,MatMenuModule,MatStepperModule,MatIconModule,MatSnackBarModule,MatFormFieldModule,MatInputModule,MatSelectModule,MatListModule,MatProgressSpinnerModule,MatCardModule,MatSortModule
   ],
 })
 export class MaterialModule { }

@@ -14,11 +14,11 @@ import { FloorService } from 'src/app/Services/floor.service';
 import { RoomService } from 'src/app/Services/room.service';
 
 @Component({
-  selector: 'app-load-flor-map',
-  templateUrl: './load-flor-map.component.html',
-  styleUrls: ['./load-flor-map.component.css']
+  selector: 'app-load-floor-map',
+  templateUrl: './load-floor-map.component.html',
+  styleUrls: ['./load-floor-map.component.css']
 })
-export class LoadFlorMapComponent implements OnInit {
+export class LoadFloorMapComponent implements OnInit {
 
   isLinear=true;
 

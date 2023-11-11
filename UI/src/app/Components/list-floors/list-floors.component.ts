@@ -5,6 +5,7 @@ import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
 import { FloorService } from 'src/app/Services/floor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-floors',
