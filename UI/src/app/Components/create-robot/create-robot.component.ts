@@ -36,8 +36,7 @@ export class CreateRobotComponent implements OnInit {
       secondCtrl: ['', Validators.required],
       thirdCtrl: ['', Validators.required],
       fourthCtrl: ['', Validators.required],
-      fifthCtrl: ['', Validators.required],
-      sixthCtrl: ['', Validators.required]
+      fifthCtrl: ['', Validators.required]
     });
   }
 
@@ -50,18 +49,13 @@ export class CreateRobotComponent implements OnInit {
     this.robot.code=this.secondFormGroup.get("secondCtrl")?.value;
     this.robot.name=this.secondFormGroup.get("thirdCtrl")?.value;
     this.robot.number=this.secondFormGroup.get("fourthtrl")?.value;
-    this.robot.status=this.secondFormGroup.get("fifthCtrl")?.value;
-    this.robot.description=this.secondFormGroup.get("sixthCtrl")?.value;
+    this.robot.description=this.secondFormGroup.get("fifthCtrl")?.value;
     if(!!this.robot.robotTypeId === false){
       this._snackBar.open("You must select one robot Type",'Close',{duration:3000});
     }else if(!!this.robot.code === false){
         this._snackBar.open("You must write a code.",'Close',{duration:3000});
     }else if(!!this.robot.name === false){
         this._snackBar.open("You must write a name.",'Close',{duration:3000});
-    }else if(!!this.robot.number === false){
-        this._snackBar.open("You must write a number.",'Close',{duration:3000});
-    }else if(!!this.robot.status === false){
-        this._snackBar.open("You must write a status.",'Close',{duration:3000});
     }else if(!!this.robot.description === false){
       this._snackBar.open("You must write a description.",'Close',{duration:3000});
     }else{

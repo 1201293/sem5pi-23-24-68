@@ -18,6 +18,7 @@ export class ListRobotsComponent implements OnInit {
   constructor(private robotService:RobotService,private _snackBar:MatSnackBar,private _formBuilder: FormBuilder){}
 
   ngOnInit() {
+    this.getRobots();
   }
 
   getRobots() {

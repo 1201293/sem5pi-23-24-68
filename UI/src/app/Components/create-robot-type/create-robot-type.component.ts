@@ -20,7 +20,6 @@ export class CreateRobotTypeComponent implements OnInit {
   isLinear=true;
 
   robotType:RobotType = {};
-
   tasks!:Task[];
 
   
@@ -43,11 +42,13 @@ export class CreateRobotTypeComponent implements OnInit {
   
   
   createRobotType() {
-    this.robotType.possibleTasks=this.firstFormGroup.get("firstCtrl")?.value;
+    let possibleTasks = [];
+    possibleTasks.push(this.firstFormGroup.get("firstCtrl")?.value);
+    this.robotType.possibleTasks=possibleTasks;
     this.robotType.type=this.secondFormGroup.get("secondCtrl")?.value;
     this.robotType.brand=this.secondFormGroup.get("thirdCtrl")?.value;
     this.robotType.model=this.secondFormGroup.get("fourthCtrl")?.value;
-    if(!!this.robotType.possibleTasks === false){
+    if(this.robotType.possibleTasks.length == 0){
       this._snackBar.open("You must select at least one task",'Close',{duration:3000});
     }else if(!!this.robotType.type === false){
       this._snackBar.open("You must write a type.",'Close',{duration:3000});
