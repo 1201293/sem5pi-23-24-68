@@ -18,7 +18,7 @@ export class RobotTypeService {
       })
     };
     return this.http.post<RobotType>(
-      "http://localhost:4000/api/robotType",
+      "http://localhost:4000/api/robotTypes",
       robotType,
       httpOptions
     );
