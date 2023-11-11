@@ -7,6 +7,8 @@ import IBuildingConnectionService from '../services/IServices/IBuildingConnectio
 import IBuildingConnectionDTO from '../dto/IBuildingConnectionDTO';
 
 import { Result } from "../core/logic/Result";
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
 
 @Service()
 export default class BuildingConnectionController implements IBuildingConnectionController /* TODO: extends ../core/infra/BaseController */ {
@@ -63,5 +65,21 @@ export default class BuildingConnectionController implements IBuildingConnection
       return next(e);
     }
       
+  }
+
+  public async getBuildingConnectionsByFloorId(req: Request, res: Response, next: NextFunction) {
+    try{
+      let aux=req.params.id;
+      const buildingConnectionOrError = await this.buildingConnectionServiceInstance.getBuildingConnectionsByFloorId(aux) as Result<IBuildingConnectionDTO[]>;
+        
+      if (buildingConnectionOrError.isFailure) {
+        return res.status(402).json(buildingConnectionOrError.errorValue()).send();
+      }
+
+      const buildingConnectionDTO = buildingConnectionOrError.getValue();
+      return res.json( buildingConnectionDTO ).status(200);
+    }catch(e){
+      return next(e);
+    }
   }
 }

@@ -1,157 +1,30 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: white;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  background-color:whitesmoke;
-  position: fixed;
-  padding: 2em;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 350px;
-  align-items: center;
-}
-
-h1 {
-  font-size: 24px;
-  margin: 0 0 20px;
-  text-align: center;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.list-info {
-  margin-bottom: 15px;
-}
-
-label {
-  font-size: 16px;
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="text"],.initial,
-textarea {
-  width: 94%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-.form-control{
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-button{
-  background-color: black;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #373534;
-}
-
-.form-group.off{
-  display: none;
-}
-
-.form-group2{
-  display: none;
-}
-
-.form-group2.on{
-  display: block;
-}
-
-.form-group3{
-  display: none;
-}
-
-.form-group3.on{
-  display: block;
-}
-
-.form-group4{
-  display: none;
-}
-
-.form-group4.on{
-  display: block;
-} 
-
-.form-group5{
-  display: none;
-}
-
-.form-group5.on{
-  display: block;
-}
-
-.form-group6{
-  display: none;
-}
-
-.form-group6.on{
-  display: block;
-}
-
-.form-group7{
-  display: none;
-}
-
-.form-group7.on{
-  display: block;
-}
-
-.matrix-table {
+/* Custom CSS for a Material-style table */
+.material-table {
+  width: 45%;
   border-collapse: collapse;
-  width: 100%;
+  margin-bottom: 16px; /* Optional: Add margin at the bottom for spacing */
 }
 
-.matrix-table th,
-.matrix-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+.material-table th, .material-table td {
+  border: 1px solid #ddd; /* Add borders to cells */
+  padding: 8px; /* Add padding to cells */
+  text-align: left; /* Align text to the left */
 }
 
-.matrix-table th {
-  background-color: #f2f2f2;
+.material-table th {
+  background-color: #fff; /* Header background color */
 }
 
-.matrix-table input {
-  width: 100%;
-  padding: 5px;
-  text-align: center;
-  border: none;
-  background-color: transparent;
-  color: #000;
-  font-weight: bold;
+.material-table tr:nth-child(even) {
+  background-color: #fff; /* Alternate row background color */
 }
 
+.material-table tr:hover {
+  background-color: #fff; /* Hover background color */
+}
 
-
-
+.material-table input {
+  border: 0;
+  width: 75%;
+  margin: 0;
+}

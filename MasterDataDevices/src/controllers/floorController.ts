@@ -87,7 +87,7 @@ export default class FloorController implements IFloorController /* TODO: extend
       let elevators=[];
       if(req.body.elevators!=null){
         for(let i=0;i<req.body.elevators.length;i++){
-          connections.push(req.body.elevators[i] as IElevatorDTO);
+          elevators.push(req.body.elevators[i] as IElevatorDTO);
         }
       }
 
