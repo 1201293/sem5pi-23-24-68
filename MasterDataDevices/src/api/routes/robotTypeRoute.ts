@@ -14,7 +14,7 @@ export default (app: Router) => {
 
   const ctrl = Container.get(config.controllers.robotType.name) as IRobotTypeController;
 
-  route.post('',middlewares.checkGestorFrota,
+  route.post('',
     celebrate({
       body: Joi.object({
         type: Joi.string().required(),
@@ -25,6 +25,6 @@ export default (app: Router) => {
     }),
     (req, res, next) => ctrl.createRobotType(req, res, next) );
 
-  route.get('', middlewares.checkGestorFrota, (req,res,next) => ctrl.listRobotTypes(req,res,next));
+  route.get('', (req,res,next) => ctrl.listRobotTypes(req,res,next));
 
 };
