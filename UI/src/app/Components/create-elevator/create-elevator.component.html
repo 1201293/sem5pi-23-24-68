@@ -8,7 +8,7 @@
           </mat-select>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button matStepperNext (click) = "getFloors()">Next</button>
         </div>
       </form>
     </mat-step>
@@ -16,7 +16,7 @@
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Select the floors</ng-template>
             <mat-form-field>
-              <mat-select name="floorsIds" formControlName="secondCtrl" multiple>
+              <mat-select name="floorId" formControlName="secondCtrl" multiple>
                 <mat-option *ngFor="let floor of floors" [value]="floor.id">{{floor.number}}</mat-option>
               </mat-select>
             </mat-form-field>

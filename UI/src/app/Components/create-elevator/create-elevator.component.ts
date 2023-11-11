@@ -57,12 +57,12 @@ export class CreateElevatorComponent implements OnInit {
 
   createElevator() {
     this.elevator.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
-    this.elevator.floorsIds=this.firstFormGroup.get("secondCtrl")?.value;
-    this.elevator.code=this.firstFormGroup.get("thirdCtrl")?.value;
-    this.elevator.brand=this.firstFormGroup.get("fourthCtrl")?.value;
-    this.elevator.model=this.firstFormGroup.get("fifthCtrl")?.value;
-    this.elevator.serialNumber=this.firstFormGroup.get("sixthCtrl")?.value;
-    this.elevator.description=this.secondFormGroup.get("seventhCtrl")?.value;
+    this.elevator.floorsIds=this.secondFormGroup.get("secondCtrl")?.value;
+    this.elevator.code=this.thirdFormGroup.get("thirdCtrl")?.value;
+    this.elevator.brand=this.thirdFormGroup.get("fourthCtrl")?.value;
+    this.elevator.model=this.thirdFormGroup.get("fifthCtrl")?.value;
+    this.elevator.serialNumber=this.thirdFormGroup.get("sixthCtrl")?.value;
+    this.elevator.description=this.thirdFormGroup.get("seventhCtrl")?.value;
     this.elevatorService.createElevator(this.elevator as Elevator).pipe(
       catchError(error => {
         this._snackBar.open("Couldn't create the elevator!\n Reason: " + error.error.error,'Close',{duration:3000});

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable, first } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError, of, tap } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { Elevator } from 'src/app/Interfaces/elevator';
 import { Floor } from 'src/app/Interfaces/floor';
@@ -13,84 +15,108 @@ import { FloorService } from 'src/app/Services/floor.service';
   styleUrls: ['./edit-elevator.component.css']
 })
 export class EditElevatorComponent {
-  elevator:Elevator={};
-  elevators$?:Observable<Elevator[]>;
-  floors:Floor[]=[];
-  floor!:Floor;
+  elevator!:Elevator;
   buildingId?:string;
-  menuBuilding:Boolean=false;
-  menuElevator:Boolean=false;
-  menuEditFloors:Boolean=false;
-  menuEdit:Boolean=false;
+  floors!:Floor[];
+  elevators?:Elevator[];
+  isLinear=true;
+  buildings!:Building[];
+  firstFormGroup!: FormGroup;
+  secondFormGroup!: FormGroup;
+  thirdFormGroup!: FormGroup;
 
-  buildings$:Observable<Building[]>;
+  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService,private _formBuilder:FormBuilder,private _snackBar:MatSnackBar){}
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService,private elevatorService:ElevatorService) {
-    this.buildings$=buildingService.getBuildings()
+  ngOnInit() {
+    this.getBuildings();
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: [null, Validators.required],
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: [null, Validators.required],
+    });
+    this.thirdFormGroup = this._formBuilder.group({
+      firstCtrl: [null, Validators.required],
+      secondCtrl: [null, Validators.required],
+      thirdCtrl: [null, Validators.required],
+      fourthCtrl: [null, Validators.required],
+      fifthCtrl: [null, Validators.required],
+      sixthCtrl: [null, Validators.required],
+      seventhCtrl: [null, Validators.required],
+    });
   }
 
-  toggleElevator() {
-    if(this.buildingId===undefined){
-      alert("Error: Failed to edit elevator.\nReason: You must select one building.");
-      this.menuBuilding=false;
-      this.menuElevator=false;
+  getBuildings(){
+    this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
+  }
+
+  getElevators(){
+    this.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
+    if(!!this.buildingId === false){
+      this.elevators=undefined;
     }else{
-      this.menuBuilding=!this.menuBuilding;
-      this.menuElevator=!this.menuElevator;
-      this.elevators$ = this.elevatorService.getElevators(this.buildingId);
-      this.floorService.getFloors(this.buildingId).pipe(first()).subscribe(firstFloor => {
-        this.floors = firstFloor;
-      });
+      this.elevatorService.getElevators(this.buildingId).subscribe(elevators => this.elevators=elevators);
     }
   }
 
-  toggleEdit() {
-    if(this.elevator.id===undefined){
-      alert("Error: Failed to edit elevator.\nReason: You must select one elevator.");
-      this.menuElevator=true;
-      this.menuEditFloors=false;
+  choosedElevator(){
+    this.elevator=this.secondFormGroup.get("secondCtrl")?.value;
+    this.getFloors();
+    this.thirdFormGroup.get("secondCtrl")?.setValue(this.elevator.floorsIds);
+    this.thirdFormGroup.get("thirdCtrl")?.setValue(this.elevator.code);
+    this.thirdFormGroup.get("fourthCtrl")?.setValue(this.elevator.brand);
+    this.thirdFormGroup.get("fifthCtrl")?.setValue(this.elevator.model);
+    this.thirdFormGroup.get("sixthCtrl")?.setValue(this.elevator.serialNumber);
+    this.thirdFormGroup.get("seventhCtrl")?.setValue(this.elevator.description);
+  }
+
+  getFloors() {
+    this.floorService.getFloors(this.buildingId).subscribe(floors => this.floors=floors);
+  }
+
+  editFloor() {
+    if(this.elevator.buildingId!=this.thirdFormGroup.get("firstCtrl")?.value && this.elevator.floorsIds!=this.thirdFormGroup.get("secondCtrl")?.value && this.elevator.code!=this.thirdFormGroup.get("thirdCtrl")?.value && this.elevator.brand!=this.thirdFormGroup.get("fourthCtrl")?.value && this.elevator.model!=this.thirdFormGroup.get("fifthCtrl")?.value && this.elevator.serialNumber!=this.thirdFormGroup.get("sixthCtrl")?.value && this.elevator.description!=this.thirdFormGroup.get("seventhdCtrl")?.value){
+      this.elevatorService.updateAllElevator(this.elevator as Elevator).pipe(
+        catchError(error => {
+        this._snackBar.open("Couldn't update the elevator!\n Reason: " + error.error.error,'Close',{duration:3000});
+        return of();
+      }),
+        tap(result =>{
+          this._snackBar.open("Elevator updated successfully!",'Close',{duration:3000});
+      })).subscribe();
     }else{
-      this.menuElevator=!this.menuElevator;
-      this.menuEditFloors=!this.menuEditFloors;
+      const elevator1:Elevator={};
+      elevator1.id=this.elevator.id;
+      if(this.elevator.buildingId!=this.thirdFormGroup.get("firstCtrl")?.value && this.thirdFormGroup.get("firstCtrl")?.value!=null ){
+        elevator1.buildingId=this.thirdFormGroup.get("firstCtrl")?.value;
+      }
+      console.log(this.thirdFormGroup.get("secondCtrl")?.value);
+      if (this.elevator.floorsIds!=this.thirdFormGroup.get("secondCtrl")?.value && this.thirdFormGroup.get("secondCtrl")?.value!=null) {
+        elevator1.floorsIds=this.thirdFormGroup.get("secondCtrl")?.value;
+      }
+      if(this.elevator.code!=this.thirdFormGroup.get("thirdCtrl")?.value){
+        elevator1.code=this.thirdFormGroup.get("thirdCtrl")?.value;
+      }
+      if(this.elevator.brand!=this.thirdFormGroup.get("fourthCtrl")?.value){
+        elevator1.brand=this.thirdFormGroup.get("fourthCtrl")?.value;
+      }
+      if(this.elevator.model!=this.thirdFormGroup.get("fifthCtrl")?.value){
+        elevator1.model=this.thirdFormGroup.get("fifthCtrl")?.value;
+      }
+      if(this.elevator.serialNumber!=this.thirdFormGroup.get("sixthCtrl")?.value){
+        elevator1.serialNumber=this.thirdFormGroup.get("sixthCtrl")?.value;
+      }
+      if(this.elevator.description!=this.thirdFormGroup.get("seventhCtrl")?.value){
+        elevator1.description=this.thirdFormGroup.get("seventhCtrl")?.value;
+      }
+      this.elevatorService.updateElevator(elevator1 as Elevator).pipe(catchError(error => {
+        this._snackBar.open("Couldn't update the elevator!\n Reason: " + error.error.error,'Close',{duration:3000});
+        return of();
+        }),
+        tap(result =>{
+            this._snackBar.open("Elevator updated successfully!",'Close',{duration:3000});
+      })).subscribe();
     }
-  }
-
-  editFloors() {
-    this.menuEditFloors = !this.menuEditFloors;
-    this.menuEdit = !this.menuEdit;
-  }
-
-  extractCheckedFloorIds(): void {
-    console.log(this.elevator);
-    if (this.floors.some((floor)=> floor.isChecked)) {
-      this.elevator.floorsIds=(this.floors.filter((floor)=> floor.isChecked).map((floor)=> floor.id)).filter((value):value is string => typeof value === 'string');
-    }
-    console.log(this.elevator);
-  }
-
-  editElevator() {
-    console.log(this.elevator);
-    if(this.elevator.buildingId!=undefined && this.elevator.floorsIds?.length!=0 && this.elevator.code!=undefined && this.elevator.brand!=undefined && this.elevator.model!=undefined && this.elevator.serialNumber!=undefined && this.elevator.description!=undefined ){
-      this.elevatorService.updateAllElevator(this.elevator as Elevator).subscribe(
-        (response) => {
-          alert("Success: Elevator edited successfully");
-        },
-        (error) => {
-          alert("Error: Failed to edit elevator.\nReason: "+error.error.error);
-        }
-      );
-    }else{
-      this.elevatorService.updateElevator(this.elevator as Elevator).subscribe(
-        (response) => {
-          alert("Success: Elevator edited successfully");
-        },
-        (error) => {
-          alert("Error: Failed to edit elevator.\nReason: "+error.error.error);
-        }
-      );
-    }
-    this.menuEdit=!this.menuEdit;
-    this.menuBuilding=!this.menuBuilding;
-    this.elevator={};
+    this.elevators=undefined;
   }
 }

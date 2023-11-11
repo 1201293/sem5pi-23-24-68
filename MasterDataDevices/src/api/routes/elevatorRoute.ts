@@ -31,6 +31,7 @@ export default (app: Router) => {
     route.put('', celebrate({
         body: Joi.object({
             id: Joi.string().required(),
+            floorsIds: Joi.array().items(Joi.string()).required(),
             code: Joi.string().required(),
             brand: Joi.string().required(),
             model: Joi.string().required(),
@@ -44,6 +45,7 @@ export default (app: Router) => {
     route.patch('', celebrate({
         body: Joi.object({
             id: Joi.string().required(),
+            floorsIds: Joi.array().items(Joi.string()),
             code: Joi.string(),
             brand: Joi.string(),
             model: Joi.string(),
