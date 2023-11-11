@@ -15,9 +15,17 @@
 <mat-step>
   <mat-divider></mat-divider>
     <ng-template matStepLabel>Floors List</ng-template>
-    <mat-list role="list" *ngIf="(floors!=undefined); else noFloors">
-      <mat-list-item *ngFor="let floor of floors">{{floor.number}} {{floor.description}}</mat-list-item>
-    </mat-list>
+    <table>
+      <tr>
+        <th>Number</th>
+        <th>Description</th>
+      </tr>
+
+      <tr *ngFor="let floor of floors">
+        <td>{{ floor.number }}</td>
+        <td>{{ floor.description }}</td>
+      </tr>
+    </table>
     <mat-divider></mat-divider>
     <div>
       <br>
