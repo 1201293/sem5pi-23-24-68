@@ -27,6 +27,8 @@ import { CreateRobotTypeComponent } from './Components/create-robot-type/create-
 import { ListRobotsComponent } from './Components/list-robots/list-robots.component';
 import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 import { ListBuildingsByMinMaxNumberOfFloorsComponent } from './Components/list-buildings-by-min-max-number-of-floors/list-buildings-by-min-max-number-of-floors.component';
+import { DisableRobotComponent } from './Components/disable-robot/disable-robot.component';
+import { ListRobotsTaskDesignationComponent } from './Components/list-robots-task-designation/list-robots-task-designation.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { ListBuildingsByMinMaxNumberOfFloorsComponent } from './Components/list-
     ListFloorsWithElevatorComponent,
     CreateRobotTypeComponent,
     CreateRobotComponent,
+    DisableRobotComponent,
     ListRobotsComponent,
+    ListRobotsTaskDesignationComponent,
     TaskbarComponent,
     ListBuildingsByMinMaxNumberOfFloorsComponent
   ],

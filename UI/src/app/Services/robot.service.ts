@@ -24,14 +24,14 @@ export class RobotService {
     );
   }
 
-  updateRobot(robot: Robot):Observable<Robot>{
+  disableRobot(robot:Robot):Observable<Robot>{
     const httpOptions = {
       headers: new HttpHeaders({
       'Content-Type': 'application/json',
       })
     };
     return this.http.patch<Robot>(
-      "http://localhost:4000/api/robots",
+      "http://localhost:4000/api/robots/disable",
       robot,
       httpOptions
     );
@@ -40,6 +40,13 @@ export class RobotService {
   getRobots():Observable<Robot[]>{
     return this.http.get<Robot[]>(
       "http://localhost:4000/api/robots",
+      {observe: 'body', responseType: 'json'}
+      );
+  }
+
+  getRobotsByTaskOrDesignation(taskOrDesignation:String):Observable<Robot[]>{
+    return this.http.get<Robot[]>(
+      "http://localhost:4000/api/robots/"+taskOrDesignation,
       {observe: 'body', responseType: 'json'}
       );
   }
