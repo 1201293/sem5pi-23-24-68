@@ -16,7 +16,7 @@
     <mat-divider></mat-divider>
       <ng-template matStepLabel>Elevators List</ng-template>
       <mat-list role="list" *ngIf="(elevators!=undefined); else noElevators">
-        <mat-list-item *ngFor="let elevator of elevators">{{elevator.floorsIds}} {{elevator.code}} {{elevator.brand}} {{elevator.model}} {{elevator.serialNumber}} {{elevator.description}}</mat-list-item>
+        <mat-list-item *ngFor="let elevator of elevators">{{ mapFloorIdsToNumbers(elevator.floorsIds) }} {{elevator.code}} {{elevator.brand}} {{elevator.model}} {{elevator.serialNumber}} {{elevator.description}}</mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
       <div>

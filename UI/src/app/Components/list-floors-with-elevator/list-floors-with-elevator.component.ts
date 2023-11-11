@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { Floor } from 'src/app/Interfaces/floor';
@@ -11,55 +12,35 @@ import { FloorService } from 'src/app/Services/floor.service';
   styleUrls: ['./list-floors-with-elevator.component.css']
 })
 export class ListFloorsWithElevatorComponent {
+  firstFormGroup!:FormGroup;
+  isLinear=true;
   buildingId?:string;
-  floors:Floor[]=[];
-  buildings$:Observable<Building[]>;
-  size:number=0;
-  index:number=0;
-  menuBuilding:Boolean=false;
-  menuInfo:Boolean=false;
-  currentFloor?:Floor;
+  floors?:Floor[];
+  buildings!:Building[];
 
-  constructor(private buildingService:BuildingService,private floorService:FloorService){
-    this.buildings$=buildingService.getBuildings();
+  constructor(private buildingService:BuildingService,private floorService:FloorService,  private _formBuilder: FormBuilder){}
+
+  ngOnInit() {
+    this.getBuildings();
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: [null, Validators.required],
+    });
   }
 
-  toggleInfo(){
-    if(this.buildingId===undefined){
-      alert("Error: Failed to list floors.\nReason: You must select one building.");
-      this.menuInfo=false;
-      this.menuBuilding=false;
+  getBuildings(){
+    this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
+  }
+
+  getFloors(){
+    this.buildingId=this.firstFormGroup.get("firstCtrl")?.value;
+    if(!!this.buildingId === false){
+      this.floors=undefined;
     }else{
-      this.floorService.getFloorsWithElevator(this.buildingId).pipe(
-        first()
-      ).subscribe(firstFloor => {
-        this.floors=firstFloor;
-        this.currentFloor=firstFloor[0];
-        this.size=firstFloor.length;
-      }
-     );
+      this.floorService.getFloorsWithElevator(this.buildingId).subscribe(floors => this.floors=floors);
     }
   }
 
-  toggleBoth(){
-    this.menuBuilding=!this.menuBuilding;
-    this.menuInfo=!this.menuInfo;
-  }
-
-
-  changeFloorInfo(value:number){
-      if(this.index==0 && value==-1){
-        this.index=this.size -1;
-        this.currentFloor=this.floors[this.index];
-      }else if(value==1 && this.index+1 >= this.size){
-        this.index=0;
-        this.currentFloor=this.floors[this.index];
-      }else if(value==1){
-        this.index++;
-        this.currentFloor=this.floors[this.index];
-      }else{
-        this.index--;
-        this.currentFloor=this.floors[this.index];
-      }
+  reset(){
+    this.floors=undefined;
   }
 }
