@@ -55,6 +55,26 @@ export default class BuildingConnectionService implements IBuildingConnectionSer
     }
   }
 
+  public async getBuildingConnectionsByFloorId(floorId: string): Promise<Result<IBuildingConnectionDTO[]>> {
+    try {
+      const buildingConnectionResult = await this.buildingConnectionRepo.findAll();
+
+      const buildingConnections = [];
+
+      if (buildingConnectionResult.length != 0){
+        for (let i = 0; i < buildingConnectionResult.length; i++) {
+          if (buildingConnectionResult[i].floor1Id===floorId || buildingConnectionResult[i].floor2Id===floorId) {
+            buildingConnections.push(BuildingConnectionMap.toDTO(buildingConnectionResult[i]));
+          }
+        }
+      }
+
+      return Result.ok<IBuildingConnectionDTO[]>( buildingConnections );
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async listBuildingConnections(buildingId1: string, buildingId2: string): Promise<Result<IBuildingConnectionDTO[]>> {
     try {
       const buildingConnectionResult = await this.buildingConnectionRepo.findAll();

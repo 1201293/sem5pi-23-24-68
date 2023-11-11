@@ -37,6 +37,7 @@ export default class ElevatorService implements IElevatorService{
                     return Result.fail<IElevatorDTO>({"error":elevatorDTO});
                 }
             });
+            /*
 
             // TO-DO Check if an elevator was already made before
 
@@ -46,7 +47,7 @@ export default class ElevatorService implements IElevatorService{
 
             if(buildingHasElevator.length != 0){
                 return Result.fail<IElevatorDTO>({"error":elevatorDTO});
-            }
+            }*/
 
             const elevatorOrError = await Elevator.create(elevatorDTO);
 

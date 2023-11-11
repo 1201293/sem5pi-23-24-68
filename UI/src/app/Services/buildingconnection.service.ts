@@ -34,4 +34,11 @@ export class BuildingConnectionService {
       );
   }
 
+   getBuildingConnectionsByFloorId( id:string|undefined):Observable<BuildingConnection[]>{
+    return this.http.get<BuildingConnection[]>(
+      "http://localhost:4000/api/buildingConnections/"+id,
+      {observe: 'body', responseType: 'json'}
+      );
+   }
+
 }

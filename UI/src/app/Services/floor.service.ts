@@ -73,4 +73,17 @@ export class FloorService {
       httpOptions
       );
   }
+
+  loadMap(json:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.patch<Floor>(
+      "http://localhost:4000/api/floors/load-maps",
+      json,
+      httpOptions
+      );
+  }
 }

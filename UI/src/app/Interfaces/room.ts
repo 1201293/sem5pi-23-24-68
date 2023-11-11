@@ -1,4 +1,5 @@
 export interface Room {
+    id?:string;
     floorId?: string;
     name?: string;
     category?: string;

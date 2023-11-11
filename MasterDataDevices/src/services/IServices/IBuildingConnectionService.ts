@@ -6,4 +6,5 @@ export default interface IBuildingConnectionService  {
   createBuildingConnection(buildingConnectionDTO: IBuildingConnectionDTO): Promise<Result<IBuildingConnectionDTO>>;
   listBuildingConnections(buildingId1: string, buildingId2: string): Promise<Result<Array<IBuildingConnectionDTO>>>;
   updateBuildingConnection(buildingConnectionDTO: IBuildingConnectionDTO): Promise<Result<IBuildingConnectionDTO>>;
+  getBuildingConnectionsByFloorId(floorId:string):Promise<Result<Array<IBuildingConnectionDTO>>>;
 }

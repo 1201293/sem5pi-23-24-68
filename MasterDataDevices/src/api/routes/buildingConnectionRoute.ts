@@ -24,6 +24,8 @@ export default (app: Router) => {
 
     route.get('/:id1/:id2',(req,res,next) => ctrl.listBuildingConnections(req,res,next));
 
+    route.get('/:id',(req,res,next) => ctrl.getBuildingConnectionsByFloorId(req,res,next));
+
     route.put('',celebrate({
       body:Joi.object({
         id: Joi.string().required(),
