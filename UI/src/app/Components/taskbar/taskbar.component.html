@@ -24,6 +24,16 @@
     <i class="material-icons">arrow_drop_down</i>
   </div>
 </button>
+<button mat-button [matMenuTriggerFor]="robotType">
+  <div class="valign-center"><span>Robot Type</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
+<button mat-button [matMenuTriggerFor]="robot">
+  <div class="valign-center"><span>Robot</span>
+    <i class="material-icons">arrow_drop_down</i>
+  </div>
+</button>
 
 <mat-menu #building="matMenu">
   <button mat-menu-item routerLink="create-building">Create</button>
@@ -54,4 +64,15 @@
 
 <mat-menu #room="matMenu">
   <button mat-menu-item routerLink="create-room">Create</button>
+</mat-menu>
+
+<mat-menu #robotType="matMenu">
+  <button mat-menu-item routerLink="create-robot-type">Create</button>
+</mat-menu>
+
+<mat-menu #robot="matMenu">
+  <button mat-menu-item routerLink="create-robot">Create</button>
+  <button mat-menu-item routerLink="disable-robot">Disable</button>
+  <button mat-menu-item routerLink="list-robots">List</button>
+  <button mat-menu-item routerLink="list-robots-task-designation">List by task or designation</button>
 </mat-menu>

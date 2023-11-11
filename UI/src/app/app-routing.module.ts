@@ -16,7 +16,11 @@ import { CreateRoomComponent } from './Components/create-room/create-room.compon
 import { CreateBuildingComponent } from './Components/create-building/create-building.component';
 import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 import { ListBuildingsByMinMaxNumberOfFloorsComponent } from './Components/list-buildings-by-min-max-number-of-floors/list-buildings-by-min-max-number-of-floors.component';
-
+import { CreateRobotTypeComponent } from './Components/create-robot-type/create-robot-type.component';
+import { CreateRobotComponent } from './Components/create-robot/create-robot.component';
+import { DisableRobotComponent } from './Components/disable-robot/disable-robot.component';
+import { ListRobotsComponent } from './Components/list-robots/list-robots.component';
+import { ListRobotsTaskDesignationComponent } from './Components/list-robots-task-designation/list-robots-task-designation.component';
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent }, 
@@ -35,6 +39,11 @@ const routes: Routes = [
   { path: 'create-building-connection', component: CreateBuildingConnectionComponent },
   { path: 'list-building-connections', component: ListBuildingConnectionsComponent },
   { path: 'create-room', component: CreateRoomComponent },
+  { path: 'create-robot-type', component: CreateRobotTypeComponent },
+  { path: 'create-robot', component: CreateRobotComponent },
+  { path: 'disable-robot', component: DisableRobotComponent },
+  { path: 'list-robots', component: ListRobotsComponent },
+  { path: 'list-robots-task-designation', component: ListRobotsTaskDesignationComponent },
   { path: '', redirectTo: '', pathMatch: 'full' }, // Rota padrão
 ];
 
