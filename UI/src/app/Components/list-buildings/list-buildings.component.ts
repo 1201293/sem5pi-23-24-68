@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable, first } from 'rxjs';
 import { Building } from 'src/app/Interfaces/building';
 import { BuildingService } from 'src/app/Services/building.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-buildings',
@@ -10,19 +11,18 @@ import { BuildingService } from 'src/app/Services/building.service';
 })
 export class ListBuildingsComponent {
 
-  building$:Observable<Building[]>;
-  size:number=0;
-  index:number=0;
-  menuInfo:Boolean=false;
-  menuBuilding:Boolean=false;
-  currentBuilding?:Building;
+  firstFormGroup!:FormGroup;
+  isLinear=true;
+  buildings!:Building[];
 
-  constructor(private buildingService:BuildingService){
-    this.building$=buildingService.getBuildings();
+  constructor(private buildingService:BuildingService){}
+
+  ngOnInit() {
+    this.getBuildings();
   }
 
-  toggleInfo(){
-    
+  getBuildings(){
+    this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
   }
 
 }

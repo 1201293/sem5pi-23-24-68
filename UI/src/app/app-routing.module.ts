@@ -14,11 +14,13 @@ import { EditElevatorComponent } from './Components/edit-elevator/edit-elevator.
 import { ListFloorsWithElevatorComponent } from './Components/list-floors-with-elevator/list-floors-with-elevator.component';
 import { CreateRoomComponent } from './Components/create-room/create-room.component';
 import { CreateBuildingComponent } from './Components/create-building/create-building.component';
+import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 
 
 const routes: Routes = [
   { path: 'auth/sign-in', component: LoginComponent }, 
   { path: 'create-building', component: CreateBuildingComponent},
+  { path: 'list-buildings', component: ListBuildingsComponent},
   { path: 'list-floors', component: ListFloorsComponent },
   { path: 'list-floors-with-connections', component: ListFloorsWithConnectionsComponent },
   { path: 'list-floors-with-elevator', component: ListFloorsWithElevatorComponent },

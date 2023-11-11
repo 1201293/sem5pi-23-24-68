@@ -25,11 +25,13 @@ import { CreateBuildingComponent } from './Components/create-building/create-bui
 import { CreateRobotComponent } from './Components/create-robot/create-robot.component';
 import { CreateRobotTypeComponent } from './Components/create-robot-type/create-robot-type.component';
 import { ListRobotsComponent } from './Components/list-robots/list-robots.component';
+import { ListBuildingsComponent } from './Components/list-buildings/list-buildings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateBuildingComponent,
+    ListBuildingsComponent,
     CreateFloorComponent,
     LoginComponent,
     ListFloorsComponent,
