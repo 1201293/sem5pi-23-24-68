@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CreateFloorComponent } from './Components/create-floor/create-floor.component';
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
 import { ListBuildingConnectionsComponent } from './Components/list-building-connections/list-building-connections.component';
+import { EditBuildingConnectionsComponent } from './Components/edit-building-connections/edit-building-connections.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ListFloorsComponent } from './Components/list-floors/list-floors.component';
 import { ListFloorsWithConnectionsComponent } from './Components/list-floors-with-connections/list-floors-with-connections.component';
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'create-floor', component: CreateFloorComponent },
   { path: 'create-building-connection', component: CreateBuildingConnectionComponent },
   { path: 'list-building-connections', component: ListBuildingConnectionsComponent },
+  { path: 'edit-building-connections', component: EditBuildingConnectionsComponent },
   { path: 'create-room', component: CreateRoomComponent },
   { path: 'create-robot-type', component: CreateRobotTypeComponent },
   { path: 'create-robot', component: CreateRobotComponent },

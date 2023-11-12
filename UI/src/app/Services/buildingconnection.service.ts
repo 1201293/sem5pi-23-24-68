@@ -41,4 +41,30 @@ export class BuildingConnectionService {
       );
    }
 
+   updateAllBuildingConnection(buildingconnection:BuildingConnection){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.put<BuildingConnection>(
+      "http://localhost:4000/api/buildingConnections",
+      buildingconnection,
+      httpOptions
+      );
+  }
+
+  updateBuildingConnection(buildingconnection:BuildingConnection){
+    const httpOptions = {
+      headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      })
+      };
+    return this.http.patch<BuildingConnection>(
+      "http://localhost:4000/api/buildingConnections",
+      buildingconnection,
+      httpOptions
+      );
+  }
+
 }

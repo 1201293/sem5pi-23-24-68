@@ -34,8 +34,6 @@
                 <select id="floor2" name="floor2" class="form-control" [(ngModel)]="buildingconnection.floor2Id" required>
                   <option *ngFor="let floor of floors2$ |async" [value]="floor.id">{{ floor.number }}</option>
                 </select>
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" [(ngModel)]="buildingconnection.description" rows="4" required></textarea>
                 <div id = "submit" style="text-align: center; padding: 10px;"><button type="submit" (click) = "toggleBoth()">Create Building Connection</button></div>
             </div>
 

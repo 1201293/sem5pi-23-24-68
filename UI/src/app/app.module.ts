@@ -12,6 +12,7 @@ import { ListFloorsWithConnectionsComponent } from './Components/list-floors-wit
 import { EditFloorsComponent } from './Components/edit-floors/edit-floors.component';
 import { CreateBuildingConnectionComponent } from './Components/create-building-connection/create-building-connection.component';
 import { ListBuildingConnectionsComponent } from './Components/list-building-connections/list-building-connections.component';
+import { EditBuildingConnectionsComponent } from './Components/edit-building-connections/edit-building-connections.component';
 import { CreateElevatorComponent } from './Components/create-elevator/create-elevator.component';
 import { ListElevatorComponent } from './Components/list-elevator/list-elevator.component';
 import { LoadFloorMapComponent } from './Components/load-floor-map/load-floor-map.component';
@@ -42,6 +43,7 @@ import { ListRobotsTaskDesignationComponent } from './Components/list-robots-tas
     EditFloorsComponent,
     CreateBuildingConnectionComponent,
     ListBuildingConnectionsComponent,
+    EditBuildingConnectionsComponent,
     CreateRoomComponent,
     CreateElevatorComponent,
     ListElevatorComponent,
