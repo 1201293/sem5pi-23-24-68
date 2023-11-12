@@ -1,6 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { response } from "express";
-import { Observable, first } from "rxjs";
+import { Observable,of,catchError,tap } from 'rxjs';
 import { Building } from "src/app/Interfaces/building";
 import { BuildingService } from "src/app/Services/building.service";
 
@@ -11,50 +13,36 @@ import { BuildingService } from "src/app/Services/building.service";
 
 })
 export class EditBuildingComponent {
-    building: Building = {};
-    buildings$: Observable<Building[]>;
-    menuBuilding:Boolean=false;
-    menuElevator:Boolean=false;
-    menuEditBuilding:Boolean=false;
-    menuEditFloors:Boolean=false;
-    menuEdit:Boolean=false;
 
-    constructor(private buildingService: BuildingService) {
-        this.buildings$ = buildingService.getBuildings();
-    }
+    building!:Building;
+    buildings?:Building[];
+    firstFormGroup!: FormGroup;
+    secondFormGroup!: FormGroup;
 
-    toggleBuilding() {
-        if(this.building.id===undefined){
-            alert("Error: Failed to edit building.\nReason: You must select one building.");
-            this.menuBuilding=false;
-            this.menuEditBuilding=false;
-        } else {
-            this.menuBuilding=!this.menuBuilding;
-            this.menuEditBuilding=!this.menuEditBuilding;
-        }
-    }
+    constructor(private buildingService:BuildingService, private _formBuilder:FormBuilder, private _snackBar:MatSnackBar) {}
 
-    toggleEdit() {
-        if(this.building.id===undefined){
-            alert("Error: Failed to edit building.\nReason: You must select one building.");
-            this.menuBuilding=true;
-            this.menuEditBuilding=false;
-        } else {
-            this.menuBuilding=!this.menuBuilding;
-            this.menuEditBuilding=!this.menuEditBuilding;
-        }
-    }
-
-    editBuilding() {
-        console.log(this.building);
-        this.buildingService.updateBuilding(this.building as Building).subscribe(
-            (response) => {
-                alert("Success: Building updated successfully.");
-            },
-            (error) => {
-                alert("Error: Failed to update building.\nReason: " + error.error.error);
-            });
-        }
+    ngOnInit(){
+        this.getBuildings;
+        this.firstFormGroup = this._formBuilder.group({
+            firstCtrl: [null, Validators.required],
+        });
+        this.secondFormGroup = this._formBuilder.group({
+            secondCtrl: ['', Validators.required],
+            thirdCtrl: ['', Validators.required],
+            forthCtrl: ['', Validators.required],
+        })
         
     }
+
+    getBuildings(){
+        this.buildingService.getBuildings().subscribe(buildings => this.buildings=buildings);
+    }
+
+
+    editBuilding(){
+        
+       
+    }
+
+}
 
