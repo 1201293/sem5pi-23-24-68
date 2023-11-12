@@ -1,43 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="create-building.component.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1> Create a New Building</h1>
-            <form (ngSubmit)="createBuilding()">
-                <div class="form-group">
-                    <label for="code">Building Code:</label>
-                    <input type="text" id="code" name="code" [(ngModel)]="building.code" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="name">Building Name:</label>
-                    <input type="text" id="name" name="name" [(ngModel)]="building.name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" name="description" [(ngModel)]="building.description" rows="4" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="width">Width:</label>
-                    <input type="text" id="width" name="width" [(ngModel)]="building.width" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="depth">Depth:</label>
-                    <input type="text" id="depth" name="depth" [(ngModel)]="building.depth" required>
-                </div>
-
-                <button type="submit">Create Building</button>
-            </form>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out the building information</ng-template>
+        <mat-form-field>
+            <input name="code" matInput placeholder="Code" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input name="name" matInput placeholder="Name" formControlName="secondCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input name="description" matInput placeholder="Description" formControlName="thirdCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input name="width" type="number" matInput placeholder="Width" formControlName="forthCtrl" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <input name="depth" type="number" matInput placeholder="Depth" formControlName="fifthCtrl" required>
+        </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
         </div>
-    </body>
-
-
-</html>
+      </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Create</ng-template>
+        <div>
+          <button mat-button (click)="createBuilding();stepper.reset()">Create</button>
+        </div>
+      </mat-step>
+</mat-horizontal-stepper>

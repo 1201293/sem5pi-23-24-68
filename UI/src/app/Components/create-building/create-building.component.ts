@@ -1,5 +1,7 @@
-import { Component } from "@angular/core";
-import { Observable } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Observable, of, tap, catchError } from "rxjs";
 import { Building } from "src/app/Interfaces/building";
 import { BuildingService } from "src/app/Services/building.service";
 
@@ -10,37 +12,41 @@ import { BuildingService } from "src/app/Services/building.service";
 })
 export class CreateBuildingComponent {
     
-    building ={
-        name : '',
-        code : '',
-        description : '',
-        width : 0,
-        depth : 0
-    }
+    firstFormGroup!: FormGroup;
+    isLinear=true;
 
-    constructor(private buildingService:BuildingService){}
+
+    building:Building ={};
+
+    constructor(private buildingService:BuildingService, private _snackBar:MatSnackBar, private _formBuilder:FormBuilder){}
+
+    ngOnInit(){
+        this.firstFormGroup = this._formBuilder.group({
+            firstCtrl: ['', Validators.required],
+            secondCtrl: ['', Validators.required],
+            thirdCtrl: ['', Validators.required],
+            forthCtrl: ['', Validators.required],
+            fifthCtrl: ['', Validators.required],
+        });
+    }
 
     createBuilding() {
-        if(!!this.building.name === false){
-            alert("Error: Failed to create building.\nReason: You must write a name.");
-        }else if(!!this.building.code === false){
-            alert("Error: Failed to create building.\nReason: You must write a code.");
-        }else if(!!this.building.description === false){
-            alert("Error: Failed to create building.\nReason: You must write a description.");
-        }else if(this.building.width <= 0){
-            alert("Error: Failed to create building.\nReason: Width must be greater than 0."); 
-        }else if(this.building.depth <= 0){
-            alert("Error: Failed to create building.\nReason: Depth must be greater than 0.");
-        }
-        else{
-            const building1=this.buildingService.createBuilding(this.building as Building).subscribe(
-                (response) => {
-                    alert("Success: Building created successfully");
-                },
-                (error) => {
-                    alert("Error: Failed to create building.\nReason: "+error.error.error);
-                }
-            );
-        }
+        this.building.code=this.firstFormGroup.get("firstCtrl")?.value;
+        this.building.name=this.firstFormGroup.get("secondCtrl")?.value;
+        this.building.description=this.firstFormGroup.get("thirdCtrl")?.value;
+        this.building.width=this.firstFormGroup.get("forthCtrl")?.value;
+        this.building.depth=this.firstFormGroup.get("fifthCtrl")?.value;
+
+        this.buildingService.createBuilding(this.building as Building).pipe(
+            catchError(error => {
+                this._snackBar.open("Couldn't create the building!\n Reason: " + error.error.error,'Close',{duration:3000});
+                return of();
+              }),
+              tap(result =>{
+                  this._snackBar.open("Building created successfully!",'Close',{duration:3000});
+              })).subscribe();
+        
+
     }
+
 }

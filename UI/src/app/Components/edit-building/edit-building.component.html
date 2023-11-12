@@ -1,44 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="edit-building.component.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1>Edit Building</h1>
-            <form (ngSubmit)="toggleBuilding()">
-                <div class="form-group" [ngClass]="{    'off': menuBuilding }" >
-                    <label for="building">Building</label>
-                    <select id="building" name="building" class="form-control" [(ngModel)]="buildingId" required>
-                        <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
-                    </select>
-                    <div id="submit" style="text-align: center; padding: 10px"><button type="submit">Edit Building</button></div>
-                </div>
-            </form>
-            <form (ngSubmit)="toggleEdit()" >
-                <div class="form-group2" [ngClass]="{   'on': menuBuilding }">
-                    <label for="building">Building</label>
-                    <select id="building" name="building" class="form-control" [(ngModel)]="building.id" required>
-                        <option *ngFor="let building of buildings$ |async" [value]="building.id">{{ building.code }}</option>
-                    </select>
-                    <div id="submit" style="text-align: center; padding: 10px"><button type="submit">Choose Building</button></div>
-                </div>
-            </form>
-            <form (ngSubmit)="editBuilding()" >
-                <div class="form-group3" [ngClass]="{   'on': menuEdit}">
-                    <label for="code">Building Code:</label>
-                    <input type="text" id="code" name="code" [(ngModel)]="building.code" required>
-                    <label for="name">Building Name:</label>
-                    <input type="text" id="name" name="name" [(ngModel)]="building.name" required>
-                    <label for="description">Building Description:</label>
-                    <input type="text" id="description" name="description" [(ngModel)]="building.description" required>
-                    <label for="width">Building Width:</label>
-                    <input type="text" id="width" name="width" [(ngModel)]="building.width" required>
-                    <label for="length">Building Length:</label>
-                    <input type="text" id="length" name="length" [(ngModel)]="building.length" required>
-                </div>
-            </form>
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Select one building</ng-template>
+            <mat-form-field>
+                <mat-select name="buildingId" formControlName="firstCtrl">
+                    <mat-option *ngFor="let building of buildings" [value]="building.id">{{building.code}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext (click)="getFloors()">Next</button>
+            </div>     
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="firstFormGroup">
+
+            <ng-template matStepLabel>Edit building information</ng-template>
+
+            <mat-form-field>
+                <input name="code" matInput placeholder="Code" formControlName="secondCtrl" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="name" matInput placeholder="Name" formControlName="thirdCtrl" required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input name="description" matInput placeholder="Description" formControlName="forthCtrl" required>
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+
+        </form>
+
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Create</ng-template>
+        <div>
+          <button mat-button (click)="createBuilding();stepper.reset()">Create</button>
         </div>
-    </body>
+    </mat-step>
+
+</mat-horizontal-stepper>
